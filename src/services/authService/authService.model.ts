@@ -1,11 +1,11 @@
 import { createEffect, createEvent, createStore, sample } from "effector";
 import { loginUser } from "./authService.api";
-import { LoginResponse } from "@/api/types";
+import { TokenResponse } from "@/api/types";
 import { AxiosError } from "axios";
 
 const handleSecretRecieved = createEvent<string>();
 
-const fetchAuthTokenFx = createEffect<string, LoginResponse, AxiosError>(
+const fetchAuthTokenFx = createEffect<string, TokenResponse, AxiosError>(
   loginUser
 );
 

@@ -1,5 +1,5 @@
 import { api } from "@/api";
-import { LoginResponse } from "@/api/types";
+import { TokenResponse } from "@/api/types";
 
-export const loginUser = (telegramUserInitData: string): Promise<LoginResponse> =>
+export const loginUser = (telegramUserInitData: string): Promise<TokenResponse> =>
   api.post("Auth/Login", { telegramUserInitData });
