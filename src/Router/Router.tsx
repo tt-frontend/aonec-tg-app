@@ -8,7 +8,7 @@ import { useBackButton } from "@/services/backButton/backButtonService.hook";
 export const Router = () => {
   useBackButton();
 
-  const { handleSecretRecieved } = useUnit({
+  const { handleSecretRecieved, isAuth } = useUnit({
     isAuth: authService.outputs.$isAuth,
     handleSecretRecieved: authService.inputs.handleSecretRecieved,
   });
@@ -19,7 +19,7 @@ export const Router = () => {
     if (telegramUserInitData) handleSecretRecieved(telegramUserInitData);
   }, [handleSecretRecieved]);
 
-  const routes = useMemo(() => getRoutes(), []);
+  const routes = useMemo(() => getRoutes(isAuth), [isAuth]);
 
   const router = useRoutes(routes);
 

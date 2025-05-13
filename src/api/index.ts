@@ -4,8 +4,10 @@ import axios from "axios";
 axios.defaults.baseURL = "https://stage-ecbot.ru/api";
 
 axios.interceptors.request.use((req) => {
-
-  req.headers.Authorization = `Bearer ${authService.outputs.$authToken.getState()}`;
+  req.headers.Authorization = `Bearer ${
+    authService.outputs.$authToken.getState() ||
+    authService.outputs.$initToken.getState()
+  }`;
   req.headers["x-user-path"] = window.location.pathname || "none";
   req.params = {
     ...(req.params || {}),
