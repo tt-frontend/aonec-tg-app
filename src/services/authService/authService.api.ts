@@ -8,4 +8,4 @@ export const loginUser = (
 export const initializeUser = (
   telegramUserInitData: string
 ): Promise<InitializeResponse> =>
-  api.post("Auth/InitializeUser", { telegramUserInitData });
+  api.post("Auth/Initialization", { telegramUserInitData });
