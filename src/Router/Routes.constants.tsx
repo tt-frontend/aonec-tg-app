@@ -30,6 +30,10 @@ export const getRoutes = (isAuth: boolean): RouteObject[] => [
             element: <LoginContainer />,
           },
           {
+            path: "/",
+            element: <Navigate to="/login" />,
+          },
+          {
             path: "*",
             element: <Navigate to="/login" />,
           },
