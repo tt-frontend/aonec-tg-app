@@ -1,12 +1,16 @@
 import { createEffect, createEvent, createStore, sample } from "effector";
-import { loginUser } from "./authService.api";
-import { TokenResponse } from "@/api/types";
+import { initializeUser, loginUser } from "./authService.api";
+import { InitializeResponse, TokenResponse } from "@/api/types";
 import { AxiosError } from "axios";
 
 const handleSecretRecieved = createEvent<string>();
 
 const fetchAuthTokenFx = createEffect<string, TokenResponse, AxiosError>(
   loginUser
+);
+
+const initializeUserFx = createEffect<string, InitializeResponse, AxiosError>(
+  initializeUser
 );
 
 const setAuthToken = createEvent<string>();
@@ -25,7 +29,7 @@ sample({
   filter: (token, telegramUserInitData) =>
     !token && Boolean(telegramUserInitData),
   fn: (_, telegramUserInitData) => telegramUserInitData,
-  target: fetchAuthTokenFx,
+  target: initializeUserFx,
 });
 
 fetchAuthTokenFx.failData.watch((e) => {

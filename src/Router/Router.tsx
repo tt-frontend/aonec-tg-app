@@ -4,15 +4,22 @@ import { getRoutes } from "./Routes.constants";
 import { useUnit } from "effector-react";
 import { authService } from "@/services/authService";
 import { DEFAULT_TOKEN } from "@/services/authService/authService.model";
-// import { useBackButton } from "@/services/backButton/backButtonService.hook";
+import { useBackButton } from "@/services/backButton/backButtonService.hook";
 
 export const Router = () => {
-  // useBackButton();
+  useBackButton();
 
-  const { isAuth, setAuthToken } = useUnit({
+  const { isAuth, setAuthToken, handleSecretRecieved } = useUnit({
     isAuth: authService.outputs.$isAuth,
     setAuthToken: authService.inputs.setAuthToken,
+    handleSecretRecieved: authService.inputs.handleSecretRecieved,
   });
+
+  useEffect(() => {
+    const telegramUserInitData = Telegram.WebApp.initData;
+
+    if (telegramUserInitData) handleSecretRecieved(telegramUserInitData);
+  }, [handleSecretRecieved]);
 
   const navigate = useNavigate();
 
@@ -25,7 +32,7 @@ export const Router = () => {
       return;
     }
 
-    // if (!isAuth) navigate(`/login`);
+    if (!isAuth) navigate(`/login`);
   }, [navigate, params, isAuth, setAuthToken]);
 
   const routes = useMemo(() => getRoutes(), []);
