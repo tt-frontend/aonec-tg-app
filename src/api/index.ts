@@ -1,7 +1,7 @@
 import { authService } from "@/services/authService";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://stage.k8s.transparent-technology.ru/api/tg";
+axios.defaults.baseURL = "https://stage-ecbot.ru/api";
 
 axios.interceptors.request.use((req) => {
 
