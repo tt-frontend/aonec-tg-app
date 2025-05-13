@@ -1,35 +1,47 @@
 import { createEffect, createEvent, createStore, sample } from "effector";
 import { initializeUser, loginUser } from "./authService.api";
-import { InitializeResponse, TokenResponse } from "@/api/types";
-import { AxiosError } from "axios";
+import { InitializeResponse, LoginRequest, TokenResponse } from "@/api/types";
+import { EffectFailDataAxiosError } from "@/types";
 
 const handleSecretRecieved = createEvent<string>();
+const handleLoginUser = createEvent<LoginRequest>();
 
-const fetchAuthTokenFx = createEffect<string, TokenResponse, AxiosError>(
-  loginUser
+const initializeUserFx = createEffect<
+  string,
+  InitializeResponse,
+  EffectFailDataAxiosError
+>(initializeUser);
+
+const fetchAuthTokenFx = createEffect<
+  LoginRequest,
+  TokenResponse,
+  EffectFailDataAxiosError
+>(loginUser);
+
+export const DEFAULT_INIT_TOKEN =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUZ1VzZXJJZCI6IjE3NjcyNDIwNzMiLCJuYmYiOjE3NDcxMjY1NDgsImV4cCI6MTc0NzEyNzE0OCwiaWF0IjoxNzQ3MTI2NTQ4fQ.gzE6GJqiFz_Gaa4DQg2EhiC63HqQ6bd5aD7f0Jl9nv8";
+
+const $initToken = createStore<string | null>(DEFAULT_INIT_TOKEN).on(
+  initializeUserFx.doneData,
+  (_, data) => data.token
 );
 
-const initializeUserFx = createEffect<string, InitializeResponse, AxiosError>(
-  initializeUser
-);
-
-const setAuthToken = createEvent<string>();
-
-export const DEFAULT_TOKEN = null;
-
-const $authToken = createStore<null | string>(null)
-  .on(fetchAuthTokenFx.doneData, (_, data) => {
+const $authToken = createStore<null | string>(null).on(
+  fetchAuthTokenFx.doneData,
+  (_, data) => {
     return data.token;
-  })
-  .on(setAuthToken, (_, token) => token);
+  }
+);
 
 sample({
-  source: $authToken,
   clock: handleSecretRecieved,
-  filter: (token, telegramUserInitData) =>
-    !token && Boolean(telegramUserInitData),
-  fn: (_, telegramUserInitData) => telegramUserInitData,
+  filter: (telegramUserInitData) => Boolean(telegramUserInitData),
   target: initializeUserFx,
+});
+
+sample({
+  clock: handleLoginUser,
+  target: fetchAuthTokenFx,
 });
 
 fetchAuthTokenFx.failData.watch((e) => {
@@ -40,7 +52,10 @@ fetchAuthTokenFx.failData.watch((e) => {
 
 const $isAuth = $authToken.map(Boolean);
 
+const $isLoginLoading = fetchAuthTokenFx.pending;
+
 export const authService = {
-  inputs: { handleSecretRecieved, setAuthToken },
-  outputs: { $authToken, $isAuth },
+  inputs: { handleSecretRecieved, handleLoginUser },
+  outputs: { $authToken, $initToken, $isAuth, $isLoginLoading },
+  effect: { fetchAuthTokenFx },
 };
