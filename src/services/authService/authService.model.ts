@@ -18,8 +18,7 @@ const fetchAuthTokenFx = createEffect<
   EffectFailDataAxiosError
 >(loginUser);
 
-export const DEFAULT_INIT_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUZ1VzZXJJZCI6IjE3NjcyNDIwNzMiLCJuYmYiOjE3NDcxMjY1NDgsImV4cCI6MTc0NzEyNzE0OCwiaWF0IjoxNzQ3MTI2NTQ4fQ.gzE6GJqiFz_Gaa4DQg2EhiC63HqQ6bd5aD7f0Jl9nv8";
+export const DEFAULT_INIT_TOKEN = null;
 
 const $initToken = createStore<string | null>(DEFAULT_INIT_TOKEN).on(
   initializeUserFx.doneData,
