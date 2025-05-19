@@ -14,7 +14,7 @@ export function useBackButton() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const backButton = Telegram?.WebApp?.BackButton;
+  const backButton = Telegram.WebApp.BackButton;
 
   useEffect(() => {
     if (!excludedRoutes.includes(location.pathname)) {

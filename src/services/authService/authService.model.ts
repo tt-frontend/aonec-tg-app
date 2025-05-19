@@ -43,12 +43,6 @@ sample({
   target: fetchAuthTokenFx,
 });
 
-fetchAuthTokenFx.failData.watch((e) => {
-  const isForbidden = e.response?.status === 403 || e.response?.status === 401;
-
-  if (isForbidden) Telegram.WebApp.close();
-});
-
 const $isAuth = $authToken.map(Boolean);
 
 const $isLoginLoading = fetchAuthTokenFx.pending;

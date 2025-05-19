@@ -24,6 +24,7 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
             value={values.phoneNumber}
             onChange={handleChange}
             name="phoneNumber"
+            placeholder="Введите номер телефона"
           />
         </FormItem>
         <FormItem label="Имя">
@@ -32,6 +33,7 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
             value={values.name}
             onChange={handleChange}
             name="name"
+            placeholder="Введите имя и фамилию"
           />
         </FormItem>
         <Button
