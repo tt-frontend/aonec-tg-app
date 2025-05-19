@@ -2,6 +2,7 @@ import { createEffect, createEvent, createStore, sample } from "effector";
 import { initializeUser, loginUser } from "./authService.api";
 import { InitializeResponse, LoginRequest, TokenResponse } from "@/api/types";
 import { EffectFailDataAxiosError } from "@/types";
+import { persist } from "effector-storage/local";
 
 const handleSecretRecieved = createEvent<string>();
 const handleLoginUser = createEvent<LoginRequest>();
@@ -31,6 +32,11 @@ const $authToken = createStore<null | string>(null).on(
     return data.token;
   }
 );
+
+persist({
+  store: $authToken,
+  key: "authToken",
+});
 
 sample({
   clock: handleSecretRecieved,

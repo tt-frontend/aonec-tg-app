@@ -15,9 +15,8 @@ sample({
   clock: handleBack,
   fn: (callback) => {
     if (callback) return callback();
-
-    goBack();
   },
+  target: [goBack],
 });
 
 export const backButtonService = {
