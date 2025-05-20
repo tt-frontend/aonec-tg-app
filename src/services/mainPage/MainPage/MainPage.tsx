@@ -7,7 +7,7 @@ import { Title } from "@/components/Title";
 import { SpaceLine } from "@/components/SpaceLine";
 import { ActionLink } from "@/components/ActionLink";
 
-export const MainPage: FC<Props> = () => {
+export const MainPage: FC<Props> = ({ logoutUser }) => {
   return (
     <Wrapper>
       <HeaderWrapper>
@@ -27,7 +27,7 @@ export const MainPage: FC<Props> = () => {
         <ActionLink
           path="/tasks"
           title="Активные"
-          description={56}
+          description={57}
           statusColor="#34C759"
         />
         <ActionLink
@@ -39,6 +39,10 @@ export const MainPage: FC<Props> = () => {
         <SpaceLine />
         <Title>Объекты</Title>
         <ActionLink path="/" title="Посмотреть все объекты" />
+        <SpaceLine />
+        <div onClick={logoutUser}>
+          <ActionLink path="/" title="Выйти" />
+        </div>
       </Content>
     </Wrapper>
   );
