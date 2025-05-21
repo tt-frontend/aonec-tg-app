@@ -31,6 +31,11 @@ export enum EDocumentType {
   Photo = "Photo",
 }
 
+export enum EContractType {
+  Income = "Income",
+  Execution = "Execution",
+}
+
 export interface CharacteristicResponse {
   /** @format int32 */
   id?: number;
@@ -49,6 +54,31 @@ export interface CommentResponse {
   author?: ExecutorLiteResponse | null;
   /** @format date-time */
   createdAt?: string;
+}
+
+export interface ContractListResponse {
+  /** @format int32 */
+  id?: number;
+  name?: string | null;
+  type?: EContractType;
+}
+
+export interface ContractListResponsePagedList {
+  /** @format int32 */
+  totalItems?: number;
+  /** @format int32 */
+  pageNumber?: number;
+  /** @format int32 */
+  pageSize?: number;
+  /** @format int32 */
+  totalPages?: number;
+  hasPreviousPage?: boolean;
+  hasNextPage?: boolean;
+  /** @format int32 */
+  nextPageNumber?: number;
+  /** @format int32 */
+  previousPageNumber?: number;
+  items?: ContractListResponse[] | null;
 }
 
 export interface DocumentResponse {
@@ -98,15 +128,6 @@ export interface ExecutorResponse {
   name?: string | null;
   /** Номер телефона */
   phoneNumber?: string | null;
-}
-
-export interface ExistingCustomersRequest {
-  /** @format int32 */
-  pageNumber?: number;
-  /** @format int32 */
-  pageSize?: number;
-  orderBy?: EOrderByRule;
-  customerName?: string | null;
 }
 
 /** Запрос на инициализацию телеграм пользователя */
@@ -612,7 +633,7 @@ export class Api<
      * @tags Auth
      * @name AuthInitializationCreate
      * @summary Инициализация и валидация Телеграм пользователя
-     * @request POST:/api/Auth/Initialization
+     * @request POST:/api/Auth/initialization
      * @secure
      */
     authInitializationCreate: (
@@ -620,11 +641,96 @@ export class Api<
       params: RequestParams = {},
     ) =>
       this.request<InitializeResponse, ErrorApiResponse | ProblemDetails>({
-        path: `/api/Auth/Initialization`,
+        path: `/api/Auth/initialization`,
         method: "POST",
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Contractors
+     * @name ContractorsCustomersList
+     * @summary Получить список заказчиков
+     * @request GET:/api/Contractors/customers
+     * @secure
+     */
+    contractorsCustomersList: (
+      query?: {
+        CustomerName?: string;
+        /** @format int32 */
+        PageNumber?: number;
+        /** @format int32 */
+        PageSize?: number;
+        OrderBy?: EOrderByRule;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<StringPagedList, ErrorApiResponse>({
+        path: `/api/Contractors/customers`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Contractors
+     * @name ContractorsContractsList
+     * @summary Получить доходных договоров внутри контрагента
+     * @request GET:/api/Contractors/contracts
+     * @secure
+     */
+    contractorsContractsList: (
+      query?: {
+        /** @format int32 */
+        PageNumber?: number;
+        /** @format int32 */
+        PageSize?: number;
+        OrderBy?: EOrderByRule;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ContractListResponsePagedList, ErrorApiResponse>({
+        path: `/api/Contractors/contracts`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Contractors
+     * @name ContractorsExecutionContractsList
+     * @summary Получить договоров с исполнителем внутри контрагента
+     * @request GET:/api/Contractors/executionContracts
+     * @secure
+     */
+    contractorsExecutionContractsList: (
+      query?: {
+        /** @format int32 */
+        PageNumber?: number;
+        /** @format int32 */
+        PageSize?: number;
+        OrderBy?: EOrderByRule;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ContractListResponsePagedList, ErrorApiResponse>({
+        path: `/api/Contractors/executionContracts`,
+        method: "GET",
+        query: query,
+        secure: true,
         format: "json",
         ...params,
       }),
@@ -698,7 +804,8 @@ export class Api<
      * @tags Executors
      * @name ExecutorsExistingExecutorNamesList
      * @summary Возвращает список ФИО, похожих на набранный текст
-     * @request GET:/api/Executors/ExistingExecutorNames
+     * @request GET:/api/Executors/existingExecutorNames
+     * @deprecated
      * @secure
      */
     executorsExistingExecutorNamesList: (
@@ -713,7 +820,7 @@ export class Api<
       params: RequestParams = {},
     ) =>
       this.request<StringPagedList, ErrorApiResponse>({
-        path: `/api/Executors/ExistingExecutorNames`,
+        path: `/api/Executors/existingExecutorNames`,
         method: "GET",
         query: query,
         secure: true,
@@ -724,9 +831,26 @@ export class Api<
     /**
      * No description
      *
+     * @tags Executors
+     * @name ExecutorsCurrentList
+     * @request GET:/api/Executors/current
+     * @secure
+     */
+    executorsCurrentList: (params: RequestParams = {}) =>
+      this.request<ExecutorResponse, ErrorApiResponse>({
+        path: `/api/Executors/current`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags Nomenclatures
      * @name NomenclaturesList
-     * @summary Возвращает список номенклатур, похожих на набранный текст
+     * @summary Возвращает список номенклатур, присоединненых к исполнителю и похожих на набранный текст
      * @request GET:/api/Nomenclatures
      * @secure
      */
@@ -779,7 +903,10 @@ export class Api<
         /** @format int32 */
         CharacteristicId?: number;
         GroupType?: ProductionOrderGroupingFilter;
-        Contract?: string;
+        /** @format int32 */
+        ContractId?: number;
+        /** @format int32 */
+        ExecutionContractId?: number;
         Customer?: string;
         /** Тип сортировки наряд-заданий */
         OrderRule?: EProductionOrderOrderRule;
@@ -825,31 +952,8 @@ export class Api<
      * No description
      *
      * @tags ProductionOrders
-     * @name ProductionOrdersCustomersList
-     * @summary Получить список заказчиков
-     * @request GET:/api/ProductionOrders/Customers
-     * @secure
-     */
-    productionOrdersCustomersList: (
-      data: ExistingCustomersRequest,
-      params: RequestParams = {},
-    ) =>
-      this.request<StringPagedList, ErrorApiResponse>({
-        path: `/api/ProductionOrders/Customers`,
-        method: "GET",
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags ProductionOrders
      * @name ProductionOrdersCompleteCreate
-     * @request POST:/api/ProductionOrders/{productionOrderId}/Complete
+     * @request POST:/api/ProductionOrders/{productionOrderId}/complete
      * @secure
      */
     productionOrdersCompleteCreate: (
@@ -857,7 +961,7 @@ export class Api<
       params: RequestParams = {},
     ) =>
       this.request<void, ErrorApiResponse>({
-        path: `/api/ProductionOrders/${productionOrderId}/Complete`,
+        path: `/api/ProductionOrders/${productionOrderId}/complete`,
         method: "POST",
         secure: true,
         ...params,
@@ -869,7 +973,7 @@ export class Api<
      * @tags ProductionOrders
      * @name ProductionOrdersDocumentsDelete
      * @summary Удалить прикрепленнуый документ
-     * @request DELETE:/api/ProductionOrders/{productionOrderId}/Documents/{documentId}
+     * @request DELETE:/api/ProductionOrders/{productionOrderId}/documents/{documentId}
      * @secure
      */
     productionOrdersDocumentsDelete: (
@@ -878,7 +982,7 @@ export class Api<
       params: RequestParams = {},
     ) =>
       this.request<void, ErrorApiResponse>({
-        path: `/api/ProductionOrders/${productionOrderId}/Documents/${documentId}`,
+        path: `/api/ProductionOrders/${productionOrderId}/documents/${documentId}`,
         method: "DELETE",
         secure: true,
         ...params,
@@ -890,7 +994,7 @@ export class Api<
      * @tags ProductionOrders
      * @name ProductionOrdersCommentsCreate
      * @summary Добавить комментарий
-     * @request POST:/api/ProductionOrders/{productionOrderId}/Comments
+     * @request POST:/api/ProductionOrders/{productionOrderId}/comments
      * @secure
      */
     productionOrdersCommentsCreate: (
@@ -899,7 +1003,7 @@ export class Api<
       params: RequestParams = {},
     ) =>
       this.request<CommentResponse, ErrorApiResponse>({
-        path: `/api/ProductionOrders/${productionOrderId}/Comments`,
+        path: `/api/ProductionOrders/${productionOrderId}/comments`,
         method: "POST",
         body: data,
         secure: true,
@@ -914,7 +1018,7 @@ export class Api<
      * @tags ProductionOrders
      * @name ProductionOrdersCommentsDelete
      * @summary Удалить комментарий
-     * @request DELETE:/api/ProductionOrders/{productionOrderId}/Comments/{commentId}
+     * @request DELETE:/api/ProductionOrders/{productionOrderId}/comments/{commentId}
      * @secure
      */
     productionOrdersCommentsDelete: (
@@ -923,7 +1027,7 @@ export class Api<
       params: RequestParams = {},
     ) =>
       this.request<void, ErrorApiResponse>({
-        path: `/api/ProductionOrders/${productionOrderId}/Comments/${commentId}`,
+        path: `/api/ProductionOrders/${productionOrderId}/comments/${commentId}`,
         method: "DELETE",
         secure: true,
         ...params,

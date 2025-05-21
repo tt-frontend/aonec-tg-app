@@ -7,35 +7,36 @@ import { Title } from "@/components/Title";
 import { SpaceLine } from "@/components/SpaceLine";
 import { ActionLink } from "@/components/ActionLink";
 
-export const MainPage: FC<Props> = ({ logoutUser }) => {
+export const MainPage: FC<Props> = ({
+  logoutUser,
+  currentUser,
+  tasksCount,
+}) => {
   return (
     <Wrapper>
-      <HeaderWrapper>
-        <Header>
-          <Avatar
-            style={{ backgroundColor: "orange", verticalAlign: "middle" }}
-            size="large"
-          >
-            Ю
-          </Avatar>
-          <HeaderWrapper>Юлия Филимонова</HeaderWrapper>
-        </Header>
-        <ChevronRight />
-      </HeaderWrapper>
+      {currentUser && (
+        <HeaderWrapper>
+          <Header>
+            <Avatar
+              style={{ backgroundColor: "orange", verticalAlign: "middle" }}
+              size="large"
+            >
+              {currentUser.name?.[0].toUpperCase()}
+            </Avatar>
+            <HeaderWrapper>{currentUser.name}</HeaderWrapper>
+          </Header>
+          <ChevronRight />
+        </HeaderWrapper>
+      )}
       <Content>
         <Title>Задачи</Title>
         <ActionLink
           path="/tasks"
           title="Активные"
-          description={57}
+          description={tasksCount}
           statusColor="#34C759"
         />
-        <ActionLink
-          path="/"
-          title="В архиве"
-          description={10}
-          statusColor="#999999"
-        />
+        <ActionLink path="/" title="В архиве" statusColor="#999999" />
         <SpaceLine />
         <Title>Объекты</Title>
         <ActionLink path="/" title="Посмотреть все объекты" />

@@ -45,6 +45,20 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
         >
           Войти
         </Button>
+        <Button
+          size="large"
+          type="link"
+          onClick={() =>
+            handleLogin({
+              phoneNumber: "89347378631",
+              name: "Фарит Гиззатуллин",
+            })
+          }
+          loading={isLoading}
+          disabled={isLoading}
+        >
+          Быстрый вход
+        </Button>
       </Card>
     </Wrapper>
   );
