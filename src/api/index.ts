@@ -32,11 +32,11 @@ axios.interceptors.response.use(
     const { data, config } = res;
     const { url } = config;
 
-    if (url && checkUrl("Auth/login|Auth/refreshToken)", url)) {
+    if (url && checkUrl("Auth/login|Auth/refreshToken", url)) {
       authService.inputs.setTokens(data);
     }
 
-    return res;
+    return data;
   },
   async (error) => {
     const status = error?.response?.status;
@@ -52,13 +52,13 @@ axios.interceptors.response.use(
       return;
     }
 
-    if (status === 401 && !checkUrl("login|Auth/confirm", error.config.url)) {
+    if (status === 401 && !checkUrl("Auth/login|Auth/confirm", error.config.url)) {
       const { config } = error;
 
       config._retry = true;
 
       if (!refreshPromise) {
-        refreshPromise = axios.post("/auth/refreshToken").finally(clearPromise);
+        refreshPromise = axios.post("/Auth/refreshToken").finally(clearPromise);
       }
 
       const token = await refreshPromise;
@@ -70,9 +70,5 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-axios.interceptors.response.use(({ data }) => {
-  return data;
-});
 
 export const api = axios;

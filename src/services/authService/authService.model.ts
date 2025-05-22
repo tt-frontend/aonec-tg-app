@@ -5,7 +5,6 @@ import { EffectFailDataAxiosError } from "@/types";
 import { persist } from "effector-storage/local";
 import { createGate } from "effector-react";
 
-const handleSecretRecieved = createEvent<string>();
 const handleLoginUser = createEvent<LoginRequest>();
 const logoutUser = createEvent<void>();
 const setTokens = createEvent<TokenResponse>();
@@ -29,8 +28,6 @@ export const DEFAULT_INIT_TOKEN = null;
 const $initToken = createStore<string | null>(DEFAULT_INIT_TOKEN).on(
   initializeUserFx.doneData,
   (_, data) => {
-    alert(JSON.stringify(data));
-    console.log(data);
     return data.token;
   }
 );
@@ -61,12 +58,6 @@ persist({
 
 sample({
   clock: AuthGate.open,
-  target: initializeUserFx,
-});
-
-sample({
-  clock: handleSecretRecieved,
-  filter: (telegramUserInitData) => Boolean(telegramUserInitData),
   target: initializeUserFx,
 });
 
