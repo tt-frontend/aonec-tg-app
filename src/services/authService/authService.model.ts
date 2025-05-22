@@ -3,14 +3,17 @@ import { initializeUser, loginUser } from "./authService.api";
 import { InitializeResponse, LoginRequest, TokenResponse } from "@/api/types";
 import { EffectFailDataAxiosError } from "@/types";
 import { persist } from "effector-storage/local";
+import { createGate } from "effector-react";
 
 const handleSecretRecieved = createEvent<string>();
 const handleLoginUser = createEvent<LoginRequest>();
 const logoutUser = createEvent<void>();
 const setTokens = createEvent<TokenResponse>();
 
+const AuthGate = createGate();
+
 const initializeUserFx = createEffect<
-  string,
+  void,
   InitializeResponse,
   EffectFailDataAxiosError
 >(initializeUser);
@@ -53,6 +56,11 @@ persist({
 });
 
 sample({
+  clock: AuthGate.open,
+  target: initializeUserFx,
+});
+
+sample({
   clock: handleSecretRecieved,
   filter: (telegramUserInitData) => Boolean(telegramUserInitData),
   target: initializeUserFx,
@@ -68,7 +76,8 @@ const $isAuth = $authToken.map(Boolean);
 const $isLoginLoading = fetchAuthTokenFx.pending;
 
 export const authService = {
-  inputs: { handleSecretRecieved, handleLoginUser, logoutUser, setTokens },
-  outputs: { $authToken, $initToken, $isAuth, $isLoginLoading },
+  inputs: { handleLoginUser, logoutUser, setTokens },
+  outputs: { $authToken, $refreshToken, $initToken, $isAuth, $isLoginLoading },
   effect: { fetchAuthTokenFx },
+  gates: { AuthGate },
 };

@@ -13,6 +13,14 @@ axios.interceptors.request.use((req) => {
   req.params = {
     ...(req.params || {}),
   };
+
+  if (req.url && checkUrl("Auth/refreshToken", req.url)) {
+    req.data = {
+      token: authService.outputs.$authToken.getState(),
+      refreshToken: authService.outputs.$refreshToken.getState(),
+    };
+  }
+
   return req;
 });
 
@@ -36,11 +44,10 @@ axios.interceptors.response.use(
 
     if (status === 401 && checkUrl("Auth/refreshToken", url)) {
       authService.inputs.logoutUser();
-      console.log("logout", url, status);
       return;
     }
 
-    if (status === 401 && checkUrl("Auth/Initialization", url)) {
+    if (status === 401 && checkUrl("Auth/initialization", url)) {
       Telegram.WebApp.close();
       return;
     }
