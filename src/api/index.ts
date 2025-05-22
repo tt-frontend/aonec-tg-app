@@ -1,4 +1,5 @@
 import { authService } from "@/services/authService";
+import { checkUrl } from "@/utils";
 import axios from "axios";
 
 axios.defaults.baseURL = "https://stage-ecbot.ru/api";
@@ -14,6 +15,54 @@ axios.interceptors.request.use((req) => {
   };
   return req;
 });
+
+let refreshPromise: Promise<unknown> | null = null;
+const clearPromise = () => (refreshPromise = null);
+
+axios.interceptors.response.use(
+  (res) => {
+    const { data, config } = res;
+    const { url } = config;
+
+    if (url && checkUrl("Auth/login|Auth/refreshToken)", url)) {
+      authService.inputs.setTokens(data);
+    }
+
+    return res;
+  },
+  async (error) => {
+    const status = error?.response?.status;
+    const url = error?.config?.url;
+
+    if (status === 401 && checkUrl("Auth/refreshToken", url)) {
+      authService.inputs.logoutUser();
+      console.log("logout", url, status);
+      return;
+    }
+
+    if (status === 401 && checkUrl("Auth/Initialization", url)) {
+      Telegram.WebApp.close();
+      return;
+    }
+
+    if (status === 401 && !checkUrl("login|Auth/confirm", error.config.url)) {
+      const { config } = error;
+
+      config._retry = true;
+
+      if (!refreshPromise) {
+        refreshPromise = axios.post("/auth/refreshToken").finally(clearPromise);
+      }
+
+      const token = await refreshPromise;
+      config.headers.authorization = `Bearer ${token}`;
+
+      return axios(config);
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 axios.interceptors.response.use(({ data }) => {
   return data;

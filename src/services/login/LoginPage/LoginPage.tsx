@@ -50,8 +50,8 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
           type="link"
           onClick={() =>
             handleLogin({
-              phoneNumber: "89347378631",
-              name: "Фарит Гиззатуллин",
+              phoneNumber: "89613313421",
+              name: "Алмаз Иванов",
             })
           }
           loading={isLoading}

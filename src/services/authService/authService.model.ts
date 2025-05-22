@@ -7,6 +7,7 @@ import { persist } from "effector-storage/local";
 const handleSecretRecieved = createEvent<string>();
 const handleLoginUser = createEvent<LoginRequest>();
 const logoutUser = createEvent<void>();
+const setTokens = createEvent<TokenResponse>();
 
 const initializeUserFx = createEffect<
   string,
@@ -31,11 +32,24 @@ const $authToken = createStore<null | string>(null)
   .on(fetchAuthTokenFx.doneData, (_, data) => {
     return data.token;
   })
+  .on(setTokens, (_, { token }) => token)
+  .reset(logoutUser);
+
+const $refreshToken = createStore<null | string>(null)
+  .on(fetchAuthTokenFx.doneData, (_, data) => {
+    return data.refreshToken;
+  })
+  .on(setTokens, (_, { refreshToken }) => refreshToken)
   .reset(logoutUser);
 
 persist({
   store: $authToken,
-  key: "authToken",
+  key: "accessToken",
+});
+
+persist({
+  store: $refreshToken,
+  key: "refreshToken",
 });
 
 sample({
@@ -54,7 +68,7 @@ const $isAuth = $authToken.map(Boolean);
 const $isLoginLoading = fetchAuthTokenFx.pending;
 
 export const authService = {
-  inputs: { handleSecretRecieved, handleLoginUser, logoutUser },
+  inputs: { handleSecretRecieved, handleLoginUser, logoutUser, setTokens },
   outputs: { $authToken, $initToken, $isAuth, $isLoginLoading },
   effect: { fetchAuthTokenFx },
 };
