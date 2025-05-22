@@ -28,7 +28,11 @@ export const DEFAULT_INIT_TOKEN = null;
 
 const $initToken = createStore<string | null>(DEFAULT_INIT_TOKEN).on(
   initializeUserFx.doneData,
-  (_, data) => data.token
+  (_, data) => {
+    alert(JSON.stringify(data));
+    console.log(data);
+    return data.token;
+  }
 );
 
 const $authToken = createStore<null | string>(null)
