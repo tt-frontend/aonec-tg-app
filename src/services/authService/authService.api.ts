@@ -19,5 +19,5 @@ export const initializeUser = async (): Promise<InitializeResponse> => {
 };
 
 export const logoutUserMutation = createMutation<LogoutRequest, void>({
-  handler: () => api.post("Auth/logout"),
+  handler: (payload): Promise<void> => api.post("Auth/logout", payload),
 });
