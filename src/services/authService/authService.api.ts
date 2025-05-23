@@ -1,5 +1,10 @@
 import { api } from "@/api";
-import { InitializeResponse, LoginRequest, TokenResponse } from "@/api/types";
+import {
+  InitializeResponse,
+  LoginRequest,
+  LogoutRequest,
+  TokenResponse,
+} from "@/api/types";
 import { createMutation } from "@farfetched/core";
 
 export const loginUser = (payload: LoginRequest): Promise<TokenResponse> =>
@@ -13,6 +18,6 @@ export const initializeUser = async (): Promise<InitializeResponse> => {
   return res;
 };
 
-export const logoutUserMutation = createMutation({
+export const logoutUserMutation = createMutation<LogoutRequest, void>({
   handler: () => api.post("Auth/logout"),
 });

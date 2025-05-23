@@ -1,6 +1,21 @@
-import { createEffect, createEvent, createStore, sample } from "effector";
-import { initializeUser, loginUser } from "./authService.api";
-import { InitializeResponse, LoginRequest, TokenResponse } from "@/api/types";
+import {
+  combine,
+  createEffect,
+  createEvent,
+  createStore,
+  sample,
+} from "effector";
+import {
+  initializeUser,
+  loginUser,
+  logoutUserMutation,
+} from "./authService.api";
+import {
+  InitializeResponse,
+  LoginRequest,
+  LogoutRequest,
+  TokenResponse,
+} from "@/api/types";
 import { EffectFailDataAxiosError } from "@/types";
 import { persist } from "effector-storage/local";
 import { createGate } from "effector-react";
@@ -64,6 +79,22 @@ sample({
 sample({
   clock: handleLoginUser,
   target: fetchAuthTokenFx,
+});
+
+const $logoutRequest = combine(
+  $authToken,
+  $refreshToken,
+  (token, refreshToken) =>
+    ({
+      token: token as string,
+      refreshToken: refreshToken as string,
+    } as LogoutRequest)
+);
+
+sample({
+  source: $logoutRequest,
+  clock: logoutUser,
+  target: logoutUserMutation.start,
 });
 
 const $isAuth = $authToken.map(Boolean);
