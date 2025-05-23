@@ -24,8 +24,7 @@ export const SearchButtonWrapper = styled.div`
 `;
 
 export const TasksListWrapper = styled.div`
-  margin-top: 14px;
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 16px;
 `;

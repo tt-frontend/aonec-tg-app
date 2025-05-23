@@ -8,11 +8,11 @@ import {
 import { Props } from "./TasksList.types";
 import { Title } from "@/components/Title";
 import { Funnel, Search } from "react-bootstrap-icons";
-import { Segmented } from "antd";
-import { MockTask } from "./MockTask";
+import { Segmented, Skeleton } from "antd";
 import { FiltersPanel } from "./FiltersPanel";
+import { TaskItem } from "./TaskItem";
 
-export const TasksList: FC<Props> = () => {
+export const TasksList: FC<Props> = ({ tasksListPagedList, isLoading }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => {
@@ -46,14 +46,14 @@ export const TasksList: FC<Props> = () => {
           block
           size="large"
         />
-        <TasksListWrapper>
-          <MockTask />
-          <MockTask />
-          <MockTask />
-          <MockTask />
-          <MockTask />
-          <MockTask />
-        </TasksListWrapper>
+        {!isLoading && (
+          <TasksListWrapper>
+            {tasksListPagedList?.items?.map((task) => (
+              <TaskItem task={task} key={task.id} />
+            ))}
+          </TasksListWrapper>
+        )}
+        {isLoading && <Skeleton active />}
       </Wrapper>
     </div>
   );
