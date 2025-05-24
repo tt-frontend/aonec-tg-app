@@ -9,10 +9,11 @@ const {
 } = mainPageService;
 
 export const MainPageContainer = () => {
-  const { logoutUser, currentUser, tasksCountData } = useUnit({
+  const { logoutUser, currentUser, tasksCountData, isLoading } = useUnit({
     logoutUser: authService.inputs.logoutUser,
     currentUser: currentUserQuery.$data,
     tasksCountData: tasksCountQuery.$data,
+    isLoading: currentUserQuery.$pending,
   });
 
   const tasksCount = tasksCountData?.totalItems || null;
@@ -24,6 +25,7 @@ export const MainPageContainer = () => {
         logoutUser={logoutUser}
         currentUser={currentUser}
         tasksCount={tasksCount}
+        isLoading={isLoading}
       />
     </>
   );

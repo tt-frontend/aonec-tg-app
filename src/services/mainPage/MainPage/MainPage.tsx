@@ -1,16 +1,18 @@
 import { FC } from "react";
 import { Content, Header, HeaderWrapper, Wrapper } from "./MainPage.styled";
 import { Props } from "./MainPage.types";
-import { Avatar } from "antd";
+import { Avatar, Skeleton } from "antd";
 import { ChevronRight } from "react-bootstrap-icons";
 import { Title } from "@/components/Title";
 import { SpaceLine } from "@/components/SpaceLine";
 import { ActionLink } from "@/components/ActionLink";
+import { Space } from "antd/lib";
 
 export const MainPage: FC<Props> = ({
   logoutUser,
   currentUser,
   tasksCount,
+  isLoading,
 }) => {
   return (
     <Wrapper>
@@ -27,6 +29,12 @@ export const MainPage: FC<Props> = ({
           </Header>
           <ChevronRight />
         </HeaderWrapper>
+      )}
+      {!currentUser && isLoading && (
+        <Space>
+          <Skeleton.Avatar active shape="circle" />
+          <Skeleton.Input active />
+        </Space>
       )}
       <Content>
         <Title>Задачи</Title>
