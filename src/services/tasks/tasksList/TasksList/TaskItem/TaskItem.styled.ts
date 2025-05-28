@@ -1,12 +1,15 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(Link)`
   background-color: white;
   padding: 16px;
   box-shadow: 0px 0px 8px 0px #0000000d;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  text-decoration: none;
+  color: black;
 `;
 
 export const NomenclatureName = styled.div`

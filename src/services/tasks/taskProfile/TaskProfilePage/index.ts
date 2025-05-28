@@ -1,0 +1,1 @@
+export { TaskProfilePage } from './TaskProfilePage';

@@ -29,6 +29,7 @@ export enum EOrderByRule {
 export enum EDocumentType {
   Act = "Act",
   Photo = "Photo",
+  ProfilePhoto = "ProfilePhoto",
 }
 
 export enum EContractType {
@@ -128,6 +129,7 @@ export interface ExecutorResponse {
   name?: string | null;
   /** Номер телефона */
   phoneNumber?: string | null;
+  profilePhoto?: DocumentResponse | null;
 }
 
 /** Запрос на инициализацию телеграм пользователя */
@@ -227,6 +229,11 @@ export interface ProductionOrderListResponse {
   characteristic?: CharacteristicResponse | null;
   /** Номер наряд-задания */
   requestNumber?: string | null;
+  /**
+   * Количество
+   * @format double
+   */
+  amount?: number;
 }
 
 export interface ProductionOrderListResponsePagedList {
@@ -263,6 +270,8 @@ export interface ProductionOrderResponse {
   /** @format date-time */
   creationTime?: string;
   requestNumber?: string | null;
+  /** @format double */
+  amount?: number;
 }
 
 /** Ответ обновления JWT-токена */

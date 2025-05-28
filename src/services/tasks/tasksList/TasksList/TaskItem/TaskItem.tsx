@@ -17,12 +17,15 @@ import { FinishIcon } from "@/components/icons/FinishIcon";
 
 export const TaskItem: FC<Props> = ({ task }) => {
   return (
-    <Wrapper>
+    <Wrapper to={`/tasks/${task.id}`}>
       <RequestNumber>№{task.requestNumber}</RequestNumber>
       <NomenclatureName>{task.nomenclature?.name}</NomenclatureName>
       <CharacterisicWrapper>
         <div>{task.characteristic?.name}</div>
-        <div>50{task.nomenclature?.units}</div>
+        <div>
+          {task.amount}
+          {task.nomenclature?.units}
+        </div>
       </CharacterisicWrapper>
       <Progress
         percent={30}
