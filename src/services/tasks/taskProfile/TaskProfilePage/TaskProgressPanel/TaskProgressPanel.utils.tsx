@@ -3,7 +3,7 @@ import {
   daysCountForms,
   hoursCountForms,
   minutesCountForms,
-} from "./TaskProfilePage.constants";
+} from "./TaskProgressPanel.constants";
 import { IDateDifference } from "@/utils/dateDiffs";
 
 export const getProgressDateText = ({
@@ -12,23 +12,15 @@ export const getProgressDateText = ({
   minutes,
   isNegative,
 }: IDateDifference) => {
-  const daysText = Boolean(days) && (
-    <>
-      {days} {getCountText(days, daysCountForms)}{" "}
-    </>
-  );
+  const daysText =
+    Boolean(days) && `${days} ${getCountText(days, daysCountForms)}`;
 
-  const hoursText = Boolean(hours) && (
-    <>
-      {hours} {getCountText(hours, hoursCountForms)}
-    </>
-  );
+  const hoursText =
+    Boolean(hours) && `${hours} ${getCountText(hours, hoursCountForms)}`;
 
-  const minutesText = Boolean(minutes) && (
-    <>
-      {minutes} {getCountText(minutes, minutesCountForms)}
-    </>
-  );
+  const minutesText =
+    Boolean(minutes) &&
+    `${minutes} ${getCountText(minutes, minutesCountForms)}`;
 
   const isShowMinutes = Boolean(minutes) && !days && !hours;
 
@@ -36,7 +28,8 @@ export const getProgressDateText = ({
 
   const differenceText = (
     <>
-      {prefix}: {daysText} {hoursText} {isShowMinutes && minutesText}
+      {prefix}: {daysText}
+      {daysText && hoursText && ","} {hoursText} {isShowMinutes && minutesText}
     </>
   );
 
