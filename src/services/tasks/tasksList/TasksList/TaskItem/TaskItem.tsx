@@ -14,25 +14,16 @@ import { Progress } from "antd";
 import dayjs from "dayjs";
 import { DateIcon } from "@/components/icons/DateIcon";
 import { FinishIcon } from "@/components/icons/FinishIcon";
+import { getDateProgressBarPercent, getProgressBarColor } from "@/utils/dateDiffs";
 
 export const TaskItem: FC<Props> = ({ task }) => {
-  return (
-    <Wrapper to={`/tasks/${task.id}`}>
-      <RequestNumber>№{task.requestNumber}</RequestNumber>
-      <NomenclatureName>{task.nomenclature?.name}</NomenclatureName>
-      <CharacterisicWrapper>
-        <div>{task.characteristic?.name}</div>
-        <div>
-          {task.amount}
-          {task.nomenclature?.units}
-        </div>
-      </CharacterisicWrapper>
-      <Progress
-        percent={30}
-        size="small"
-        showInfo={false}
-        strokeColor="#17B45A"
-      />
+  const percent = getDateProgressBarPercent(
+    dayjs(task.startDate),
+    dayjs(task.normativeCompletionDate)
+  );
+
+  const dateSegment = (
+    <>
       <DateWrapper>
         <DateName>
           <IconWrapper>
@@ -53,6 +44,27 @@ export const TaskItem: FC<Props> = ({ task }) => {
           {dayjs(task.normativeCompletionDate).format("DD.MM.YYYY")}
         </DateString>
       </DateWrapper>
+    </>
+  );
+
+  return (
+    <Wrapper to={`/tasks/${task.id}`}>
+      <RequestNumber>№{task.requestNumber}</RequestNumber>
+      <NomenclatureName>{task.nomenclature?.name}</NomenclatureName>
+      <CharacterisicWrapper>
+        <div>{task.characteristic?.name}</div>
+        <div>
+          {task.amount}
+          {task.nomenclature?.units}
+        </div>
+      </CharacterisicWrapper>
+      <Progress
+        percent={percent}
+        size="small"
+        showInfo={false}
+        strokeColor={getProgressBarColor(percent)}
+      />
+      {dateSegment}
     </Wrapper>
   );
 };
