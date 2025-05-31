@@ -1,6 +1,7 @@
 import { FC } from "react";
 import {
   CharacterisicWrapper,
+  FilesAttachCardHeader,
   NomenclatureName,
   RequestNumber,
   TitleWrapper,
@@ -10,6 +11,8 @@ import { Props } from "./TaskProfilePage.types";
 import { Empty, Segmented, Skeleton } from "antd";
 import { TaskProgressPanel } from "./TaskProgressPanel";
 import { InputCommentPanel } from "./InputCommentPanel";
+import { Card } from "@/components/Card";
+import { PlusIcon } from "@/components/icons/PlusIcon";
 
 export const TaskProfilePage: FC<Props> = ({ isLoading, task }) => {
   if (isLoading) return <Skeleton active />;
@@ -35,6 +38,22 @@ export const TaskProfilePage: FC<Props> = ({ isLoading, task }) => {
         </CharacterisicWrapper>
       </TitleWrapper>
       <InputCommentPanel task={task} />
+      <Card
+        header={
+          <FilesAttachCardHeader>
+            <div>Акт</div>
+            <PlusIcon />
+          </FilesAttachCardHeader>
+        }
+      />
+      <Card
+        header={
+          <FilesAttachCardHeader>
+            <div>Фотографии</div>
+            <PlusIcon />
+          </FilesAttachCardHeader>
+        }
+      />
       <Segmented
         block
         size="large"
