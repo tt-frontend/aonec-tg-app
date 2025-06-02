@@ -24,7 +24,7 @@ export const getCountTextsTemp = ({
 export const getCountText = (count: number, countForms: CountForms) => {
   const countTexts = getCountTextsTemp(countForms);
 
-  const countText = countTexts.find(({ digits }) => {
+  const countText = countTexts.reverse().find(({ digits }) => {
     return digits.some((digit) => {
       return String(count).endsWith(String(digit));
     });
