@@ -1,0 +1,72 @@
+import { FC } from "react";
+import { Props } from "./TaskInfo.types";
+import { Card } from "@/components/Card";
+import { CommonInfo } from "@/components/CommonInfo";
+import dayjs from "dayjs";
+
+export const TaskInfo: FC<Props> = ({ task }) => {
+  return (
+    <>
+      <Card title="Основная информация">
+        <CommonInfo
+          items={[
+            { key: "Номер наряд-задания", value: task.requestNumber },
+            {
+              key: "Дата создания",
+              value: dayjs(task.creationTime).format("DD.MM.YYYY"),
+            },
+          ]}
+        />
+      </Card>
+      <Card title="Исполнитель">
+        <CommonInfo
+          items={[
+            {
+              key: "Ответственнй исполнитель",
+              value: task.executor?.name,
+            },
+
+            {
+              key: "Договор с исполнителем",
+              value: task.executionContract?.id,
+            },
+            {
+              key: "Нормативный срок задания",
+              value: dayjs(task.normativeCompletionDate).format(
+                "DD.MM.YYYY HH:mm"
+              ),
+            },
+            {
+              key: "Дата начала выполнения работ",
+              value: dayjs(task.startDate).format("DD.MM.YYYY HH:mm"),
+            },
+          ]}
+        />
+      </Card>
+
+      <Card title="Работы">
+        <CommonInfo
+          items={[
+            {
+              key: "Номенклатура работ",
+              value: task.nomenclature?.name,
+            },
+
+            {
+              key: "Единица хранения используемых материалов",
+              value: task.nomenclature?.units,
+            },
+            {
+              key: "Характеристика работ",
+              value: task.characteristic?.name,
+            },
+            {
+              key: "Количество работ",
+              value: task.amount,
+            },
+          ]}
+        />
+      </Card>
+    </>
+  );
+};

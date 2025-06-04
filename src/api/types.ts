@@ -82,6 +82,17 @@ export interface ContractListResponsePagedList {
   items?: ContractListResponse[] | null;
 }
 
+export interface ContractResponse {
+  /** @format int32 */
+  id?: number;
+  name?: string | null;
+  type?: EContractType;
+  /** @format date-time */
+  startDate?: string;
+  /** @format date-time */
+  endDate?: string;
+}
+
 export interface DocumentResponse {
   /** @format int32 */
   id?: number;
@@ -263,6 +274,8 @@ export interface ProductionOrderResponse {
   nomenclature?: NomenclatureResponse | null;
   characteristic?: CharacteristicResponse | null;
   comments?: CommentResponse[] | null;
+  executionContract?: ContractResponse | null;
+  contract?: ContractResponse | null;
   /** @format date-time */
   normativeCompletionDate?: string;
   /** @format date-time */
@@ -693,7 +706,7 @@ export class Api<
      *
      * @tags Contractors
      * @name ContractorsContractsList
-     * @summary Получить доходных договоров внутри контрагента
+     * @summary Получить список доходных договоров внутри контрагента
      * @request GET:/api/Contractors/contracts
      * @secure
      */

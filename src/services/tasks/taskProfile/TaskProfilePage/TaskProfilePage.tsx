@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   CharacterisicWrapper,
   FilesAttachCardHeader,
@@ -13,8 +13,11 @@ import { TaskProgressPanel } from "./TaskProgressPanel";
 import { InputCommentPanel } from "./InputCommentPanel";
 import { Card } from "@/components/Card";
 import { PlusIcon } from "@/components/icons/PlusIcon";
+import { TaskInfo } from "./TaskInfo";
 
 export const TaskProfilePage: FC<Props> = ({ isLoading, task }) => {
+  const [section, setSection] = useState<"about" | "comments">("about");
+
   if (isLoading) return <Skeleton active />;
 
   if (!task) {
@@ -57,9 +60,14 @@ export const TaskProfilePage: FC<Props> = ({ isLoading, task }) => {
       <Segmented
         block
         size="large"
-        defaultValue="О задаче"
-        options={["О задаче", "Комментарии"]}
+        value={section}
+        onChange={setSection}
+        options={[
+          { label: "О задаче", value: "about" },
+          { label: "Комментарии", value: "comments" },
+        ]}
       />
+      {section === "about" && <TaskInfo task={task} />}
     </Wrapper>
   );
 };
