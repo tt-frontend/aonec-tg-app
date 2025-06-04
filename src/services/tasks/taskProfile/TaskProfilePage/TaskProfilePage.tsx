@@ -15,7 +15,12 @@ import { Card } from "@/components/Card";
 import { PlusIcon } from "@/components/icons/PlusIcon";
 import { TaskInfo } from "./TaskInfo";
 
-export const TaskProfilePage: FC<Props> = ({ isLoading, task }) => {
+export const TaskProfilePage: FC<Props> = ({
+  isLoading,
+  task,
+  handleAddComment,
+  isLoadingComment,
+}) => {
   const [section, setSection] = useState<"about" | "comments">("about");
 
   if (isLoading) return <Skeleton active />;
@@ -40,7 +45,11 @@ export const TaskProfilePage: FC<Props> = ({ isLoading, task }) => {
           </div>
         </CharacterisicWrapper>
       </TitleWrapper>
-      <InputCommentPanel task={task} />
+      <InputCommentPanel
+        task={task}
+        handleAddComment={handleAddComment}
+        isLoadingComment={isLoadingComment}
+      />
       <Card
         header={
           <FilesAttachCardHeader>
