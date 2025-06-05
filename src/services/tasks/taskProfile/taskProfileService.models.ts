@@ -1,6 +1,10 @@
 import { sample } from "effector";
 import { createGate } from "effector-react";
-import { addCommnetMutation, taskQuery } from "./taskProfileService.api";
+import {
+  addCommnetMutation,
+  deleteCommentMutation,
+  taskQuery,
+} from "./taskProfileService.api";
 
 const TaskProfileGate = createGate<{ id: number }>();
 
@@ -11,7 +15,10 @@ sample({
 });
 
 sample({
-  clock: addCommnetMutation.finished.success,
+  clock: [
+    addCommnetMutation.finished.success,
+    deleteCommentMutation.finished.success,
+  ],
   source: TaskProfileGate.state,
   filter: TaskProfileGate.status,
   fn: ({ id }) => id,

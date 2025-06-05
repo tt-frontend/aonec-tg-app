@@ -6,6 +6,12 @@ export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 30px;
   gap: 8px;
+
+  user-select: none;
+
+  * {
+    user-select: none;
+  }
 `;
 
 export const Comment = styled(Card)`

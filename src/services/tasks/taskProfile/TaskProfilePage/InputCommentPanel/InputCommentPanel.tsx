@@ -11,6 +11,7 @@ export const InputCommentPanel: FC<Props> = ({
 
   const onSubmit = () => {
     handleAddComment({ comment: text });
+    setText("");
   };
 
   return (

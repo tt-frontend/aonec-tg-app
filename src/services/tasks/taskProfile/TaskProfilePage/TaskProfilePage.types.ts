@@ -5,4 +5,5 @@ export type Props = {
   isLoading: boolean;
   handleAddComment: (payload: CommentRequest) => void;
   isLoadingComment: boolean;
+  handleDeleteComment: (commentId: number) => void;
 };

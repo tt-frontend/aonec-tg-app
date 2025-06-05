@@ -4,6 +4,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  position: relative;
+  padding-bottom: 64px;
 `;
 
 export const TitleWrapper = styled.div`
@@ -35,4 +37,17 @@ export const FilesAttachCardHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 1px solid lightgray;
+  position: fixed;
+  z-index: 5;
+  bottom: 0;
+  width: calc(100%);
+  transform: translateX(-16px);
+  background-color: white;
 `;

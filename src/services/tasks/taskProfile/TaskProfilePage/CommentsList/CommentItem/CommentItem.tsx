@@ -10,15 +10,33 @@ import { Props } from "./CommentItem.types";
 import { Avatar } from "antd";
 import stc from "string-to-color";
 import dayjs from "dayjs";
+import { useLongPress } from "@uidotdev/usehooks";
 
-export const CommentItem: FC<Props> = ({ comment }) => {
+export const CommentItem: FC<Props> = ({ comment, handleDeleteComment }) => {
+  const attrs = useLongPress(
+    () => {
+      const isApproveDelete = confirm(
+        "Вы действительно хотите удалить этот комментарий?"
+      );
+
+      if (isApproveDelete && comment.id) {
+        handleDeleteComment(comment.id);
+      }
+    },
+    {
+      threshold: 500,
+    }
+  );
+
   return (
-    <Wrapper>
+    <Wrapper {...attrs}>
       <Comment
         header={
           <CommentTitle>
             <AuthorName>{comment.author?.name}</AuthorName>
-            <CommentCreationDate>{dayjs(comment.createdAt).format("DD.MM.YYYY HH:mm")}</CommentCreationDate>
+            <CommentCreationDate>
+              {dayjs(comment.createdAt).format("DD.MM.YYYY HH:mm")}
+            </CommentCreationDate>
           </CommentTitle>
         }
       >
