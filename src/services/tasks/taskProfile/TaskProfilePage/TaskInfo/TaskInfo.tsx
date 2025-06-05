@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 export const TaskInfo: FC<Props> = ({ task }) => {
   return (
     <>
-      <Card title="Основная информация">
+      <Card lable="Основная информация">
         <CommonInfo
           items={[
             { key: "Номер наряд-задания", value: task.requestNumber },
@@ -18,7 +18,7 @@ export const TaskInfo: FC<Props> = ({ task }) => {
           ]}
         />
       </Card>
-      <Card title="Исполнитель">
+      <Card lable="Исполнитель">
         <CommonInfo
           items={[
             {
@@ -44,7 +44,7 @@ export const TaskInfo: FC<Props> = ({ task }) => {
         />
       </Card>
 
-      <Card title="Работы">
+      <Card lable="Работы">
         <CommonInfo
           items={[
             {

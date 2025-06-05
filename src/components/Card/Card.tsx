@@ -2,7 +2,7 @@ import { FC } from "react";
 import { ExWrapper, Header, Title, Wrapper } from "./Card.styled";
 import { Props } from "./Card.types";
 
-export const Card: FC<Props> = ({ title, header, ...props }) => {
+export const Card: FC<Props> = ({ lable, header, ...props }) => {
   const content = (
     <Wrapper {...props}>
       {header && <Header>{header}</Header>}
@@ -10,10 +10,10 @@ export const Card: FC<Props> = ({ title, header, ...props }) => {
     </Wrapper>
   );
 
-  if (title) {
+  if (lable) {
     return (
       <ExWrapper>
-        <Title>{title}</Title>
+        <Title>{lable}</Title>
         {content}
       </ExWrapper>
     );

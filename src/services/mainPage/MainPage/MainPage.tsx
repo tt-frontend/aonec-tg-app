@@ -7,6 +7,7 @@ import { Title } from "@/components/Title";
 import { SpaceLine } from "@/components/SpaceLine";
 import { ActionLink } from "@/components/ActionLink";
 import { Space } from "antd/lib";
+import stc from "string-to-color";
 
 export const MainPage: FC<Props> = ({
   logoutUser,
@@ -20,7 +21,10 @@ export const MainPage: FC<Props> = ({
         <HeaderWrapper>
           <Header>
             <Avatar
-              style={{ backgroundColor: "orange", verticalAlign: "middle" }}
+              style={{
+                backgroundColor: stc(currentUser.name),
+                verticalAlign: "middle",
+              }}
               size="large"
             >
               {currentUser.name?.[0].toUpperCase()}

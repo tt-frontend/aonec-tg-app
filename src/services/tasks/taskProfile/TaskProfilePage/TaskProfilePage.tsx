@@ -14,6 +14,7 @@ import { InputCommentPanel } from "./InputCommentPanel";
 import { Card } from "@/components/Card";
 import { PlusIcon } from "@/components/icons/PlusIcon";
 import { TaskInfo } from "./TaskInfo";
+import { CommentsList } from "./CommentsList";
 
 export const TaskProfilePage: FC<Props> = ({
   isLoading,
@@ -21,7 +22,7 @@ export const TaskProfilePage: FC<Props> = ({
   handleAddComment,
   isLoadingComment,
 }) => {
-  const [section, setSection] = useState<"about" | "comments">("about");
+  const [section, setSection] = useState<"about" | "comments">("comments");
 
   if (isLoading) return <Skeleton active />;
 
@@ -77,6 +78,9 @@ export const TaskProfilePage: FC<Props> = ({
         ]}
       />
       {section === "about" && <TaskInfo task={task} />}
+      {section === "comments" && (
+        <CommentsList comments={task.comments || []} />
+      )}
     </Wrapper>
   );
 };
