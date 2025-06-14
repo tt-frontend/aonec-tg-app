@@ -5,7 +5,7 @@ import {
   Wrapper,
 } from "./InputCommentPanel.styled";
 import { Props } from "./InputCommentPanel.types";
-import { ChevronRight } from "react-bootstrap-icons";
+import { ChevronTop } from "@/components/icons/ChevronTop";
 
 export const InputCommentPanel: FC<Props> = ({
   isLoadingComment,
@@ -33,7 +33,7 @@ export const InputCommentPanel: FC<Props> = ({
           onSubmit();
         }}
       >
-        <ChevronRight color="white" />
+        <ChevronTop />
       </ChevronWrapper>
     </Wrapper>
   );

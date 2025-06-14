@@ -2,7 +2,6 @@ import { FC, useState } from "react";
 import {
   ButtonWrapper,
   CharacterisicWrapper,
-  FilesAttachCardHeader,
   NomenclatureName,
   RequestNumber,
   TitleWrapper,
@@ -12,10 +11,9 @@ import { Props } from "./TaskProfilePage.types";
 import { Button, Empty, Segmented, Skeleton } from "antd";
 import { TaskProgressPanel } from "./TaskProgressPanel";
 import { InputCommentPanel } from "./InputCommentPanel";
-import { Card } from "@/components/Card";
-import { PlusIcon } from "@/components/icons/PlusIcon";
 import { TaskInfo } from "./TaskInfo";
 import { CommentsList } from "./CommentsList";
+import { TaskFilesUpload } from "./TaskFilesUpload";
 
 export const TaskProfilePage: FC<Props> = ({
   isLoading,
@@ -61,22 +59,7 @@ export const TaskProfilePage: FC<Props> = ({
             </div>
           </CharacterisicWrapper>
         </TitleWrapper>
-        <Card
-          header={
-            <FilesAttachCardHeader>
-              <div>Акт</div>
-              <PlusIcon />
-            </FilesAttachCardHeader>
-          }
-        />
-        <Card
-          header={
-            <FilesAttachCardHeader>
-              <div>Фотографии</div>
-              <PlusIcon />
-            </FilesAttachCardHeader>
-          }
-        />
+        <TaskFilesUpload />
         <Segmented
           block
           size="large"

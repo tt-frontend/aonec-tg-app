@@ -8,7 +8,7 @@ import {
   TitleWrapper,
   Wrapper,
 } from "./ActionLink.styled";
-import { ChevronRight } from "react-bootstrap-icons";
+import { ChevronRight } from "../icons/ChevronRight";
 
 export const ActionLink: FC<ActionLinkProps> = ({
   title,
@@ -26,7 +26,7 @@ export const ActionLink: FC<ActionLinkProps> = ({
         {description && <Description>{description}</Description>}
       </TitleWrapper>
       <ChevronWrapper>
-        <ChevronRight color="white" />
+        <ChevronRight />
       </ChevronWrapper>
     </Wrapper>
   );
