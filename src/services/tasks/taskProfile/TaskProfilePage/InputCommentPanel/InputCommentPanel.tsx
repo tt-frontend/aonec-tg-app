@@ -1,7 +1,11 @@
 import { FC, useState } from "react";
-import { TextArea, Wrapper } from "./InputCommentPanel.styled";
+import {
+  ChevronWrapper,
+  CommentInput,
+  Wrapper,
+} from "./InputCommentPanel.styled";
 import { Props } from "./InputCommentPanel.types";
-import { Button } from "antd";
+import { ChevronRight } from "react-bootstrap-icons";
 
 export const InputCommentPanel: FC<Props> = ({
   isLoadingComment,
@@ -15,22 +19,22 @@ export const InputCommentPanel: FC<Props> = ({
   };
 
   return (
-    <Wrapper header="Комментарий">
-      <TextArea
+    <Wrapper>
+      <CommentInput
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Кратко опишите проделанную работу"
       />
-      {text && (
-        <Button
-          onClick={onSubmit}
-          block
-          loading={isLoadingComment}
-          disabled={isLoadingComment}
-        >
-          Отправить
-        </Button>
-      )}
+      <ChevronWrapper
+        disabled={isLoadingComment || !text}
+        onClick={() => {
+          if (isLoadingComment || !text) return;
+
+          onSubmit();
+        }}
+      >
+        <ChevronRight color="white" />
+      </ChevronWrapper>
     </Wrapper>
   );
 };

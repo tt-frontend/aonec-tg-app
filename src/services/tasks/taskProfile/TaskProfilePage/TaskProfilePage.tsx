@@ -24,7 +24,7 @@ export const TaskProfilePage: FC<Props> = ({
   isLoadingComment,
   handleDeleteComment,
 }) => {
-  const [section, setSection] = useState<"about" | "comments">("about");
+  const [section, setSection] = useState<"about" | "comments">("comments");
 
   if (isLoading && !task) return <Skeleton active />;
 
@@ -61,11 +61,6 @@ export const TaskProfilePage: FC<Props> = ({
             </div>
           </CharacterisicWrapper>
         </TitleWrapper>
-        <InputCommentPanel
-          task={task}
-          handleAddComment={handleAddComment}
-          isLoadingComment={isLoadingComment}
-        />
         <Card
           header={
             <FilesAttachCardHeader>
@@ -94,10 +89,17 @@ export const TaskProfilePage: FC<Props> = ({
         />
         {section === "about" && <TaskInfo task={task} />}
         {section === "comments" && (
-          <CommentsList
-            comments={task.comments || []}
-            handleDeleteComment={handleDeleteComment}
-          />
+          <>
+            <CommentsList
+              comments={task.comments || []}
+              handleDeleteComment={handleDeleteComment}
+            />
+            <InputCommentPanel
+              task={task}
+              handleAddComment={handleAddComment}
+              isLoadingComment={isLoadingComment}
+            />
+          </>
         )}
       </Wrapper>
     </>
