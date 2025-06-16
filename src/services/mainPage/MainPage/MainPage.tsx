@@ -2,12 +2,12 @@ import { FC } from "react";
 import { Content, Header, HeaderWrapper, Wrapper } from "./MainPage.styled";
 import { Props } from "./MainPage.types";
 import { Avatar, Skeleton } from "antd";
-import { ChevronRight } from "react-bootstrap-icons";
 import { Title } from "@/components/Title";
 import { SpaceLine } from "@/components/SpaceLine";
 import { ActionLink } from "@/components/ActionLink";
 import { Space } from "antd/lib";
 import stc from "string-to-color";
+import { ChevronRight } from "@/components/icons/ChevronRight";
 
 export const MainPage: FC<Props> = ({
   logoutUser,
