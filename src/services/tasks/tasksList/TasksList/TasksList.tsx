@@ -7,7 +7,6 @@ import {
 } from "./TasksList.styled";
 import { Props } from "./TasksList.types";
 import { Title } from "@/components/Title";
-import { Funnel, Search } from "react-bootstrap-icons";
 import { Segmented, Skeleton } from "antd";
 import { FiltersPanel } from "./FiltersPanel";
 import { TaskItem } from "./TaskItem";
@@ -33,10 +32,10 @@ export const TasksList: FC<Props> = ({ tasksListPagedList, isLoading }) => {
           Активные задачи
           <ButtonsWrapper>
             <SearchButtonWrapper>
-              <Search />
+              {/* <Search /> */}
             </SearchButtonWrapper>
             <SearchButtonWrapper onClick={() => setIsFilterOpen(true)}>
-              <Funnel />
+              {/* <Funnel /> */}
             </SearchButtonWrapper>
           </ButtonsWrapper>
         </Title>
