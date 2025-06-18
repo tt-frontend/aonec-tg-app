@@ -25,6 +25,7 @@ export const TaskProfileContainer = () => {
     handleAddComment,
     isLoadingComment,
     handleDeleteComment,
+    handleFile,
   } = useUnit({
     task: taskQuery.$data,
     isLoading: taskQuery.$pending,
@@ -58,7 +59,7 @@ export const TaskProfileContainer = () => {
           handleDeleteComment([Number(id), commentId])
         }
         isLoadingComment={isLoadingComment}
-        handleFile={() => {}}
+        handleFile={handleFile}
       />
     </>
   );
