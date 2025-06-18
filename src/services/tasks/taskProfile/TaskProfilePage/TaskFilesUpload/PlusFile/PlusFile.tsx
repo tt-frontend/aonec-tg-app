@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useRef } from "react";
 import { Wrapper } from "./PlusFile.styled";
 import { Props } from "./PlusFile.types";
 import { PlusIcon } from "@/components/icons/PlusIcon";
@@ -6,12 +6,18 @@ import { PlusIcon } from "@/components/icons/PlusIcon";
 export const PlusFile: FC<Props> = ({ uniqId, accept, fileHandler }) => {
   const id = `file-input-${uniqId}`;
 
-  const handleFile = (files: FileList) => {
-    fileHandler(files);
+  const inputFileRef = useRef<HTMLInputElement | null>(null);
+
+  const handleClick = () => {
+    if (inputFileRef.current) {
+      inputFileRef.current.click();
+    }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) handleFile(event.target.files);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+
+    if (files) fileHandler(files);
   };
 
   return (
@@ -19,18 +25,15 @@ export const PlusFile: FC<Props> = ({ uniqId, accept, fileHandler }) => {
       <input
         id={id}
         type="file"
-        name="file"
-        multiple={false}
-        value=""
-        onChange={handleChange}
+        ref={inputFileRef}
         style={{ display: "none" }}
         accept={accept}
+        onChange={handleFileChange}
       />
-      <label htmlFor={id} style={{ margin: 0 }}>
-        <Wrapper>
-          <PlusIcon />
-        </Wrapper>
-      </label>
+
+      <Wrapper onClick={handleClick}>
+        <PlusIcon />
+      </Wrapper>
     </>
   );
 };

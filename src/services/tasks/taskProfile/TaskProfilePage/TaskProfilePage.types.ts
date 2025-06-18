@@ -1,4 +1,5 @@
 import { CommentRequest, ProductionOrderResponse } from "@/api/types";
+import { UploadFileRequestPayload } from "@/services/filesUpload/filesUploadService.types";
 
 export type Props = {
   task: ProductionOrderResponse | null;
@@ -6,4 +7,5 @@ export type Props = {
   handleAddComment: (payload: CommentRequest) => void;
   isLoadingComment: boolean;
   handleDeleteComment: (commentId: number) => void;
+  handleFile(payload: UploadFileRequestPayload): void;
 };

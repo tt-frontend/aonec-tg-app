@@ -217,6 +217,11 @@ export interface ProblemDetails {
   [key: string]: any;
 }
 
+export interface ProductionOrderDocumentLinkRequest {
+  /** @format int32 */
+  id?: number;
+}
+
 /** Облегченная модель наряд-заданий, используемая в списках */
 export interface ProductionOrderListResponse {
   /**
@@ -267,6 +272,8 @@ export interface ProductionOrderListResponsePagedList {
 
 /** Ответ API для получения полной информации о наряд-задании */
 export interface ProductionOrderResponse {
+  /** @format int32 */
+  id?: number;
   documents?: DocumentResponse[] | null;
   /** Облегченная модель исполнителя */
   executor?: ExecutorLiteResponse | null;
@@ -283,6 +290,7 @@ export interface ProductionOrderResponse {
   /** @format date-time */
   creationTime?: string;
   requestNumber?: string | null;
+  description?: string | null;
   /** @format double */
   amount?: number;
 }
@@ -986,6 +994,29 @@ export class Api<
         path: `/api/ProductionOrders/${productionOrderId}/complete`,
         method: "POST",
         secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags ProductionOrders
+     * @name ProductionOrdersDocumentsCreate
+     * @summary Прикрепить документ к наряд-заданию
+     * @request POST:/api/ProductionOrders/{productionOrderId}/documents
+     * @secure
+     */
+    productionOrdersDocumentsCreate: (
+      productionOrderId: number,
+      data: ProductionOrderDocumentLinkRequest,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, ErrorApiResponse>({
+        path: `/api/ProductionOrders/${productionOrderId}/documents`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         ...params,
       }),
 

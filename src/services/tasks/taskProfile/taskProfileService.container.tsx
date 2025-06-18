@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import useMessage from "antd/es/message/useMessage";
 
 const {
+  inputs,
   gates: { TaskProfileGate },
 } = taskProfileService;
 
@@ -30,6 +31,7 @@ export const TaskProfileContainer = () => {
     handleAddComment: addCommnetMutation.start,
     isLoadingComment: addCommnetMutation.$pending,
     handleDeleteComment: deleteCommentMutation.start,
+    handleFile: inputs.handleFile,
   });
 
   useEffect(() => {
@@ -56,6 +58,7 @@ export const TaskProfileContainer = () => {
           handleDeleteComment([Number(id), commentId])
         }
         isLoadingComment={isLoadingComment}
+        handleFile={() => {}}
       />
     </>
   );
