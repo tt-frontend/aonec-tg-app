@@ -22,6 +22,7 @@ export const TaskProfilePage: FC<Props> = ({
   isLoadingComment,
   handleDeleteComment,
   handleFile,
+  handleDeleteDocument,
 }) => {
   const [section, setSection] = useState<"about" | "comments">("comments");
 
@@ -60,7 +61,11 @@ export const TaskProfilePage: FC<Props> = ({
             </div>
           </CharacterisicWrapper>
         </TitleWrapper>
-        <TaskFilesUpload documents={task.documents} handleFile={handleFile} />
+        <TaskFilesUpload
+          documents={task.documents}
+          handleFile={handleFile}
+          handleDeleteDocument={handleDeleteDocument}
+        />
         <Segmented
           block
           size="large"

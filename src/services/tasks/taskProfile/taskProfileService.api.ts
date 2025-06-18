@@ -32,3 +32,10 @@ export const addDocumentMutation = createMutation<
   handler: ({ taskId, ...data }) =>
     axios.post(`/ProductionOrders/${taskId}/documents`, data),
 });
+
+export const deleteDocumentMutation = createMutation<[number, number], void>({
+  handler: ([productionOrderId, documentId]) =>
+    api.delete(
+      `/ProductionOrders/${productionOrderId}/documents/${documentId}`
+    ),
+});

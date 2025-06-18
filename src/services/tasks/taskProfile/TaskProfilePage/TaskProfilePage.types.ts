@@ -8,4 +8,5 @@ export type Props = {
   isLoadingComment: boolean;
   handleDeleteComment: (commentId: number) => void;
   handleFile(payload: UploadFileRequestPayload): void;
+  handleDeleteDocument: (documentId: number) => void;
 };

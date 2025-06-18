@@ -5,6 +5,7 @@ import { useUnit } from "effector-react";
 import {
   addCommnetMutation,
   deleteCommentMutation,
+  deleteDocumentMutation,
   taskQuery,
 } from "./taskProfileService.api";
 import { useEffect } from "react";
@@ -26,6 +27,7 @@ export const TaskProfileContainer = () => {
     isLoadingComment,
     handleDeleteComment,
     handleFile,
+    handleDeleteDocument,
   } = useUnit({
     task: taskQuery.$data,
     isLoading: taskQuery.$pending,
@@ -33,6 +35,7 @@ export const TaskProfileContainer = () => {
     isLoadingComment: addCommnetMutation.$pending,
     handleDeleteComment: deleteCommentMutation.start,
     handleFile: inputs.handleFile,
+    handleDeleteDocument: deleteDocumentMutation.start,
   });
 
   useEffect(() => {
@@ -60,6 +63,9 @@ export const TaskProfileContainer = () => {
         }
         isLoadingComment={isLoadingComment}
         handleFile={handleFile}
+        handleDeleteDocument={(documentId) =>
+          handleDeleteDocument([Number(id), documentId])
+        }
       />
     </>
   );

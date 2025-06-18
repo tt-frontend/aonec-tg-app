@@ -33,12 +33,6 @@ export const CharacterisicWrapper = styled.div`
   font-weight: 300;
 `;
 
-export const FilesAttachCardHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
 export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;

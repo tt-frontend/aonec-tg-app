@@ -1,16 +1,34 @@
 import { FC } from "react";
 import { Props } from "./TaskFilesUpload.types";
 import { Card } from "@/components/Card";
-import { FilesAttachCardHeader } from "../TaskProfilePage.styled";
 import { PlusFile } from "./PlusFile";
 import { EDocumentType } from "@/api/types";
-import { DocumentItem } from "./TaskFilesUpload.styled";
+import {
+  DocumentItem,
+  DocumentName,
+  FilesAttachCardHeader,
+  ImageItem,
+  ImagesList,
+} from "./TaskFilesUpload.styled";
+import { ClipIcon } from "@/components/icons/ClipIcon";
+import { XIcon } from "@/components/icons/XIcon";
+import { XWhiteIcon } from "@/components/icons/XWhiteIcon";
 
-export const TaskFilesUpload: FC<Props> = ({ handleFile, documents }) => {
+export const TaskFilesUpload: FC<Props> = ({
+  handleFile,
+  documents,
+  handleDeleteDocument,
+}) => {
   const actsList = documents?.filter((doc) => doc.type === EDocumentType.Act);
-  // const photosList = documents?.filter(
-  //   (doc) => doc.type === EDocumentType.Photo
-  // );
+  const photosList = documents?.filter(
+    (doc) => doc.type === EDocumentType.Photo
+  );
+
+  const onDeleteDocument = (documentId: number) => {
+    if (!confirm("Удалить файл?")) return;
+
+    handleDeleteDocument(documentId);
+  };
 
   return (
     <>
@@ -27,12 +45,19 @@ export const TaskFilesUpload: FC<Props> = ({ handleFile, documents }) => {
                 });
               }}
             />
-            {actsList?.map((doc) => (
-              <DocumentItem key={doc.id}>{doc.name}</DocumentItem>
-            ))}
           </FilesAttachCardHeader>
         }
-      />
+      >
+        {actsList?.map((doc) => (
+          <DocumentItem key={doc.id}>
+            <ClipIcon />
+            <DocumentName>{doc.name}</DocumentName>
+            <span onClick={() => onDeleteDocument(doc.id!)}>
+              <XIcon />
+            </span>
+          </DocumentItem>
+        ))}
+      </Card>
       <Card
         header={
           <FilesAttachCardHeader>
@@ -49,7 +74,17 @@ export const TaskFilesUpload: FC<Props> = ({ handleFile, documents }) => {
             />
           </FilesAttachCardHeader>
         }
-      />
+      >
+        <ImagesList>
+          {photosList?.map((doc) => (
+            <ImageItem key={doc.id} url={doc.url!}>
+              <span onClick={() => onDeleteDocument(doc.id!)}>
+                <XWhiteIcon />
+              </span>
+            </ImageItem>
+          ))}
+        </ImagesList>
+      </Card>
     </>
   );
 };

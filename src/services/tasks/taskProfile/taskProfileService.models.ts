@@ -4,6 +4,7 @@ import {
   addCommnetMutation,
   addDocumentMutation,
   deleteCommentMutation,
+  deleteDocumentMutation,
   taskQuery,
 } from "./taskProfileService.api";
 import { UploadFileRequestPayload } from "@/services/filesUpload/filesUploadService.types";
@@ -15,7 +16,11 @@ const handleSavedFile = createEvent<number | null>();
 
 sample({
   source: TaskProfileGate.state,
-  clock: [TaskProfileGate.open, addDocumentMutation.finished.success],
+  clock: [
+    TaskProfileGate.open,
+    addDocumentMutation.finished.success,
+    deleteDocumentMutation.finished.success,
+  ],
   fn: ({ id }) => id,
   target: taskQuery.start,
 });

@@ -4,4 +4,5 @@ import { UploadFileRequestPayload } from "@/services/filesUpload/filesUploadServ
 export type Props = {
   handleFile(payload: UploadFileRequestPayload): void;
   documents?: DocumentResponse[] | null;
+  handleDeleteDocument: (documentId: number) => void;
 };
