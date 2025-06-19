@@ -4,11 +4,12 @@ import { excludedRoutes } from "./backButtonService.constants";
 import { backButtonService } from "./backButtonService.model";
 import { useUnit } from "effector-react";
 
-const { inputs } = backButtonService;
+const { inputs, outputs } = backButtonService;
 
 export function useBackButton() {
-  const { handleBack } = useUnit({
+  const { handleBack, goBackHandler } = useUnit({
     handleBack: inputs.handleBack,
+    goBackHandler: outputs.$goBackHandler,
   });
 
   const location = useLocation();
@@ -25,8 +26,10 @@ export function useBackButton() {
   }, [location.pathname, backButton]);
 
   useEffect(() => {
-    return inputs.goBack.watch(() => navigate(-1)).unsubscribe;
-  }, [navigate]);
+    return inputs.goBack.watch(() => {
+      if (!goBackHandler) navigate(-1);
+    }).unsubscribe;
+  }, [navigate, goBackHandler]);
 
   useEffect(() => {
     backButton.onClick(handleBack);

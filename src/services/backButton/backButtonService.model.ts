@@ -21,4 +21,5 @@ sample({
 
 export const backButtonService = {
   inputs: { handleBack, goBack, setGoBackHandler },
+  outputs: { $goBackHandler },
 };

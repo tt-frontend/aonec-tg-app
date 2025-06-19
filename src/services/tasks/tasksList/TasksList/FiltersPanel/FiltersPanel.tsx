@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import {
   ButtonsWrapper,
   Content,
@@ -9,8 +9,22 @@ import { Props } from "./FiltersPanel.types";
 import { Title } from "@/components/Title";
 import { Button, DatePicker, Select } from "antd";
 import { FormItem } from "@/components/FormItem";
+import { useUnit } from "effector-react";
+import { backButtonService } from "@/services/backButton/backButtonService.model";
 
-export const FiltersPanel: FC<Props> = ({ handleApply }) => {
+export const FiltersPanel: FC<Props> = ({ handleApply, handleCancel }) => {
+  const { setGoBackHandler } = useUnit({
+    setGoBackHandler: backButtonService.inputs.setGoBackHandler,
+  });
+
+  useEffect(() => {
+    setGoBackHandler(handleCancel);
+
+    return () => {
+      setGoBackHandler(null);
+    };
+  }, [handleCancel, setGoBackHandler]);
+
   return (
     <Wrapper>
       <Content>
