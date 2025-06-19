@@ -18,3 +18,7 @@ export const uploadFileMutation = createMutation<
     return api.post(`/Documents/upload`, formData);
   },
 });
+
+export const deleteFileMutation = createMutation<number, void>({
+  handler: (id: number) => api.delete(`/Documents/${id}`),
+});

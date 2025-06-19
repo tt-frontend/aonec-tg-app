@@ -9,6 +9,7 @@ import {
 } from "./taskProfileService.api";
 import { UploadFileRequestPayload } from "@/services/filesUpload/filesUploadService.types";
 import { uploadFileMutation } from "@/services/filesUpload";
+import { deleteFileMutation } from "@/services/filesUpload/filesUploadService.api";
 
 const TaskProfileGate = createGate<{ id: number }>();
 const handleFile = createEvent<UploadFileRequestPayload>();
@@ -57,6 +58,14 @@ sample({
     id: fileId!,
   }),
   target: addDocumentMutation.start,
+});
+
+sample({
+  clock: deleteDocumentMutation.finished.success,
+  fn({ params: [, documentId] }) {
+    return documentId;
+  },
+  target: deleteFileMutation.start,
 });
 
 export const taskProfileService = {
