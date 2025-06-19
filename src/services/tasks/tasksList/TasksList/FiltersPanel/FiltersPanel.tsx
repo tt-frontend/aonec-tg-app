@@ -60,10 +60,22 @@ export const FiltersPanel: FC<Props> = ({ handleApply, handleCancel }) => {
         </FormItem>
       </Content>
       <ButtonsWrapper>
-        <Button size="large" type="primary" block onClick={handleApply}>
+        <Button
+          style={{ height: 64 }}
+          size="large"
+          type="primary"
+          block
+          onClick={handleApply}
+        >
           Применить
         </Button>
-        <Button size="large" type="default" block onClick={handleApply}>
+        <Button
+          style={{ height: 64 }}
+          size="large"
+          type="default"
+          block
+          onClick={handleCancel}
+        >
           Сбросить фильтры
         </Button>
       </ButtonsWrapper>

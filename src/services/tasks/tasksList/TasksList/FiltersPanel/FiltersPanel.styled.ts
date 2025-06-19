@@ -20,12 +20,11 @@ export const Content = styled.div`
 export const ButtonsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
   border-top: 1px solid lightgray;
   position: absolute;
   bottom: 0;
-  width: calc(100% - 32px);
-  padding: 16px;
+  width: 100%;
+  padding: 0px;
 `;
 
 export const InputWrapper = styled.div`

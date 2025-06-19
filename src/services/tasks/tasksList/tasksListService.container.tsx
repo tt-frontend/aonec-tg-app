@@ -8,9 +8,11 @@ const {
 } = tasksListService;
 
 export const TasksListContainer = () => {
-  const { tasksListPagedList, isLoading } = useUnit({
+  const { tasksListPagedList, isLoading, filters, setTasksListFilters } = useUnit({
     tasksListPagedList: tasksListQuery.$data,
     isLoading: tasksListQuery.$pending,
+    filters: tasksListService.outputs.$tasksListFilters,
+    setTasksListFilters: tasksListService.inputs.setTasksListFilters,
   });
 
   return (
@@ -19,6 +21,8 @@ export const TasksListContainer = () => {
       <TasksList
         tasksListPagedList={tasksListPagedList}
         isLoading={isLoading}
+        setTasksListFilters={setTasksListFilters}
+        filters={filters}
       />
     </>
   );
