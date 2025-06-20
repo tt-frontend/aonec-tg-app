@@ -1,4 +1,9 @@
-import { ProductionOrderListResponsePagedList } from "@/api/types";
+import {
+  ContractListResponsePagedList,
+  NomenclatureListResponse,
+  ProductionOrderListResponsePagedList,
+  StringPagedList,
+} from "@/api/types";
 import { GetTasksListQueryParams } from "../tasksListService.types";
 
 export type Props = {
@@ -6,4 +11,8 @@ export type Props = {
   isLoading: boolean;
   setTasksListFilters: (filters: GetTasksListQueryParams) => void;
   filters: GetTasksListQueryParams;
+  nomenclatures: NomenclatureListResponse[] | null;
+  customers: StringPagedList | null;
+  contracts: ContractListResponsePagedList | null;
+  executingContracts: ContractListResponsePagedList | null;
 };

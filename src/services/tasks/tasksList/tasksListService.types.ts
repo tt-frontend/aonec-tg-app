@@ -23,3 +23,28 @@ export type GetTasksListQueryParams = {
   PageSize?: number;
   OrderBy?: EOrderByRule;
 };
+
+export type GetContractorsCustomersQueryParams = {
+  CustomerName?: string;
+  /** @format int32 */
+  PageNumber?: number;
+  /** @format int32 */
+  PageSize?: number;
+  OrderBy?: EOrderByRule;
+};
+
+export type GetContractsQueryParams = {
+  /** @format int32 */
+  PageNumber?: number;
+  /** @format int32 */
+  PageSize?: number;
+  OrderBy?: EOrderByRule;
+};
+
+export type GetExecutingContractsQueryParams = {
+  /** @format int32 */
+  PageNumber?: number;
+  /** @format int32 */
+  PageSize?: number;
+  OrderBy?: EOrderByRule;
+};

@@ -13,7 +13,16 @@ import { TaskItem } from "./TaskItem";
 import { SearchIcon } from "@/components/icons/SearchIcon";
 import { FilterIcon } from "@/components/icons/FilterIcon";
 
-export const TasksList: FC<Props> = ({ tasksListPagedList, isLoading }) => {
+export const TasksList: FC<Props> = ({
+  tasksListPagedList,
+  isLoading,
+  nomenclatures,
+  customers,
+  contracts,
+  executingContracts,
+  filters,
+  setTasksListFilters,
+}) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => {
@@ -30,6 +39,12 @@ export const TasksList: FC<Props> = ({ tasksListPagedList, isLoading }) => {
         <FiltersPanel
           handleApply={() => setIsFilterOpen(false)}
           handleCancel={() => setIsFilterOpen(false)}
+          nomenclatures={nomenclatures}
+          customers={customers}
+          contracts={contracts}
+          executingContracts={executingContracts}
+          filters={filters}
+          setTasksListFilters={setTasksListFilters}
         />
       )}
       <Wrapper>
