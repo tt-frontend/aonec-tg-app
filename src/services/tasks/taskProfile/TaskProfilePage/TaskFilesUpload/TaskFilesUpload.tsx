@@ -18,6 +18,7 @@ export const TaskFilesUpload: FC<Props> = ({
   handleFile,
   documents,
   handleDeleteDocument,
+  isLoadingUploadFile,
 }) => {
   const actsList = documents?.filter((doc) => doc.type === EDocumentType.Act);
   const photosList = documents?.filter(
@@ -37,8 +38,11 @@ export const TaskFilesUpload: FC<Props> = ({
           <FilesAttachCardHeader>
             <div>Акт</div>
             <PlusFile
+              isLoading={isLoadingUploadFile}
               uniqId="task-act-add"
               fileHandler={(files) => {
+                if (isLoadingUploadFile) return;
+
                 handleFile({
                   file: Array.from(files),
                   type: EDocumentType.Act,
@@ -63,9 +67,12 @@ export const TaskFilesUpload: FC<Props> = ({
           <FilesAttachCardHeader>
             <div>Фотографии</div>
             <PlusFile
+              isLoading={isLoadingUploadFile}
               uniqId="task-photo-add"
               accept="image/*"
               fileHandler={(files) => {
+                if (isLoadingUploadFile) return;
+
                 handleFile({
                   file: Array.from(files),
                   type: EDocumentType.Photo,

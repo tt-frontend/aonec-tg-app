@@ -2,8 +2,14 @@ import { FC, useRef } from "react";
 import { Wrapper } from "./PlusFile.styled";
 import { Props } from "./PlusFile.types";
 import { PlusIcon } from "@/components/icons/PlusIcon";
+import { Spin } from "antd";
 
-export const PlusFile: FC<Props> = ({ uniqId, accept, fileHandler }) => {
+export const PlusFile: FC<Props> = ({
+  uniqId,
+  accept,
+  fileHandler,
+  isLoading,
+}) => {
   const id = `file-input-${uniqId}`;
 
   const inputFileRef = useRef<HTMLInputElement | null>(null);
@@ -32,7 +38,9 @@ export const PlusFile: FC<Props> = ({ uniqId, accept, fileHandler }) => {
       />
 
       <Wrapper onClick={handleClick}>
-        <PlusIcon />
+        {!isLoading && <PlusIcon />}
+        {}
+        {isLoading && <Spin />}
       </Wrapper>
     </>
   );

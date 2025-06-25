@@ -23,6 +23,7 @@ export const TaskProfilePage: FC<Props> = ({
   handleDeleteComment,
   handleFile,
   handleDeleteDocument,
+  isLoadingUploadFile,
 }) => {
   const [section, setSection] = useState<"about" | "comments">("comments");
 
@@ -65,6 +66,7 @@ export const TaskProfilePage: FC<Props> = ({
           documents={task.documents}
           handleFile={handleFile}
           handleDeleteDocument={handleDeleteDocument}
+          isLoadingUploadFile={isLoadingUploadFile}
         />
         <Segmented
           block

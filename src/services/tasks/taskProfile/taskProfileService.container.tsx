@@ -10,6 +10,7 @@ import {
 } from "./taskProfileService.api";
 import { useEffect } from "react";
 import useMessage from "antd/es/message/useMessage";
+import { uploadFileMutation } from "@/services/filesUpload";
 
 const {
   inputs,
@@ -28,6 +29,7 @@ export const TaskProfileContainer = () => {
     handleDeleteComment,
     handleFile,
     handleDeleteDocument,
+    isLoadingUploadFile,
   } = useUnit({
     task: taskQuery.$data,
     isLoading: taskQuery.$pending,
@@ -36,6 +38,7 @@ export const TaskProfileContainer = () => {
     handleDeleteComment: deleteCommentMutation.start,
     handleFile: inputs.handleFile,
     handleDeleteDocument: deleteDocumentMutation.start,
+    isLoadingUploadFile: uploadFileMutation.$pending,
   });
 
   useEffect(() => {
@@ -66,6 +69,7 @@ export const TaskProfileContainer = () => {
         handleDeleteDocument={(documentId) =>
           handleDeleteDocument([Number(id), documentId])
         }
+        isLoadingUploadFile={isLoadingUploadFile}
       />
     </>
   );
