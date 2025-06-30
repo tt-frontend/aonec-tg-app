@@ -43,32 +43,6 @@ export const TaskInfo: FC<Props> = ({ task }) => {
           ]}
         />
       </Card>
-
-      {/* <Card lable="Работы">
-        <CommonInfo
-          items={[
-            {
-              key: "Номенклатура работ",
-              value: task.outputMaterials
-                ?.map((elem) => elem.nomenclature?.name)
-                .join(", "),
-            },
-
-            {
-              key: "Единица хранения используемых материалов",
-              value: task.outputMaterials?.map((elem) => elem.units).join(", "),
-            },
-            {
-              key: "Характеристика работ",
-              value: task.characteristic?.name,
-            },
-            {
-              key: "Количество работ",
-              value: task.amount,
-            },
-          ]}
-        />
-      </Card> */}
     </>
   );
 };
