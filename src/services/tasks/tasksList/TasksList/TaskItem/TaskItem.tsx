@@ -53,7 +53,6 @@ export const TaskItem: FC<Props> = ({ task }) => {
   return (
     <Wrapper to={`/tasks/${task.id}`}>
       <RequestNumber>№{task.requestNumber}</RequestNumber>
-      {/* <MaterialsList> */}
       {task.outputMaterials?.map((elem) => (
         <>
           <NomenclatureName>{elem.nomenclature?.name}</NomenclatureName>
@@ -65,7 +64,6 @@ export const TaskItem: FC<Props> = ({ task }) => {
           </CharacterisicWrapper>
         </>
       ))}
-      {/* </MaterialsList> */}
       <Progress
         percent={percent}
         size="small"
