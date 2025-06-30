@@ -48,10 +48,10 @@ export const MainPage: FC<Props> = ({
           description={tasksCount}
           statusColor="#34C759"
         />
-        <ActionLink path="/" title="В архиве" statusColor="#999999" />
+        {/* <ActionLink path="/" title="В архиве" statusColor="#999999" />
         <SpaceLine />
         <Title>Объекты</Title>
-        <ActionLink path="/" title="Посмотреть все объекты" />
+        <ActionLink path="/" title="Посмотреть все объекты" /> */}
         <SpaceLine />
         <div onClick={logoutUser}>
           <ActionLink path="/" title="Выйти" />

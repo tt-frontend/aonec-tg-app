@@ -28,7 +28,7 @@ export const TaskInfo: FC<Props> = ({ task }) => {
 
             {
               key: "Договор с исполнителем",
-              value: task.executionContract?.id,
+              value: `${task.contract?.name} ${task.contract?.type} (${task.contract?.id})`,
             },
             {
               key: "Нормативный срок задания",
@@ -44,17 +44,19 @@ export const TaskInfo: FC<Props> = ({ task }) => {
         />
       </Card>
 
-      <Card lable="Работы">
+      {/* <Card lable="Работы">
         <CommonInfo
           items={[
             {
               key: "Номенклатура работ",
-              value: task.nomenclature?.name,
+              value: task.outputMaterials
+                ?.map((elem) => elem.nomenclature?.name)
+                .join(", "),
             },
 
             {
               key: "Единица хранения используемых материалов",
-              value: task.nomenclature?.units,
+              value: task.outputMaterials?.map((elem) => elem.units).join(", "),
             },
             {
               key: "Характеристика работ",
@@ -66,7 +68,7 @@ export const TaskInfo: FC<Props> = ({ task }) => {
             },
           ]}
         />
-      </Card>
+      </Card> */}
     </>
   );
 };

@@ -14,7 +14,10 @@ import { Progress } from "antd";
 import dayjs from "dayjs";
 import { DateIcon } from "@/components/icons/DateIcon";
 import { FinishIcon } from "@/components/icons/FinishIcon";
-import { getDateProgressBarPercent, getProgressBarColor } from "@/utils/dateDiffs";
+import {
+  getDateProgressBarPercent,
+  getProgressBarColor,
+} from "@/utils/dateDiffs";
 
 export const TaskItem: FC<Props> = ({ task }) => {
   const percent = getDateProgressBarPercent(
@@ -50,14 +53,19 @@ export const TaskItem: FC<Props> = ({ task }) => {
   return (
     <Wrapper to={`/tasks/${task.id}`}>
       <RequestNumber>№{task.requestNumber}</RequestNumber>
-      <NomenclatureName>{task.nomenclature?.name}</NomenclatureName>
-      <CharacterisicWrapper>
-        <div>{task.characteristic?.name}</div>
-        <div>
-          {task.amount}
-          {task.nomenclature?.units}
-        </div>
-      </CharacterisicWrapper>
+      {/* <MaterialsList> */}
+      {task.outputMaterials?.map((elem) => (
+        <>
+          <NomenclatureName>{elem.nomenclature?.name}</NomenclatureName>
+          <CharacterisicWrapper>
+            <div>{elem.characteristic?.name}</div>
+            <div>
+              {elem.amount} {elem.units}
+            </div>
+          </CharacterisicWrapper>
+        </>
+      ))}
+      {/* </MaterialsList> */}
       <Progress
         percent={percent}
         size="small"

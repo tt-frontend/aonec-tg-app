@@ -1,8 +1,6 @@
 import { FC, useState } from "react";
 import {
   ButtonWrapper,
-  CharacterisicWrapper,
-  NomenclatureName,
   RequestNumber,
   TitleWrapper,
   Wrapper,
@@ -53,14 +51,14 @@ export const TaskProfilePage: FC<Props> = ({
         <TaskProgressPanel task={task} />
         <TitleWrapper>
           <RequestNumber>№{task.requestNumber}</RequestNumber>
-          <NomenclatureName>{task.nomenclature?.name}</NomenclatureName>
+          {/* <NomenclatureName>{task.nomenclature?.name}</NomenclatureName>
           <CharacterisicWrapper>
             <div>{task.characteristic?.name}</div>
             <div>
-              {task.amount}
+              {task.outputMaterials.amount}
               {task.nomenclature?.units}
             </div>
-          </CharacterisicWrapper>
+          </CharacterisicWrapper> */}
         </TitleWrapper>
         <TaskFilesUpload
           documents={task.documents}

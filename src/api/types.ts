@@ -203,7 +203,14 @@ export interface NomenclatureResponse {
   id?: number;
   /** Наименование */
   name?: string | null;
-  /** Единицы измерения */
+}
+
+export interface OutputMaterialResponse {
+  /** Ответ API для номенклатура */
+  nomenclature?: NomenclatureResponse | null;
+  characteristic?: CharacteristicResponse | null;
+  /** @format double */
+  amount?: number;
   units?: string | null;
 }
 
@@ -229,8 +236,6 @@ export interface ProductionOrderListResponse {
    * @format int32
    */
   id?: number;
-  /** Номенклатура */
-  nomenclature?: NomenclatureResponse | null;
   /**
    * Дата начала
    * @format date-time
@@ -245,11 +250,7 @@ export interface ProductionOrderListResponse {
   characteristic?: CharacteristicResponse | null;
   /** Номер наряд-задания */
   requestNumber?: string | null;
-  /**
-   * Количество
-   * @format double
-   */
-  amount?: number;
+  outputMaterials?: OutputMaterialResponse[] | null;
 }
 
 export interface ProductionOrderListResponsePagedList {
@@ -277,11 +278,7 @@ export interface ProductionOrderResponse {
   documents?: DocumentResponse[] | null;
   /** Облегченная модель исполнителя */
   executor?: ExecutorLiteResponse | null;
-  /** Ответ API для номенклатура */
-  nomenclature?: NomenclatureResponse | null;
-  characteristic?: CharacteristicResponse | null;
   comments?: CommentResponse[] | null;
-  executionContract?: ContractResponse | null;
   contract?: ContractResponse | null;
   /** @format date-time */
   normativeCompletionDate?: string;
@@ -291,8 +288,7 @@ export interface ProductionOrderResponse {
   creationTime?: string;
   requestNumber?: string | null;
   description?: string | null;
-  /** @format double */
-  amount?: number;
+  outputMaterials?: OutputMaterialResponse[] | null;
 }
 
 /** Ответ обновления JWT-токена */
@@ -935,8 +931,6 @@ export class Api<
         GroupType?: ProductionOrderGroupingFilter;
         /** @format int32 */
         ContractId?: number;
-        /** @format int32 */
-        ExecutionContractId?: number;
         Customer?: string;
         /** Тип сортировки наряд-заданий */
         OrderRule?: EProductionOrderOrderRule;
