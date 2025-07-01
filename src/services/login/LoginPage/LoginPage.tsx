@@ -51,7 +51,7 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
           onClick={() =>
             handleLogin({
               phoneNumber: "89598229833",
-              name: "Самураев Сегун Николаевич",
+              name: "Николай Николаевич Николаев",
             })
           }
           loading={isLoading}

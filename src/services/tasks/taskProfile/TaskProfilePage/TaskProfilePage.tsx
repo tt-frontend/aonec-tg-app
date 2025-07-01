@@ -25,7 +25,7 @@ export const TaskProfilePage: FC<Props> = ({
   handleDeleteDocument,
   isLoadingUploadFile,
 }) => {
-  const [section, setSection] = useState<"about" | "comments">("comments");
+  const [section, setSection] = useState<"about" | "comments">("about");
 
   if (isLoading && !task) return <Skeleton active />;
 
