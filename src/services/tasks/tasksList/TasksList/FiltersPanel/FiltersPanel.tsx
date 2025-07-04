@@ -21,13 +21,14 @@ export const FiltersPanel: FC<Props> = ({
   characteristics,
   filters,
   setTasksListFilters,
+  handleClose,
 }) => {
   const { setGoBackHandler } = useUnit({
     setGoBackHandler: backButtonService.inputs.setGoBackHandler,
   });
 
   useEffect(() => {
-    setGoBackHandler(handleCancel);
+    setGoBackHandler(handleClose);
 
     return () => {
       setGoBackHandler(null);

@@ -11,6 +11,7 @@ import {
 } from "./tasksListService.api";
 
 const {
+  inputs,
   gates: { TasksListGate },
 } = tasksListService;
 
@@ -25,6 +26,7 @@ export const TasksListContainer = () => {
     contracts,
     executingContracts,
     characteristics,
+    resetFilters,
   } = useUnit({
     tasksListPagedList: tasksListQuery.$data,
     isLoading: tasksListQuery.$pending,
@@ -35,6 +37,7 @@ export const TasksListContainer = () => {
     contracts: contractsListQuery.$data,
     executingContracts: executingContractsListQuery.$data,
     characteristics: nomenclatureCharacteristicsQuery.$data,
+    resetFilters: inputs.resetFilters,
   });
 
   return (
@@ -50,6 +53,7 @@ export const TasksListContainer = () => {
         contracts={contracts}
         executingContracts={executingContracts}
         characteristics={characteristics}
+        resetFilters={resetFilters}
       />
     </>
   );

@@ -16,4 +16,5 @@ export type Props = {
   contracts: ContractListResponsePagedList | null;
   executingContracts: ContractListResponsePagedList | null;
   characteristics: CharacteristicResponse[] | null;
+  handleClose: () => void;
 };

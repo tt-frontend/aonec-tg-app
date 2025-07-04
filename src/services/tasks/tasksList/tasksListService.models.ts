@@ -14,7 +14,7 @@ import { ProductionOrderGroupingFilter } from "@/api/types";
 const TasksListGate = createGate();
 
 const setTasksListFilters = createEvent<GetTasksListQueryParams>();
-const applyFilters = createEvent();
+// const applyFilters = createEvent();
 const resetFilters = createEvent();
 
 const $tasksListFilters = createStore<GetTasksListQueryParams>({
@@ -25,7 +25,7 @@ const $tasksListFilters = createStore<GetTasksListQueryParams>({
 
 sample({
   source: $tasksListFilters,
-  clock: [TasksListGate.open, applyFilters],
+  clock: [TasksListGate.open, $tasksListFilters.updates],
   target: tasksListQuery.start,
 });
 
@@ -60,7 +60,7 @@ sample({
 });
 
 export const tasksListService = {
-  inputs: { setTasksListFilters },
+  inputs: { setTasksListFilters, resetFilters },
   outputs: { $tasksListFilters },
   gates: { TasksListGate },
 };

@@ -22,6 +22,7 @@ export const TasksList: FC<Props> = ({
   filters,
   setTasksListFilters,
   characteristics,
+  resetFilters,
 }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -38,7 +39,7 @@ export const TasksList: FC<Props> = ({
       {isFilterOpen && (
         <FiltersPanel
           handleApply={() => setIsFilterOpen(false)}
-          handleCancel={() => setIsFilterOpen(false)}
+          handleCancel={resetFilters}
           nomenclatures={nomenclatures}
           customers={customers}
           contracts={contracts}
@@ -46,6 +47,7 @@ export const TasksList: FC<Props> = ({
           filters={filters}
           setTasksListFilters={setTasksListFilters}
           characteristics={characteristics}
+          handleClose={() => setIsFilterOpen(false)}
         />
       )}
       <Wrapper>
