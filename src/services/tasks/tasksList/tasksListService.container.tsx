@@ -5,6 +5,7 @@ import {
   contractsListQuery,
   customersListQuery,
   executingContractsListQuery,
+  nomenclatureCharacteristicsQuery,
   nomenclaturesListQuery,
   tasksListQuery,
 } from "./tasksListService.api";
@@ -23,6 +24,7 @@ export const TasksListContainer = () => {
     customers,
     contracts,
     executingContracts,
+    characteristics,
   } = useUnit({
     tasksListPagedList: tasksListQuery.$data,
     isLoading: tasksListQuery.$pending,
@@ -32,6 +34,7 @@ export const TasksListContainer = () => {
     customers: customersListQuery.$data,
     contracts: contractsListQuery.$data,
     executingContracts: executingContractsListQuery.$data,
+    characteristics: nomenclatureCharacteristicsQuery.$data,
   });
 
   return (
@@ -46,6 +49,7 @@ export const TasksListContainer = () => {
         customers={customers}
         contracts={contracts}
         executingContracts={executingContracts}
+        characteristics={characteristics}
       />
     </>
   );

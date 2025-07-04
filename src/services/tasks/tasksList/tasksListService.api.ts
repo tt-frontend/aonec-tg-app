@@ -1,5 +1,6 @@
 import { api } from "@/api";
 import {
+  CharacteristicResponse,
   ContractListResponsePagedList,
   NomenclatureListResponse,
   ProductionOrderListResponsePagedList,
@@ -51,4 +52,11 @@ export const executingContractsListQuery = createQuery<
   ContractListResponsePagedList
 >({
   handler: (params) => api.get("/Contractors/executionContracts", { params }),
+});
+
+export const nomenclatureCharacteristicsQuery = createQuery<
+  [number],
+  CharacteristicResponse[]
+>({
+  handler: (id) => api.get(`/Nomenclatures/${id}`),
 });

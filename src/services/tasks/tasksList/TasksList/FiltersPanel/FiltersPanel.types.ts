@@ -1,4 +1,5 @@
 import {
+  CharacteristicResponse,
   ContractListResponsePagedList,
   NomenclatureListResponse,
   StringPagedList,
@@ -14,4 +15,5 @@ export type Props = {
   customers: StringPagedList | null;
   contracts: ContractListResponsePagedList | null;
   executingContracts: ContractListResponsePagedList | null;
+  characteristics: CharacteristicResponse[] | null;
 };

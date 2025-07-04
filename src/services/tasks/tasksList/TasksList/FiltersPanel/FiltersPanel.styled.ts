@@ -1,16 +1,21 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  top: 0px;
-  left: 0px;
-  position: absolute;
+  top: 0;
+  left: 0;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   background: #f9f9f9;
   z-index: 10;
+
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Content = styled.div`
+  flex: 1;
+  overflow-y: auto;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -21,10 +26,9 @@ export const ButtonsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border-top: 1px solid lightgray;
-  position: absolute;
-  bottom: 0;
   width: 100%;
-  padding: 0px;
+  padding: 0;
+  background: white;
 `;
 
 export const InputWrapper = styled.div`

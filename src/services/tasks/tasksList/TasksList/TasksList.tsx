@@ -10,7 +10,6 @@ import { Title } from "@/components/Title";
 import { Segmented, Skeleton } from "antd";
 import { FiltersPanel } from "./FiltersPanel";
 import { TaskItem } from "./TaskItem";
-import { SearchIcon } from "@/components/icons/SearchIcon";
 import { FilterIcon } from "@/components/icons/FilterIcon";
 
 export const TasksList: FC<Props> = ({
@@ -22,6 +21,7 @@ export const TasksList: FC<Props> = ({
   executingContracts,
   filters,
   setTasksListFilters,
+  characteristics,
 }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -45,15 +45,13 @@ export const TasksList: FC<Props> = ({
           executingContracts={executingContracts}
           filters={filters}
           setTasksListFilters={setTasksListFilters}
+          characteristics={characteristics}
         />
       )}
       <Wrapper>
         <Title>
           Активные задачи
           <ButtonsWrapper>
-            <SearchButtonWrapper>
-              <SearchIcon />
-            </SearchButtonWrapper>
             <SearchButtonWrapper onClick={() => setIsFilterOpen(true)}>
               <FilterIcon />
             </SearchButtonWrapper>
