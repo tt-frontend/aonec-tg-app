@@ -8,7 +8,7 @@ export const CommonInfo: FC<Props> = ({ items }) => {
       {items.map(({ key, value }) => (
         <InfoItem key={key}>
           <InfoTitle>{key}</InfoTitle>
-          {value}
+          {value || "—"}
         </InfoItem>
       ))}
     </Wrapper>

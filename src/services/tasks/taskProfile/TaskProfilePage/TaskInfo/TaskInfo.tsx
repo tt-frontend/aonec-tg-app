@@ -7,28 +7,17 @@ import dayjs from "dayjs";
 export const TaskInfo: FC<Props> = ({ task }) => {
   return (
     <>
+      <Card lable="Комментарий к заданию">{task.report}</Card>
       <Card lable="Основная информация">
         <CommonInfo
           items={[
-            { key: "Номер наряд-задания", value: task.requestNumber },
             {
               key: "Дата создания",
               value: dayjs(task.creationTime).format("DD.MM.YYYY"),
             },
-          ]}
-        />
-      </Card>
-      <Card lable="Исполнитель">
-        <CommonInfo
-          items={[
             {
-              key: "Ответственнй исполнитель",
-              value: task.executor?.name,
-            },
-
-            {
-              key: "Договор с исполнителем",
-              value: `${task.contract?.name} ${task.contract?.type} (${task.contract?.id})`,
+              key: "Дата начала выполнения работ",
+              value: dayjs(task.startDate).format("DD.MM.YYYY HH:mm"),
             },
             {
               key: "Нормативный срок задания",
@@ -36,9 +25,25 @@ export const TaskInfo: FC<Props> = ({ task }) => {
                 "DD.MM.YYYY HH:mm"
               ),
             },
+          ]}
+        />
+      </Card>
+      <Card lable="Договор">
+        <CommonInfo
+          items={[
             {
-              key: "Дата начала выполнения работ",
-              value: dayjs(task.startDate).format("DD.MM.YYYY HH:mm"),
+              key: "Описание",
+              value: task.contract?.name,
+            },
+            {
+              key: "Дата начала",
+              value: dayjs(task.contract?.startDate).format("DD.MM.YYYY"),
+            },
+            {
+              key: "Дата окончания",
+              value:
+                task.contract?.endDate &&
+                dayjs(task.contract?.endDate).format("DD.MM.YYYY"),
             },
           ]}
         />
