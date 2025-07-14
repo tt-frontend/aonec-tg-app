@@ -10,7 +10,6 @@ import {
 } from "./taskProfileService.api";
 import { uploadFileMutation } from "@/services/filesUpload";
 import { useEffect } from "react";
-import useMessage from "antd/lib/message/useMessage";
 
 const {
   inputs,
@@ -20,7 +19,6 @@ const {
 export const TaskProfileContainer = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [message, ctx] = useMessage();
 
   const {
     task,
@@ -46,14 +44,12 @@ export const TaskProfileContainer = () => {
 
   useEffect(() => {
     return completeTaskMutation.finished.success.watch(() => {
-      message.success("Задача завершена!");
       navigate("/tasks", { replace: true });
     }).unsubscribe;
-  }, [message, navigate]);
+  }, [navigate]);
 
   return (
     <>
-      {ctx}
       {id && <TaskProfileGate id={Number(id)} />}
       <TaskProfilePage
         task={task}

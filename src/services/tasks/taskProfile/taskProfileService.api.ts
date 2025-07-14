@@ -27,7 +27,7 @@ export const deleteDocumentMutation = createMutation<[number, number], void>({
 });
 
 export const completeTaskMutation = createMutation<number, void>({
-  handler: (id) => axios.get(`/ProductionOrders/${id}/complete`),
+  handler: (id) => axios.post(`/ProductionOrders/${id}/complete`),
 });
 
 export const updateReportMutation = createMutation<

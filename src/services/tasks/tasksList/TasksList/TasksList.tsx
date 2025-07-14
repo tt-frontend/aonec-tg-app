@@ -7,7 +7,7 @@ import {
 } from "./TasksList.styled";
 import { Props } from "./TasksList.types";
 import { Title } from "@/components/Title";
-import { Skeleton } from "antd";
+import { Empty, Skeleton } from "antd";
 import { FiltersPanel } from "./FiltersPanel";
 import { TaskItem } from "./TaskItem";
 import { FilterIcon } from "@/components/icons/FilterIcon";
@@ -64,6 +64,9 @@ export const TasksList: FC<Props> = ({
               <TaskItem task={task} key={task.id} />
             ))}
           </TasksListWrapper>
+        )}
+        {!isLoading && !tasksListPagedList?.items?.length && (
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Нет задач" />
         )}
         {isLoading && <Skeleton active />}
       </Wrapper>

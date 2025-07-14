@@ -2,6 +2,7 @@ import { createEvent, sample } from "effector";
 import { createGate } from "effector-react";
 import {
   addDocumentMutation,
+  completeTaskMutation,
   deleteDocumentMutation,
   taskQuery,
   updateReportMutation,
@@ -67,6 +68,10 @@ sample({
 
 updateReportMutation.finished.success.watch(() => {
   message.success("Комментарий обновлен");
+});
+
+completeTaskMutation.finished.success.watch(() => {
+  message.success("Задача завершена!");
 });
 
 export const taskProfileService = {
