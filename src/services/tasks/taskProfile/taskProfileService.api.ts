@@ -22,3 +22,7 @@ export const deleteDocumentMutation = createMutation<[number, number], void>({
       `/ProductionOrders/${productionOrderId}/documents/${documentId}`
     ),
 });
+
+export const completeTaskMutation = createMutation<number, void>({
+  handler: (id) => axios.get(`/ProductionOrders/${id}/complete`),
+});

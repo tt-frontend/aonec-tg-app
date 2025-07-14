@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 export const TaskInfo: FC<Props> = ({ task }) => {
   return (
     <>
-      <Card lable="Комментарий к заданию">{task.report}</Card>
+      <Card lable="Комментарий к заданию">{task.description}</Card>
       <Card lable="Основная информация">
         <CommonInfo
           items={[

@@ -56,3 +56,7 @@ export const AddessWrapper = styled.div`
   vertical-align: middle;
   opacity: 0.5;
 `;
+
+export const CharacterisicAmount = styled.div`
+  white-space: nowrap;
+`;

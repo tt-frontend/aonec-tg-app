@@ -2,6 +2,7 @@ import { FC } from "react";
 import {
   AddessWrapper,
   ButtonWrapper,
+  CharacterisicAmount,
   CharacterisicWrapper,
   NomenclatureName,
   RequestNumber,
@@ -9,7 +10,7 @@ import {
   Wrapper,
 } from "./TaskProfilePage.styled";
 import { Props } from "./TaskProfilePage.types";
-import { Button, Empty, Skeleton } from "antd";
+import { Button, Empty, message, Skeleton } from "antd";
 import { TaskProgressPanel } from "./TaskProgressPanel";
 import { TaskInfo } from "./TaskInfo";
 import { TaskFilesUpload } from "./TaskFilesUpload";
@@ -20,6 +21,7 @@ export const TaskProfilePage: FC<Props> = ({
   handleFile,
   handleDeleteDocument,
   isLoadingUploadFile,
+  handleCompleteTask,
 }) => {
   if (isLoading && !task) return <Skeleton active />;
 
@@ -34,7 +36,17 @@ export const TaskProfilePage: FC<Props> = ({
       <ButtonWrapper>
         <Button
           onClick={() => {
-            confirm("Завершить задачу?");
+            const isApproveComplete = confirm("Завершить задачу?");
+            const isReportExist = Boolean(task.report);
+
+            if (!isReportExist) {
+              message.error("Добавьте комментарий к задаче");
+              return;
+            }
+
+            if (isApproveComplete) {
+              handleCompleteTask();
+            }
           }}
           size="large"
           type="primary"
@@ -53,9 +65,9 @@ export const TaskProfilePage: FC<Props> = ({
               <NomenclatureName>{elem.nomenclature?.name}</NomenclatureName>
               <CharacterisicWrapper>
                 <div>{elem.characteristic?.name}</div>
-                <div>
+                <CharacterisicAmount>
                   {elem.amount} {elem.units}
-                </div>
+                </CharacterisicAmount>
               </CharacterisicWrapper>
             </>
           ))}

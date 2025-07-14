@@ -7,4 +7,5 @@ export type Props = {
   handleFile(payload: UploadFileRequestPayload): void;
   handleDeleteDocument: (documentId: number) => void;
   isLoadingUploadFile: boolean;
+  handleCompleteTask(): void;
 };

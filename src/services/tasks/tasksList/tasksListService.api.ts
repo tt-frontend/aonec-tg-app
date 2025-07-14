@@ -16,7 +16,7 @@ export const tasksListQuery = createQuery<
   [GetTasksListQueryParams],
   ProductionOrderListResponsePagedList
 >({
-  handler: () => api.get("/ProductionOrders"),
+  handler: (params) => api.get("/ProductionOrders", { params }),
 });
 
 export const nomenclaturesListQuery = createQuery<
