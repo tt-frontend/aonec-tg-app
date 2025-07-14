@@ -8,4 +8,5 @@ export type Props = {
   handleDeleteDocument: (documentId: number) => void;
   isLoadingUploadFile: boolean;
   handleCompleteTask(): void;
+  updateReport: (report: string) => void;
 };

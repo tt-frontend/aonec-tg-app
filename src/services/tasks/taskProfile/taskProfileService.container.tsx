@@ -6,6 +6,7 @@ import {
   completeTaskMutation,
   deleteDocumentMutation,
   taskQuery,
+  updateReportMutation,
 } from "./taskProfileService.api";
 import { uploadFileMutation } from "@/services/filesUpload";
 import { useEffect } from "react";
@@ -28,6 +29,7 @@ export const TaskProfileContainer = () => {
     handleDeleteDocument,
     isLoadingUploadFile,
     completeTask,
+    updateReport,
   } = useUnit({
     task: taskQuery.$data,
     isLoading: taskQuery.$pending,
@@ -35,6 +37,7 @@ export const TaskProfileContainer = () => {
     handleDeleteDocument: deleteDocumentMutation.start,
     isLoadingUploadFile: uploadFileMutation.$pending,
     completeTask: completeTaskMutation.start,
+    updateReport: updateReportMutation.start,
   });
 
   function handleCompleteTask() {
@@ -61,6 +64,7 @@ export const TaskProfileContainer = () => {
         }
         isLoadingUploadFile={isLoadingUploadFile}
         handleCompleteTask={handleCompleteTask}
+        updateReport={(report) => updateReport({ id: Number(id), report })}
       />
     </>
   );

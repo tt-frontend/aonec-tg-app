@@ -14,6 +14,7 @@ import { Button, Empty, message, Skeleton } from "antd";
 import { TaskProgressPanel } from "./TaskProgressPanel";
 import { TaskInfo } from "./TaskInfo";
 import { TaskFilesUpload } from "./TaskFilesUpload";
+import { ReportPanel } from "./ReportPanel";
 
 export const TaskProfilePage: FC<Props> = ({
   isLoading,
@@ -22,6 +23,7 @@ export const TaskProfilePage: FC<Props> = ({
   handleDeleteDocument,
   isLoadingUploadFile,
   handleCompleteTask,
+  updateReport,
 }) => {
   if (isLoading && !task) return <Skeleton active />;
 
@@ -72,6 +74,7 @@ export const TaskProfilePage: FC<Props> = ({
             </>
           ))}
         </TitleWrapper>
+        <ReportPanel task={task} updateReport={updateReport} />
         <TaskFilesUpload
           documents={task.documents}
           handleFile={handleFile}

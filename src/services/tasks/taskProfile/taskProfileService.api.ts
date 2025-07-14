@@ -2,7 +2,10 @@ import { api } from "@/api";
 import { ProductionOrderResponse } from "@/api/types";
 import { createMutation, createQuery } from "@farfetched/core";
 import axios from "axios";
-import { AddDocumentToTaskPayload } from "./taskProfileService.types";
+import {
+  AddDocumentToTaskPayload,
+  UpdateReportRequestPayload,
+} from "./taskProfileService.types";
 
 export const taskQuery = createQuery<[number], ProductionOrderResponse>({
   handler: (id) => api.get(`/ProductionOrders/${id}`),
@@ -25,4 +28,12 @@ export const deleteDocumentMutation = createMutation<[number, number], void>({
 
 export const completeTaskMutation = createMutation<number, void>({
   handler: (id) => axios.get(`/ProductionOrders/${id}/complete`),
+});
+
+export const updateReportMutation = createMutation<
+  UpdateReportRequestPayload,
+  void
+>({
+  handler: ({ id, ...data }): Promise<void> =>
+    axios.post(`/ProductionOrders/${id}/report`, data),
 });

@@ -4,10 +4,12 @@ import {
   addDocumentMutation,
   deleteDocumentMutation,
   taskQuery,
+  updateReportMutation,
 } from "./taskProfileService.api";
 import { UploadFileRequestPayload } from "@/services/filesUpload/filesUploadService.types";
 import { uploadFileMutation } from "@/services/filesUpload";
 import { deleteFileMutation } from "@/services/filesUpload/filesUploadService.api";
+import { message } from "antd";
 
 const TaskProfileGate = createGate<{ id: number }>();
 const handleFile = createEvent<UploadFileRequestPayload>();
@@ -25,7 +27,7 @@ sample({
 });
 
 sample({
-  clock: [],
+  clock: [updateReportMutation.finished.success],
   source: TaskProfileGate.state,
   filter: TaskProfileGate.status,
   fn: ({ id }) => id,
@@ -61,6 +63,10 @@ sample({
     return documentId;
   },
   target: deleteFileMutation.start,
+});
+
+updateReportMutation.finished.success.watch(() => {
+  message.success("Комментарий обновлен");
 });
 
 export const taskProfileService = {
