@@ -3,7 +3,6 @@ import { TasksList } from "./TasksList/TasksList";
 import { useUnit } from "effector-react";
 import {
   contractsListQuery,
-  customersListQuery,
   executingContractsListQuery,
   nomenclatureCharacteristicsQuery,
   nomenclaturesListQuery,
@@ -22,7 +21,6 @@ export const TasksListContainer = () => {
     filters,
     setTasksListFilters,
     nomenclatures,
-    customers,
     contracts,
     executingContracts,
     characteristics,
@@ -33,7 +31,6 @@ export const TasksListContainer = () => {
     filters: tasksListService.outputs.$tasksListFilters,
     setTasksListFilters: tasksListService.inputs.setTasksListFilters,
     nomenclatures: nomenclaturesListQuery.$data,
-    customers: customersListQuery.$data,
     contracts: contractsListQuery.$data,
     executingContracts: executingContractsListQuery.$data,
     characteristics: nomenclatureCharacteristicsQuery.$data,
@@ -49,7 +46,6 @@ export const TasksListContainer = () => {
         setTasksListFilters={setTasksListFilters}
         filters={filters}
         nomenclatures={nomenclatures}
-        customers={customers}
         contracts={contracts}
         executingContracts={executingContracts}
         characteristics={characteristics}

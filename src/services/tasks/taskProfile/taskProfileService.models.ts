@@ -1,9 +1,7 @@
 import { createEvent, sample } from "effector";
 import { createGate } from "effector-react";
 import {
-  addCommnetMutation,
   addDocumentMutation,
-  deleteCommentMutation,
   deleteDocumentMutation,
   taskQuery,
 } from "./taskProfileService.api";
@@ -27,10 +25,7 @@ sample({
 });
 
 sample({
-  clock: [
-    addCommnetMutation.finished.success,
-    deleteCommentMutation.finished.success,
-  ],
+  clock: [],
   source: TaskProfileGate.state,
   filter: TaskProfileGate.status,
   fn: ({ id }) => id,

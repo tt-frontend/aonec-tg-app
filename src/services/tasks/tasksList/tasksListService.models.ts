@@ -2,23 +2,21 @@ import { createEvent, createStore, sample } from "effector";
 import { createGate } from "effector-react";
 import {
   contractsListQuery,
-  customersListQuery,
   executingContractsListQuery,
   nomenclatureCharacteristicsQuery,
   nomenclaturesListQuery,
   tasksListQuery,
 } from "./tasksListService.api";
 import { GetTasksListQueryParams } from "./tasksListService.types";
-import { ProductionOrderGroupingFilter } from "@/api/types";
+import { EProductionOrderStatus } from "@/api/types";
 
 const TasksListGate = createGate();
 
 const setTasksListFilters = createEvent<GetTasksListQueryParams>();
-// const applyFilters = createEvent();
 const resetFilters = createEvent();
 
 const $tasksListFilters = createStore<GetTasksListQueryParams>({
-  GroupType: ProductionOrderGroupingFilter.Executing,
+  Status: EProductionOrderStatus.InProgress,
 })
   .on(setTasksListFilters, (prev, filters) => ({ ...prev, ...filters }))
   .reset(resetFilters);
@@ -32,11 +30,6 @@ sample({
 sample({
   clock: TasksListGate.open,
   target: nomenclaturesListQuery.start.prepend(() => ({})),
-});
-
-sample({
-  clock: TasksListGate.open,
-  target: customersListQuery.start.prepend(() => ({})),
 });
 
 sample({

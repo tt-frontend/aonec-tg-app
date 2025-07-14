@@ -10,8 +10,8 @@
  * ---------------------------------------------------------------
  */
 
-export enum ProductionOrderGroupingFilter {
-  Executing = "Executing",
+export enum EProductionOrderStatus {
+  InProgress = "InProgress",
   Archived = "Archived",
 }
 
@@ -35,6 +35,30 @@ export enum EDocumentType {
 export enum EContractType {
   Income = "Income",
   Execution = "Execution",
+}
+
+export interface AddressResponse {
+  /** @format int32 */
+  id?: number;
+  address?: string | null;
+}
+
+export interface AddressResponsePagedList {
+  /** @format int32 */
+  totalItems?: number;
+  /** @format int32 */
+  pageNumber?: number;
+  /** @format int32 */
+  pageSize?: number;
+  /** @format int32 */
+  totalPages?: number;
+  hasPreviousPage?: boolean;
+  hasNextPage?: boolean;
+  /** @format int32 */
+  nextPageNumber?: number;
+  /** @format int32 */
+  previousPageNumber?: number;
+  items?: AddressResponse[] | null;
 }
 
 export interface CharacteristicResponse {
@@ -90,7 +114,7 @@ export interface ContractResponse {
   /** @format date-time */
   startDate?: string;
   /** @format date-time */
-  endDate?: string;
+  endDate?: string | null;
 }
 
 export interface DocumentResponse {
@@ -246,11 +270,10 @@ export interface ProductionOrderListResponse {
    * @format date-time
    */
   normativeCompletionDate?: string;
-  /** Характеристика */
-  characteristic?: CharacteristicResponse | null;
   /** Номер наряд-задания */
   requestNumber?: string | null;
   outputMaterials?: OutputMaterialResponse[] | null;
+  objectAddress?: string | null;
 }
 
 export interface ProductionOrderListResponsePagedList {
@@ -275,9 +298,11 @@ export interface ProductionOrderListResponsePagedList {
 export interface ProductionOrderResponse {
   /** @format int32 */
   id?: number;
+  status?: EProductionOrderStatus;
   documents?: DocumentResponse[] | null;
   /** Облегченная модель исполнителя */
   executor?: ExecutorLiteResponse | null;
+  /** @deprecated */
   comments?: CommentResponse[] | null;
   contract?: ContractResponse | null;
   /** @format date-time */
@@ -286,9 +311,11 @@ export interface ProductionOrderResponse {
   startDate?: string;
   /** @format date-time */
   creationTime?: string;
+  objectAddress?: string | null;
   requestNumber?: string | null;
   description?: string | null;
   outputMaterials?: OutputMaterialResponse[] | null;
+  report?: string | null;
 }
 
 /** Ответ обновления JWT-токена */
@@ -311,6 +338,10 @@ export interface RefreshTokenRequest {
    * @minLength 1
    */
   refreshToken: string;
+}
+
+export interface ReportRequest {
+  report?: string | null;
 }
 
 export interface StringPagedList {
@@ -680,14 +711,14 @@ export class Api<
      * No description
      *
      * @tags Contractors
-     * @name ContractorsCustomersList
-     * @summary Получить список заказчиков
-     * @request GET:/api/Contractors/customers
+     * @name ContractorsAddressesList
+     * @summary Получить список объектов
+     * @request GET:/api/Contractors/addresses
      * @secure
      */
-    contractorsCustomersList: (
+    contractorsAddressesList: (
       query?: {
-        CustomerName?: string;
+        Address?: string;
         /** @format int32 */
         PageNumber?: number;
         /** @format int32 */
@@ -696,8 +727,8 @@ export class Api<
       },
       params: RequestParams = {},
     ) =>
-      this.request<StringPagedList, ErrorApiResponse>({
-        path: `/api/Contractors/customers`,
+      this.request<AddressResponsePagedList, ErrorApiResponse>({
+        path: `/api/Contractors/addresses`,
         method: "GET",
         query: query,
         secure: true,
@@ -928,12 +959,17 @@ export class Api<
         NomenclatureId?: number;
         /** @format int32 */
         CharacteristicId?: number;
-        GroupType?: ProductionOrderGroupingFilter;
+        Status?: EProductionOrderStatus;
         /** @format int32 */
         ContractId?: number;
-        Customer?: string;
+        /** @format int32 */
+        AddressId?: number;
         /** Тип сортировки наряд-заданий */
         OrderRule?: EProductionOrderOrderRule;
+        /** @format date-time */
+        From?: string;
+        /** @format date-time */
+        To?: string;
         /** @format int32 */
         PageNumber?: number;
         /** @format int32 */
@@ -1039,9 +1075,33 @@ export class Api<
      * No description
      *
      * @tags ProductionOrders
+     * @name ProductionOrdersReportCreate
+     * @request POST:/api/ProductionOrders/{productionOrderId}/report
+     * @secure
+     */
+    productionOrdersReportCreate: (
+      productionOrderId: number,
+      data: ReportRequest,
+      params: RequestParams = {},
+    ) =>
+      this.request<ProductionOrderResponse, ErrorApiResponse>({
+        path: `/api/ProductionOrders/${productionOrderId}/report`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags ProductionOrders
      * @name ProductionOrdersCommentsCreate
      * @summary Добавить комментарий
      * @request POST:/api/ProductionOrders/{productionOrderId}/comments
+     * @deprecated
      * @secure
      */
     productionOrdersCommentsCreate: (
@@ -1066,6 +1126,7 @@ export class Api<
      * @name ProductionOrdersCommentsDelete
      * @summary Удалить комментарий
      * @request DELETE:/api/ProductionOrders/{productionOrderId}/comments/{commentId}
+     * @deprecated
      * @secure
      */
     productionOrdersCommentsDelete: (

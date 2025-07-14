@@ -7,7 +7,7 @@ import {
 } from "./TasksList.styled";
 import { Props } from "./TasksList.types";
 import { Title } from "@/components/Title";
-import { Segmented, Skeleton } from "antd";
+import { Skeleton } from "antd";
 import { FiltersPanel } from "./FiltersPanel";
 import { TaskItem } from "./TaskItem";
 import { FilterIcon } from "@/components/icons/FilterIcon";
@@ -16,7 +16,6 @@ export const TasksList: FC<Props> = ({
   tasksListPagedList,
   isLoading,
   nomenclatures,
-  customers,
   contracts,
   executingContracts,
   filters,
@@ -41,7 +40,6 @@ export const TasksList: FC<Props> = ({
           handleApply={() => setIsFilterOpen(false)}
           handleCancel={resetFilters}
           nomenclatures={nomenclatures}
-          customers={customers}
           contracts={contracts}
           executingContracts={executingContracts}
           filters={filters}
@@ -59,12 +57,7 @@ export const TasksList: FC<Props> = ({
             </SearchButtonWrapper>
           </ButtonsWrapper>
         </Title>
-        <Segmented
-          defaultValue="Сегодня"
-          options={["Сегодня", "Все задачи"]}
-          block
-          size="large"
-        />
+
         {!isLoading && (
           <TasksListWrapper>
             {tasksListPagedList?.items?.map((task) => (

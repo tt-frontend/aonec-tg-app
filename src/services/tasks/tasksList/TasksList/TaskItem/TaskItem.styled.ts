@@ -57,3 +57,14 @@ export const IconWrapper = styled.div`
   justify-content: center;
   border-radius: 20px;
 `;
+
+export const Address = styled.div`
+  font-family: Rubik;
+  font-weight: 300;
+  font-style: Light;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.41px;
+  vertical-align: middle;
+  opacity: 0.5;
+`;

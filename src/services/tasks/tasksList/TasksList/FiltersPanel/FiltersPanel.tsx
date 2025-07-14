@@ -16,7 +16,6 @@ export const FiltersPanel: FC<Props> = ({
   handleApply,
   handleCancel,
   nomenclatures,
-  customers,
   contracts,
   characteristics,
   filters,
@@ -83,25 +82,6 @@ export const FiltersPanel: FC<Props> = ({
             </InputWrapper>
           </FormItem>
         )}
-
-        <FormItem label="Заказчик" bold>
-          <InputWrapper>
-            <Select
-              placeholder="Выберите из списка"
-              style={{ width: "100%" }}
-              size="large"
-              allowClear
-              value={filters.Customer}
-              onChange={(value) => setTasksListFilters({ Customer: value })}
-            >
-              {customers?.items?.map((elem) => (
-                <Select.Option key={elem} value={elem}>
-                  {elem}
-                </Select.Option>
-              ))}
-            </Select>
-          </InputWrapper>
-        </FormItem>
 
         <FormItem label="Договор" bold>
           <InputWrapper>

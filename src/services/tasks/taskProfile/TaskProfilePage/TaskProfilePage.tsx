@@ -1,5 +1,6 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import {
+  AddessWrapper,
   ButtonWrapper,
   CharacterisicWrapper,
   NomenclatureName,
@@ -8,25 +9,18 @@ import {
   Wrapper,
 } from "./TaskProfilePage.styled";
 import { Props } from "./TaskProfilePage.types";
-import { Button, Empty, Segmented, Skeleton } from "antd";
+import { Button, Empty, Skeleton } from "antd";
 import { TaskProgressPanel } from "./TaskProgressPanel";
-import { InputCommentPanel } from "./InputCommentPanel";
 import { TaskInfo } from "./TaskInfo";
-import { CommentsList } from "./CommentsList";
 import { TaskFilesUpload } from "./TaskFilesUpload";
 
 export const TaskProfilePage: FC<Props> = ({
   isLoading,
   task,
-  handleAddComment,
-  isLoadingComment,
-  handleDeleteComment,
   handleFile,
   handleDeleteDocument,
   isLoadingUploadFile,
 }) => {
-  const [section, setSection] = useState<"about" | "comments">("about");
-
   if (isLoading && !task) return <Skeleton active />;
 
   if (!task) {
@@ -51,6 +45,7 @@ export const TaskProfilePage: FC<Props> = ({
       </ButtonWrapper>
       <Wrapper>
         <TaskProgressPanel task={task} />
+        <AddessWrapper>{task.objectAddress}</AddessWrapper>
         <TitleWrapper>
           <RequestNumber>№{task.requestNumber}</RequestNumber>
           {task.outputMaterials?.map((elem) => (
@@ -71,30 +66,8 @@ export const TaskProfilePage: FC<Props> = ({
           handleDeleteDocument={handleDeleteDocument}
           isLoadingUploadFile={isLoadingUploadFile}
         />
-        <Segmented
-          block
-          size="large"
-          value={section}
-          onChange={setSection}
-          options={[
-            { label: "О задаче", value: "about" },
-            { label: "Комментарии", value: "comments" },
-          ]}
-        />
-        {section === "about" && <TaskInfo task={task} />}
-        {section === "comments" && (
-          <>
-            <CommentsList
-              comments={task.comments || []}
-              handleDeleteComment={handleDeleteComment}
-            />
-            <InputCommentPanel
-              task={task}
-              handleAddComment={handleAddComment}
-              isLoadingComment={isLoadingComment}
-            />
-          </>
-        )}
+
+        <TaskInfo task={task} />
       </Wrapper>
     </>
   );

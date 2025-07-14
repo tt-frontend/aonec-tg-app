@@ -1,5 +1,6 @@
 import { FC } from "react";
 import {
+  Address,
   CharacterisicWrapper,
   DateName,
   DateString,
@@ -52,6 +53,7 @@ export const TaskItem: FC<Props> = ({ task }) => {
 
   return (
     <Wrapper to={`/tasks/${task.id}`}>
+      <Address>{task.objectAddress}</Address>
       <RequestNumber>№{task.requestNumber}</RequestNumber>
       {task.outputMaterials?.map((elem) => (
         <>

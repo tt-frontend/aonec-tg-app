@@ -1,31 +1,21 @@
-import {
-  EOrderByRule,
-  EProductionOrderOrderRule,
-  ProductionOrderGroupingFilter,
-} from "@/api/types";
+import { EOrderByRule, EProductionOrderOrderRule, EProductionOrderStatus } from "@/api/types";
 
 export type GetTasksListQueryParams = {
   /** @format int32 */
   NomenclatureId?: number;
   /** @format int32 */
   CharacteristicId?: number;
-  GroupType?: ProductionOrderGroupingFilter;
+  Status?: EProductionOrderStatus;
   /** @format int32 */
   ContractId?: number;
   /** @format int32 */
-  ExecutionContractId?: number;
-  Customer?: string;
+  AddressId?: number;
   /** Тип сортировки наряд-заданий */
   OrderRule?: EProductionOrderOrderRule;
-  /** @format int32 */
-  PageNumber?: number;
-  /** @format int32 */
-  PageSize?: number;
-  OrderBy?: EOrderByRule;
-};
-
-export type GetContractorsCustomersQueryParams = {
-  CustomerName?: string;
+  /** @format date-time */
+  From?: string;
+  /** @format date-time */
+  To?: string;
   /** @format int32 */
   PageNumber?: number;
   /** @format int32 */

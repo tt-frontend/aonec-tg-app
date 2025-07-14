@@ -4,11 +4,9 @@ import {
   ContractListResponsePagedList,
   NomenclatureListResponse,
   ProductionOrderListResponsePagedList,
-  StringPagedList,
 } from "@/api/types";
 import { createQuery } from "@farfetched/core";
 import {
-  GetContractorsCustomersQueryParams,
   GetContractsQueryParams,
   GetExecutingContractsQueryParams,
   GetTasksListQueryParams,
@@ -30,13 +28,6 @@ export const nomenclaturesListQuery = createQuery<
   NomenclatureListResponse[]
 >({
   handler: (payload) => api.get("/Nomenclatures", { params: payload }),
-});
-
-export const customersListQuery = createQuery<
-  [GetContractorsCustomersQueryParams],
-  StringPagedList
->({
-  handler: (params) => api.get("/Contractors/customers", { params }),
 });
 
 export const contractsListQuery = createQuery<
