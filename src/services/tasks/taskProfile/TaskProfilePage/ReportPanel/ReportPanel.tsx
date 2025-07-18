@@ -33,7 +33,7 @@ export const ReportPanel: FC<Props> = ({ task, updateReport }) => {
         onChange={(e) => setText(e.target.value)}
       />
       {isChanged && (
-        <Button type="primary" onClick={() => text && updateReport(text)}>
+        <Button type="primary" onClick={() => typeof text === "string" && updateReport(text)}>
           Сохранить
         </Button>
       )}
