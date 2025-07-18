@@ -28,6 +28,11 @@ sample({
 });
 
 sample({
+  clock: TaskProfileGate.close,
+  target: taskQuery.reset,
+});
+
+sample({
   clock: [updateReportMutation.finished.success],
   source: TaskProfileGate.state,
   filter: TaskProfileGate.status,
