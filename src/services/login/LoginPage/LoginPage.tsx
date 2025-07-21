@@ -1,16 +1,21 @@
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import { Card, Title, Wrapper } from "./LoginPage.styled";
 import { Props } from "./LoginPage.types";
-import { Button, Input } from "antd";
+import { Button, Input, InputRef, message } from "antd";
 import { FormItem } from "@/components/FormItem";
 import { useFormik } from "formik";
 import { LoginRequest } from "@/api/types";
+import { IMask } from "react-imask";
 
 export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
-  const { values, handleChange, handleSubmit } = useFormik({
+  const { values, handleChange, handleSubmit, setFieldValue } = useFormik({
     initialValues: { phoneNumber: "", name: "" } as LoginRequest,
     onSubmit: (data) => {
-      handleLogin(data);
+      const phoneNumber = data.phoneNumber.replace(/[\s\-()]/g, "");
+
+      message.info(phoneNumber);
+
+      handleLogin({ ...data, phoneNumber });
     },
   });
 
@@ -19,12 +24,9 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
       <Card>
         <Title>Войдите в приложение</Title>
         <FormItem label="Номер телефона">
-          <Input
-            size="large"
+          <PhoneNumberInput
             value={values.phoneNumber}
-            onChange={handleChange}
-            name="phoneNumber"
-            placeholder="Введите номер телефона"
+            onChange={(value) => setFieldValue("phoneNumber", value)}
           />
         </FormItem>
         <FormItem label="Имя">
@@ -45,7 +47,7 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
         >
           Войти
         </Button>
-        <Button
+        {/* <Button
           size="large"
           type="link"
           onClick={() =>
@@ -58,8 +60,37 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
           disabled={isLoading}
         >
           Быстрый вход
-        </Button>
+        </Button> */}
       </Card>
     </Wrapper>
+  );
+};
+
+const PhoneNumberInput: FC<{
+  value: string;
+  onChange(value: string): void;
+}> = ({ value, onChange }) => {
+  const inputRef = useRef<InputRef>(null);
+
+  useEffect(() => {
+    if (inputRef.current && inputRef.current.input) {
+      const mask = IMask(inputRef.current.input, {
+        mask: "(000) 000-00-00",
+      });
+
+      return () => mask.destroy();
+    }
+  }, []);
+
+  return (
+    <Input
+      value={value}
+      type="tel"
+      size="large"
+      prefix="+7"
+      onChange={(e) => onChange(e.target.value)}
+      ref={inputRef}
+      placeholder="(___)___-__-__"
+    />
   );
 };

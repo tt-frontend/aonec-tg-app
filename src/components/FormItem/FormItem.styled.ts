@@ -15,5 +15,6 @@ export const FormItem = styled(FormItemAntd)<{ bold?: boolean }>`
 
     font-family: "Rubik";
     font-size: 15px;
+    white-space: nowrap;
   }
 `;
