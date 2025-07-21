@@ -1,31 +1,38 @@
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import { Card, Title, Wrapper } from "./LoginPage.styled";
 import { Props } from "./LoginPage.types";
-import { Button, Input } from "antd";
+import { Button, Input, InputRef } from "antd";
 import { FormItem } from "@/components/FormItem";
 import { useFormik } from "formik";
 import { LoginRequest } from "@/api/types";
+import { IMask } from "react-imask";
+import { validationSchema } from "./LoginPage.constants";
+import { ErrorMessage } from "@/components/ErrorMessage";
 
 export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
-  const { values, handleChange, handleSubmit } = useFormik({
-    initialValues: { phoneNumber: "", name: "" } as LoginRequest,
-    onSubmit: (data) => {
-      handleLogin(data);
-    },
-  });
+  const { values, handleChange, handleSubmit, setFieldValue, errors } =
+    useFormik({
+      initialValues: { phoneNumber: "", name: "" } as LoginRequest,
+      onSubmit: (data) => {
+        const phoneNumber = "8" + data.phoneNumber.replace(/[\s\-()]/g, "");
+
+        handleLogin({ ...data, phoneNumber });
+      },
+      validationSchema,
+      validateOnChange: false,
+    });
 
   return (
     <Wrapper>
       <Card>
         <Title>Войдите в приложение</Title>
         <FormItem label="Номер телефона">
-          <Input
-            size="large"
+          <PhoneNumberInput
             value={values.phoneNumber}
-            onChange={handleChange}
-            name="phoneNumber"
-            placeholder="Введите номер телефона"
+            onChange={(value) => setFieldValue("phoneNumber", value)}
+            isError={Boolean(errors.phoneNumber)}
           />
+          <ErrorMessage>{errors.phoneNumber}</ErrorMessage>
         </FormItem>
         <FormItem label="Имя">
           <Input
@@ -34,7 +41,9 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
             onChange={handleChange}
             name="name"
             placeholder="Введите имя и фамилию"
+            status={errors.name && "error"}
           />
+          <ErrorMessage>{errors.name}</ErrorMessage>
         </FormItem>
         <Button
           size="large"
@@ -50,7 +59,7 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
           type="link"
           onClick={() =>
             handleLogin({
-              phoneNumber: "8 961 251 49 86",
+              phoneNumber: "8 961 251 49 87",
               name: "Белослудцев Евгений Викторович",
             })
           }
@@ -61,5 +70,36 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
         </Button>
       </Card>
     </Wrapper>
+  );
+};
+
+const PhoneNumberInput: FC<{
+  value: string;
+  onChange(value: string): void;
+  isError?: boolean;
+}> = ({ value, onChange, isError }) => {
+  const inputRef = useRef<InputRef>(null);
+
+  useEffect(() => {
+    if (inputRef.current && inputRef.current.input) {
+      const mask = IMask(inputRef.current.input, {
+        mask: "(000) 000-00-00",
+      });
+
+      return () => mask.destroy();
+    }
+  }, []);
+
+  return (
+    <Input
+      value={value}
+      type="tel"
+      size="large"
+      prefix="+7"
+      onChange={(e) => onChange(e.target.value)}
+      ref={inputRef}
+      status={isError ? "error" : void 0}
+      placeholder="(___)___-__-__"
+    />
   );
 };

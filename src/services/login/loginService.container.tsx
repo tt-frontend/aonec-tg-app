@@ -2,7 +2,7 @@ import { useUnit } from "effector-react";
 import { authService } from "../authService";
 import { LoginPage } from "./LoginPage";
 import { useEffect } from "react";
-import useMessage from "antd/es/message/useMessage";
+import { message } from "antd";
 
 export const LoginContainer = () => {
   const { handleLogin, isLoading, isAuth } = useUnit({
@@ -11,17 +11,14 @@ export const LoginContainer = () => {
     isAuth: authService.outputs.$isAuth,
   });
 
-  const [messageApi, contextHolder] = useMessage();
-
   useEffect(() => {
     return authService.effect.fetchAuthTokenFx.failData.watch((e) => {
-      messageApi.error(e?.response?.data?.error?.Text);
+      message.error(e?.response?.data?.error?.Text);
     }).unsubscribe;
-  }, [messageApi]);
+  }, []);
 
   return (
     <>
-      {contextHolder}
       {isAuth && "Logged in"}
       <LoginPage handleLogin={handleLogin} isLoading={isLoading} />
     </>
