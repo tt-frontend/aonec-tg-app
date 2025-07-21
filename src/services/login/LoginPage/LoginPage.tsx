@@ -14,7 +14,7 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
     useFormik({
       initialValues: { phoneNumber: "", name: "" } as LoginRequest,
       onSubmit: (data) => {
-        const phoneNumber = data.phoneNumber.replace(/[\s\-()]/g, "");
+        const phoneNumber = "8" + data.phoneNumber.replace(/[\s\-()]/g, "");
 
         handleLogin({ ...data, phoneNumber });
       },
@@ -59,7 +59,7 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
           type="link"
           onClick={() =>
             handleLogin({
-              phoneNumber: "8 961 251 49 86",
+              phoneNumber: "8 961 251 49 87",
               name: "Белослудцев Евгений Викторович",
             })
           }
