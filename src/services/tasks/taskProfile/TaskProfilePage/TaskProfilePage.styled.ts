@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 export const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 12px;
 `;
 
 export const NomenclatureName = styled.div`
@@ -20,15 +20,13 @@ export const NomenclatureName = styled.div`
 `;
 
 export const RequestNumber = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
 `;
 
 export const CharacterisicWrapper = styled.div`
-  margin-top: 8px;
   display: flex;
   justify-content: space-between;
-
   font-size: 15px;
   font-weight: 300;
 `;
@@ -37,26 +35,68 @@ export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  border-top: 1px solid lightgray;
+  /* border-top: 1px solid lightgray; */
   position: fixed;
   z-index: 5;
   bottom: 0;
-  width: calc(100%);
+  width: calc(100% - 32px);
   transform: translateX(-16px);
-  background-color: white;
+  background-color: #ffffff3d;
+  backdrop-filter: blur(6px);
+  padding: 16px;
 `;
 
 export const AddessWrapper = styled.div`
   font-family: Rubik;
   font-weight: 300;
   font-style: Light;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 16px;
   letter-spacing: -0.41px;
   vertical-align: middle;
-  opacity: 0.5;
+  opacity: 0.7;
 `;
 
-export const CharacterisicAmount = styled.div`
-  white-space: nowrap;
+export const OutputMaterial = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+export const TaskUnitInfoWrapper = styled.div`
+  height: 28px;
+  display: flex;
+  font-weight: 300 !important;
+  font-size: 14px;
+`;
+
+export const TaskUnitAmountWrapper = styled.div`
+  height: 100%;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  color: #e0e0e0;
+  background: #2d2d2d;
+`;
+
+export const TaskUnitWrapper = styled.div`
+  height: 100%;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+  background: #dbdbdb;
+`;
+
+export const TaskStage = styled.div`
+  display: flex;
+  font-weight: 400 !important;
+  font-size: 14px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  background: #0088ff;
+  width: fit-content;
+  gap: 4px;
 `;
