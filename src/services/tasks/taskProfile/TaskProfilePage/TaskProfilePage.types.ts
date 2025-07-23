@@ -4,7 +4,7 @@ import { UploadFileRequestPayload } from "@/services/filesUpload/filesUploadServ
 export type Props = {
   task: ProductionOrderResponse | null;
   isLoading: boolean;
-  handleFile(payload: UploadFileRequestPayload): void;
+  handleFile(payload: Omit<UploadFileRequestPayload, "taskId">): void;
   handleDeleteDocument: (documentId: number) => void;
   isLoadingUploadFile: boolean;
   handleCompleteTask(): void;

@@ -9,6 +9,7 @@ export const PlusFile: FC<Props> = ({
   accept,
   fileHandler,
   isLoading,
+  multiple,
 }) => {
   const id = `file-input-${uniqId}`;
 
@@ -23,7 +24,21 @@ export const PlusFile: FC<Props> = ({
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
 
-    if (files) fileHandler(files);
+    if (!files) return;
+
+    if (files.length > 3) {
+      const isContinue = confirm(
+        "Максимальное кол-во файлов для одновременной загрузки — 3, продолжить?"
+      );
+
+      if (!isContinue) return;
+    }
+
+    fileHandler(files);
+
+    if (inputFileRef.current?.value) {
+      inputFileRef.current.value = "";
+    }
   };
 
   return (
@@ -35,6 +50,7 @@ export const PlusFile: FC<Props> = ({
         style={{ display: "none" }}
         accept={accept}
         onChange={handleFileChange}
+        multiple={multiple}
       />
 
       <Wrapper onClick={handleClick}>

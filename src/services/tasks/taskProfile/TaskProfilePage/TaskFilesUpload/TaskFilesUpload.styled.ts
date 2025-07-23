@@ -33,14 +33,14 @@ export const DocumentName = styled.div`
 `;
 
 export const ImagesList = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
-  flex-wrap: wrap;
 `;
 
 export const ImageItem = styled.div<{ url: string }>`
-  height: 98px;
-  width: 98px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   background-image: url(${(props) => props.url});
   background-size: cover;
   background-repeat: no-repeat;

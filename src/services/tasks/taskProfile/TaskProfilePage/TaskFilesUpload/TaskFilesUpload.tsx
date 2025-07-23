@@ -40,6 +40,7 @@ export const TaskFilesUpload: FC<Props> = ({
             <PlusFile
               isLoading={isLoadingUploadFile}
               uniqId="task-act-add"
+              multiple
               fileHandler={(files) => {
                 if (isLoadingUploadFile) return;
 
@@ -70,6 +71,7 @@ export const TaskFilesUpload: FC<Props> = ({
               isLoading={isLoadingUploadFile}
               uniqId="task-photo-add"
               accept="image/*"
+              multiple
               fileHandler={(files) => {
                 if (isLoadingUploadFile) return;
 
@@ -82,15 +84,17 @@ export const TaskFilesUpload: FC<Props> = ({
           </FilesAttachCardHeader>
         }
       >
-        <ImagesList>
-          {photosList?.map((doc) => (
-            <ImageItem key={doc.id} url={doc.url!}>
-              <span onClick={() => onDeleteDocument(doc.id!)}>
-                <XWhiteIcon />
-              </span>
-            </ImageItem>
-          ))}
-        </ImagesList>
+        {Boolean(photosList?.length) && (
+          <ImagesList>
+            {photosList?.map((doc) => (
+              <ImageItem key={doc.id} url={doc.url!}>
+                <span onClick={() => onDeleteDocument(doc.id!)}>
+                  <XWhiteIcon />
+                </span>
+              </ImageItem>
+            ))}
+          </ImagesList>
+        )}
       </Card>
     </>
   );

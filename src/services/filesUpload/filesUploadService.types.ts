@@ -5,4 +5,6 @@ export type UploadFileRequestPayload = {
   file?: File[];
   /** @default "Act" */
   type?: EDocumentType;
+
+  taskId?: number;
 };
