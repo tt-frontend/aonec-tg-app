@@ -84,15 +84,17 @@ export const TaskFilesUpload: FC<Props> = ({
           </FilesAttachCardHeader>
         }
       >
-        <ImagesList>
-          {photosList?.map((doc) => (
-            <ImageItem key={doc.id} url={doc.url!}>
-              <span onClick={() => onDeleteDocument(doc.id!)}>
-                <XWhiteIcon />
-              </span>
-            </ImageItem>
-          ))}
-        </ImagesList>
+        {Boolean(photosList?.length) && (
+          <ImagesList>
+            {photosList?.map((doc) => (
+              <ImageItem key={doc.id} url={doc.url!}>
+                <span onClick={() => onDeleteDocument(doc.id!)}>
+                  <XWhiteIcon />
+                </span>
+              </ImageItem>
+            ))}
+          </ImagesList>
+        )}
       </Card>
     </>
   );

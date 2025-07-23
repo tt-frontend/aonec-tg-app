@@ -15,7 +15,10 @@ import { AddDocumentToTaskPayload } from "./taskProfileService.types";
 
 const TaskProfileGate = createGate<{ id: number }>();
 const handleFile = createEvent<UploadFileRequestPayload>();
-const handleSavedFile = createEvent<number[] | null>();
+const handleSavedFile = createEvent<{
+  ids: number[] | null;
+  taskId: number | null;
+}>();
 
 sample({
   source: TaskProfileGate.state,
@@ -42,24 +45,28 @@ sample({
 });
 
 sample({
+  source: TaskProfileGate.state,
   clock: handleFile,
+  fn: ({ id: taskId }, payload) => ({ taskId, ...payload }),
   target: uploadFileMutation.start,
 });
 
 sample({
   clock: uploadFileMutation.finished.success,
   filter: TaskProfileGate.status,
-  fn: ({ result }): number[] | null => result?.map((elem) => elem.id!) || null,
+  fn: ({ result, params }) => ({
+    ids: result?.map((elem) => elem.id!) || null,
+    taskId: params.taskId || null,
+  }),
   target: handleSavedFile,
 });
 
 sample({
   source: TaskProfileGate.state,
   clock: handleSavedFile,
-  filter: (_, ids): ids is number[] => ids !== null,
-  fn: ({ id }, fileIds): AddDocumentToTaskPayload => ({
-    taskId: id,
-    data: fileIds?.map((id) => ({ id })) || [],
+  fn: ({ id }, payload): AddDocumentToTaskPayload => ({
+    taskId: payload.taskId || id,
+    data: payload.ids?.map((id) => ({ id })) || [],
   }),
   target: addDocumentMutation.start,
 });
