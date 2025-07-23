@@ -54,7 +54,7 @@ export const TaskProfileContainer = () => {
       <TaskProfilePage
         task={task}
         isLoading={isLoading}
-        handleFile={handleFile}
+        handleFile={(payload) => handleFile({ ...payload, taskId: Number(id) })}
         handleDeleteDocument={(documentId) =>
           handleDeleteDocument([Number(id), documentId])
         }

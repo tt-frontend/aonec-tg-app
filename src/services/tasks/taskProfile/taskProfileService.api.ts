@@ -15,8 +15,13 @@ export const addDocumentMutation = createMutation<
   AddDocumentToTaskPayload,
   void
 >({
-  handler: ({ taskId, ...data }) =>
-    axios.post(`/ProductionOrders/${taskId}/documents`, data),
+  handler: async ({ taskId, ...payload }): Promise<void> => {
+    await Promise.all(
+      payload.data.map((file) =>
+        axios.post(`/ProductionOrders/${taskId}/documents`, file)
+      )
+    );
+  },
 });
 
 export const deleteDocumentMutation = createMutation<[number, number], void>({

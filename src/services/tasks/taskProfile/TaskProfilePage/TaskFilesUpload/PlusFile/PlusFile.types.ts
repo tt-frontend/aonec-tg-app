@@ -3,4 +3,5 @@ export type Props = {
   accept?: string;
   uniqId: string;
   isLoading: boolean;
+  multiple?: boolean;
 };

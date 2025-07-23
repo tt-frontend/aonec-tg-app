@@ -7,15 +7,23 @@ export const uploadFileMutation = createMutation<
   UploadFileRequestPayload,
   DocumentResponse[]
 >({
-  handler: ({ type, file }) => {
+  handler: async ({ type, file }) => {
     const formData = new FormData();
 
-    const fileData = file?.[0];
-
     formData.append("type", type as string);
-    if (fileData) formData.append("file", fileData);
 
-    return api.post(`/Documents/upload`, formData);
+    const filesToUpload = (file ?? []).slice(0, 3); // максимум 3 файла
+
+    filesToUpload.forEach((fileItem) => {
+      formData.append("file", fileItem); // один ключ "file" для нескольких файлов
+    });
+
+    const response: DocumentResponse[] = await api.post(
+      "/Documents/upload",
+      formData
+    );
+
+    return response; // возвращаем "как есть"
   },
 });
 

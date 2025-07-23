@@ -42,7 +42,12 @@ export const TaskProfilePage: FC<Props> = ({
             const isReportExist = Boolean(task.report);
 
             if (!isReportExist) {
-              message.error("Добавьте комментарий к задаче");
+              message.error("Добавьте комментарий к задаче!");
+              return;
+            }
+
+            if (!task.documents?.length) {
+              message.error("Добавьте фото/документы к задаче!");
               return;
             }
 

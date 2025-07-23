@@ -59,7 +59,7 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
           type="link"
           onClick={() =>
             handleLogin({
-              phoneNumber: "8 961 251 49 87",
+              phoneNumber: "89612514987",
               name: "Белослудцев Евгений Викторович",
             })
           }
