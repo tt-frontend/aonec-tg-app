@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   gap: 16px;
   position: relative;
-  padding-bottom: 64px;
+  padding-bottom: 96px;
 `;
 
 export const TitleWrapper = styled.div`
@@ -35,7 +35,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  /* border-top: 1px solid lightgray; */
+  border-top: 1px solid #d3d3d373;
   position: fixed;
   z-index: 5;
   bottom: 0;
