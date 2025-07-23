@@ -234,7 +234,7 @@ export interface OutputMaterialResponse {
   nomenclature?: NomenclatureResponse | null;
   characteristic?: CharacteristicResponse | null;
   /** @format double */
-  amount?: number;
+  amount?: number | null;
   units?: string | null;
 }
 
@@ -316,6 +316,7 @@ export interface ProductionOrderResponse {
   description?: string | null;
   outputMaterials?: OutputMaterialResponse[] | null;
   report?: string | null;
+  stage?: string | null;
 }
 
 /** Ответ обновления JWT-токена */
@@ -710,91 +711,6 @@ export class Api<
     /**
      * No description
      *
-     * @tags Contractors
-     * @name ContractorsAddressesList
-     * @summary Получить список объектов
-     * @request GET:/api/Contractors/addresses
-     * @secure
-     */
-    contractorsAddressesList: (
-      query?: {
-        Address?: string;
-        /** @format int32 */
-        PageNumber?: number;
-        /** @format int32 */
-        PageSize?: number;
-        OrderBy?: EOrderByRule;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<AddressResponsePagedList, ErrorApiResponse>({
-        path: `/api/Contractors/addresses`,
-        method: "GET",
-        query: query,
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Contractors
-     * @name ContractorsContractsList
-     * @summary Получить список доходных договоров внутри контрагента
-     * @request GET:/api/Contractors/contracts
-     * @secure
-     */
-    contractorsContractsList: (
-      query?: {
-        /** @format int32 */
-        PageNumber?: number;
-        /** @format int32 */
-        PageSize?: number;
-        OrderBy?: EOrderByRule;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<ContractListResponsePagedList, ErrorApiResponse>({
-        path: `/api/Contractors/contracts`,
-        method: "GET",
-        query: query,
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Contractors
-     * @name ContractorsExecutionContractsList
-     * @summary Получить договоров с исполнителем внутри контрагента
-     * @request GET:/api/Contractors/executionContracts
-     * @secure
-     */
-    contractorsExecutionContractsList: (
-      query?: {
-        /** @format int32 */
-        PageNumber?: number;
-        /** @format int32 */
-        PageSize?: number;
-        OrderBy?: EOrderByRule;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<ContractListResponsePagedList, ErrorApiResponse>({
-        path: `/api/Contractors/executionContracts`,
-        method: "GET",
-        query: query,
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
      * @tags Documents
      * @name DocumentsUploadCreate
      * @summary Загрузка документа
@@ -905,6 +821,91 @@ export class Api<
     /**
      * No description
      *
+     * @tags Filters
+     * @name FiltersAddressesList
+     * @summary Получить список объектов
+     * @request GET:/api/Filters/addresses
+     * @secure
+     */
+    filtersAddressesList: (
+      query?: {
+        Address?: string;
+        /** @format int32 */
+        PageNumber?: number;
+        /** @format int32 */
+        PageSize?: number;
+        OrderBy?: EOrderByRule;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<AddressResponsePagedList, ErrorApiResponse>({
+        path: `/api/Filters/addresses`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Filters
+     * @name FiltersContractsList
+     * @summary Получить список доходных договоров внутри контрагента
+     * @request GET:/api/Filters/contracts
+     * @secure
+     */
+    filtersContractsList: (
+      query?: {
+        /** @format int32 */
+        PageNumber?: number;
+        /** @format int32 */
+        PageSize?: number;
+        OrderBy?: EOrderByRule;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ContractListResponsePagedList, ErrorApiResponse>({
+        path: `/api/Filters/contracts`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Filters
+     * @name FiltersExecutionContractsList
+     * @summary Получить договоров с исполнителем внутри контрагента
+     * @request GET:/api/Filters/executionContracts
+     * @secure
+     */
+    filtersExecutionContractsList: (
+      query?: {
+        /** @format int32 */
+        PageNumber?: number;
+        /** @format int32 */
+        PageSize?: number;
+        OrderBy?: EOrderByRule;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ContractListResponsePagedList, ErrorApiResponse>({
+        path: `/api/Filters/executionContracts`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags Nomenclatures
      * @name NomenclaturesList
      * @summary Возвращает список номенклатур, присоединненых к исполнителю и похожих на набранный текст
@@ -961,7 +962,8 @@ export class Api<
         CharacteristicId?: number;
         Status?: EProductionOrderStatus;
         /** @format int32 */
-        ContractId?: number;
+        ContractIdValue?: number;
+        ContractIdHasValue?: boolean;
         /** @format int32 */
         AddressId?: number;
         /** Тип сортировки наряд-заданий */

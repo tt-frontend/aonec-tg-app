@@ -59,10 +59,10 @@ export const TaskItem: FC<Props> = ({ task }) => {
         <>
           <NomenclatureName>{elem.nomenclature?.name}</NomenclatureName>
           <CharacterisicWrapper>
-            <div>{elem.characteristic?.name}</div>
-            <div>
-              {elem.amount} {elem.units}
-            </div>
+            {elem.characteristic?.name}
+          </CharacterisicWrapper>
+          <CharacterisicWrapper>
+            {elem.amount} • {elem.units}
           </CharacterisicWrapper>
         </>
       ))}
