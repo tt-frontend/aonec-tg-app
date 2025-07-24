@@ -1,8 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import {
   ButtonsWrapper,
+  Container,
   SearchButtonWrapper,
   TasksListWrapper,
+  TitleWrapper,
   Wrapper,
 } from "./TasksList.styled";
 import { Props } from "./TasksList.types";
@@ -34,7 +36,7 @@ export const TasksList: FC<Props> = ({
   }, [isFilterOpen]);
 
   return (
-    <div>
+    <Container>
       {isFilterOpen && (
         <FiltersPanel
           handleApply={() => setIsFilterOpen(false)}
@@ -49,14 +51,16 @@ export const TasksList: FC<Props> = ({
         />
       )}
       <Wrapper>
-        <Title>
-          Активные задачи
-          <ButtonsWrapper>
-            <SearchButtonWrapper onClick={() => setIsFilterOpen(true)}>
-              <FilterIcon />
-            </SearchButtonWrapper>
-          </ButtonsWrapper>
-        </Title>
+        <TitleWrapper>
+          <Title>
+            Активные задачи
+            <ButtonsWrapper>
+              <SearchButtonWrapper onClick={() => setIsFilterOpen(true)}>
+                <FilterIcon />
+              </SearchButtonWrapper>
+            </ButtonsWrapper>
+          </Title>
+        </TitleWrapper>
 
         {!isLoading && (
           <TasksListWrapper>
@@ -70,6 +74,6 @@ export const TasksList: FC<Props> = ({
         )}
         {isLoading && <Skeleton active />}
       </Wrapper>
-    </div>
+    </Container>
   );
 };

@@ -32,7 +32,7 @@ export const FiltersPanel: FC<Props> = ({
     return () => {
       setGoBackHandler(null);
     };
-  }, [handleCancel, setGoBackHandler]);
+  }, [handleCancel, handleClose, setGoBackHandler]);
 
   return (
     <Wrapper>
