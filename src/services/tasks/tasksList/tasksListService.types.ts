@@ -11,7 +11,7 @@ export type GetTasksListQueryParams = {
   CharacteristicId?: number;
   Status?: EProductionOrderStatus;
   /** @format int32 */
-  ContractIdValue?: number;
+  ContractIdValue?: number | string | null;
   ContractIdHasValue?: boolean;
   /** @format int32 */
   AddressId?: number;

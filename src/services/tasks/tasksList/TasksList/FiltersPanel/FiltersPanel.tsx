@@ -11,6 +11,7 @@ import { Button, Select } from "antd";
 import { FormItem } from "@/components/FormItem";
 import { useUnit } from "effector-react";
 import { backButtonService } from "@/services/backButton/backButtonService.model";
+import { NO_CONTRACT_FLAG } from "../../tasksListService.models";
 
 export const FiltersPanel: FC<Props> = ({
   handleApply,
@@ -95,6 +96,9 @@ export const FiltersPanel: FC<Props> = ({
                 setTasksListFilters({ ContractIdValue: value })
               }
             >
+              <Select.Option key={NO_CONTRACT_FLAG} value={NO_CONTRACT_FLAG}>
+                Без договора
+              </Select.Option>
               {contracts?.items?.map((elem) => (
                 <Select.Option key={elem.id} value={elem.id}>
                   {elem.name} {elem.type}

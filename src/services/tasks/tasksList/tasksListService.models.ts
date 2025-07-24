@@ -21,9 +21,21 @@ const $tasksListFilters = createStore<GetTasksListQueryParams>({
   .on(setTasksListFilters, (prev, filters) => ({ ...prev, ...filters }))
   .reset(resetFilters);
 
+export const NO_CONTRACT_FLAG = "NO_CONTRACT";
+
 sample({
   source: $tasksListFilters,
   clock: [TasksListGate.open, $tasksListFilters.updates],
+  fn: (filters): GetTasksListQueryParams => {
+    return {
+      ...filters,
+      ContractIdHasValue: Boolean(filters.ContractIdValue),
+      ContractIdValue:
+        filters.ContractIdValue === NO_CONTRACT_FLAG
+          ? null
+          : filters.ContractIdValue,
+    };
+  },
   target: tasksListQuery.start,
 });
 
