@@ -49,7 +49,10 @@ export const FiltersPanel: FC<Props> = ({
               allowClear
               value={filters.NomenclatureId}
               onChange={(value) =>
-                setTasksListFilters({ NomenclatureId: value })
+                setTasksListFilters({
+                  NomenclatureId: value,
+                  CharacteristicId: null,
+                })
               }
             >
               {nomenclatures?.map((elem) => (
