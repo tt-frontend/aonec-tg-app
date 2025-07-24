@@ -90,8 +90,10 @@ export const FiltersPanel: FC<Props> = ({
               style={{ width: "100%" }}
               size="large"
               allowClear
-              value={filters.ContractId}
-              onChange={(value) => setTasksListFilters({ ContractId: value })}
+              value={filters.ContractIdValue}
+              onChange={(value) =>
+                setTasksListFilters({ ContractIdValue: value })
+              }
             >
               {contracts?.items?.map((elem) => (
                 <Select.Option key={elem.id} value={elem.id}>

@@ -35,14 +35,14 @@ export const contractsListQuery = createQuery<
   ContractListResponsePagedList
 >({
   handler: (params): Promise<ContractListResponsePagedList> =>
-    api.get("/Contractors/contracts", { params }),
+    api.get("/Filters/contracts", { params }),
 });
 
 export const executingContractsListQuery = createQuery<
   [GetExecutingContractsQueryParams],
   ContractListResponsePagedList
 >({
-  handler: (params) => api.get("/Contractors/executionContracts", { params }),
+  handler: (params) => api.get("/Filters/executionContracts", { params }),
 });
 
 export const nomenclatureCharacteristicsQuery = createQuery<

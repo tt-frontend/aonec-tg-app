@@ -1,4 +1,8 @@
-import { EOrderByRule, EProductionOrderOrderRule, EProductionOrderStatus } from "@/api/types";
+import {
+  EOrderByRule,
+  EProductionOrderOrderRule,
+  EProductionOrderStatus,
+} from "@/api/types";
 
 export type GetTasksListQueryParams = {
   /** @format int32 */
@@ -7,7 +11,8 @@ export type GetTasksListQueryParams = {
   CharacteristicId?: number;
   Status?: EProductionOrderStatus;
   /** @format int32 */
-  ContractId?: number;
+  ContractIdValue?: number;
+  ContractIdHasValue?: boolean;
   /** @format int32 */
   AddressId?: number;
   /** Тип сортировки наряд-заданий */
