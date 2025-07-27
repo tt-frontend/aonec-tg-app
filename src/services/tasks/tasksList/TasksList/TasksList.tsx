@@ -14,6 +14,10 @@ import { FiltersPanel } from "./FiltersPanel";
 import { TaskItem } from "./TaskItem";
 import { FilterIcon } from "@/components/icons/FilterIcon";
 
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 export const TasksList: FC<Props> = ({
   tasksListPagedList,
   isLoading,
@@ -53,7 +57,7 @@ export const TasksList: FC<Props> = ({
       <Wrapper>
         <TitleWrapper>
           <Title>
-            Активные задачи
+            <div onClick={scrollToTop}>Активные задачи</div>
             <ButtonsWrapper>
               <SearchButtonWrapper onClick={() => setIsFilterOpen(true)}>
                 <FilterIcon />
