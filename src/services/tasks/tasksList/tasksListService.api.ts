@@ -1,5 +1,6 @@
 import { api } from "@/api";
 import {
+  AddressResponsePagedList,
   CharacteristicResponse,
   ContractListResponsePagedList,
   NomenclatureListResponse,
@@ -7,10 +8,12 @@ import {
 } from "@/api/types";
 import { createQuery } from "@farfetched/core";
 import {
+  AddressesOfTasksQueryParams,
   GetContractsQueryParams,
   GetExecutingContractsQueryParams,
   GetTasksListQueryParams,
 } from "./tasksListService.types";
+import axios from "axios";
 
 export const tasksListQuery = createQuery<
   [GetTasksListQueryParams],
@@ -50,4 +53,12 @@ export const nomenclatureCharacteristicsQuery = createQuery<
   CharacteristicResponse[]
 >({
   handler: (id) => api.get(`/Nomenclatures/${id}`),
+});
+
+export const addressesOfTasksQuery = createQuery<
+  [AddressesOfTasksQueryParams],
+  AddressResponsePagedList
+>({
+  handler: (params): Promise<AddressResponsePagedList> =>
+    axios.get(`Filters/addresses`, { params }),
 });

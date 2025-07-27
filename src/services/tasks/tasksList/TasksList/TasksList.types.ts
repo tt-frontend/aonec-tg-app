@@ -1,4 +1,5 @@
 import {
+  AddressResponsePagedList,
   CharacteristicResponse,
   ContractListResponsePagedList,
   NomenclatureListResponse,
@@ -16,4 +17,5 @@ export type Props = {
   executingContracts: ContractListResponsePagedList | null;
   characteristics: CharacteristicResponse[] | null;
   resetFilters: () => void;
+  addressesList: AddressResponsePagedList | null;
 };

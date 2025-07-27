@@ -1,6 +1,7 @@
 import { createEvent, createStore, sample } from "effector";
 import { createGate } from "effector-react";
 import {
+  addressesOfTasksQuery,
   contractsListQuery,
   executingContractsListQuery,
   nomenclatureCharacteristicsQuery,
@@ -52,6 +53,11 @@ sample({
 sample({
   clock: TasksListGate.open,
   target: executingContractsListQuery.start.prepend(() => ({})),
+});
+
+sample({
+  clock: TasksListGate.open,
+  target: addressesOfTasksQuery.start.prepend(() => ({})),
 });
 
 const $selectecNomenclature = $tasksListFilters.map(

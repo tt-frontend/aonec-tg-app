@@ -28,6 +28,7 @@ export const TasksList: FC<Props> = ({
   setTasksListFilters,
   characteristics,
   resetFilters,
+  addressesList,
 }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -52,6 +53,7 @@ export const TasksList: FC<Props> = ({
           setTasksListFilters={setTasksListFilters}
           characteristics={characteristics}
           handleClose={() => setIsFilterOpen(false)}
+          addressesList={addressesList}
         />
       )}
       <Wrapper>
