@@ -12,6 +12,12 @@ import { FormItem } from "@/components/FormItem";
 import { useUnit } from "effector-react";
 import { backButtonService } from "@/services/backButton/backButtonService.model";
 import { NO_CONTRACT_FLAG } from "../../tasksListService.models";
+import {
+  ETasksSortType,
+  filterToTaskSortType,
+  TaskSortTypeToFilter,
+  TasksSortTypeToLable,
+} from "./FiltersPanel.constatns";
 
 export const FiltersPanel: FC<Props> = ({
   handleApply,
@@ -39,6 +45,30 @@ export const FiltersPanel: FC<Props> = ({
     <Wrapper>
       <Content>
         <Title>Фильтры</Title>
+
+        <FormItem label="Сортировка" bold>
+          <InputWrapper>
+            <Select
+              size="large"
+              placeholder="Без сортировки"
+              onChange={(value: ETasksSortType | null) => {
+                if (!value) {
+                  setTasksListFilters({ OrderBy: null, OrderRule: null });
+                  return;
+                }
+
+                setTasksListFilters({ ...TaskSortTypeToFilter[value] });
+              }}
+              value={filterToTaskSortType(filters.OrderBy, filters.OrderRule)}
+            >
+              {Object.values(ETasksSortType).map((type) => (
+                <Select.Option key={type} value={type}>
+                  {TasksSortTypeToLable[type]}
+                </Select.Option>
+              ))}
+            </Select>
+          </InputWrapper>
+        </FormItem>
 
         <FormItem label="Номенклатура работ" bold>
           <InputWrapper>

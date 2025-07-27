@@ -16,7 +16,7 @@ export type GetTasksListQueryParams = {
   /** @format int32 */
   AddressId?: number;
   /** Тип сортировки наряд-заданий */
-  OrderRule?: EProductionOrderOrderRule;
+  OrderRule?: EProductionOrderOrderRule | null;
   /** @format date-time */
   From?: string;
   /** @format date-time */
@@ -25,7 +25,7 @@ export type GetTasksListQueryParams = {
   PageNumber?: number;
   /** @format int32 */
   PageSize?: number;
-  OrderBy?: EOrderByRule;
+  OrderBy?: EOrderByRule | null;
 };
 
 export type GetContractsQueryParams = {
