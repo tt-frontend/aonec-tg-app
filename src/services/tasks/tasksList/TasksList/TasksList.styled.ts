@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
+export const Container = styled.div``;
+
 export const Wrapper = styled.div`
+  padding-top: 64px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -27,4 +30,15 @@ export const TasksListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+`;
+
+export const TitleWrapper = styled.div`
+  top: 0px;
+  left: 0;
+  padding: 14px 16px;
+  position: fixed;
+  width: calc(100% - 32px);
+  backdrop-filter: blur(4px);
+  background: #ffffffb5;
+  z-index: 2;
 `;

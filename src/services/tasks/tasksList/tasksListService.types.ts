@@ -1,17 +1,22 @@
-import { EOrderByRule, EProductionOrderOrderRule, EProductionOrderStatus } from "@/api/types";
+import {
+  EOrderByRule,
+  EProductionOrderOrderRule,
+  EProductionOrderStatus,
+} from "@/api/types";
 
 export type GetTasksListQueryParams = {
   /** @format int32 */
   NomenclatureId?: number;
   /** @format int32 */
-  CharacteristicId?: number;
+  CharacteristicId?: number | null;
   Status?: EProductionOrderStatus;
   /** @format int32 */
-  ContractId?: number;
+  ContractIdValue?: number | string | null;
+  ContractIdHasValue?: boolean;
   /** @format int32 */
   AddressId?: number;
   /** Тип сортировки наряд-заданий */
-  OrderRule?: EProductionOrderOrderRule;
+  OrderRule?: EProductionOrderOrderRule | null;
   /** @format date-time */
   From?: string;
   /** @format date-time */
@@ -20,7 +25,7 @@ export type GetTasksListQueryParams = {
   PageNumber?: number;
   /** @format int32 */
   PageSize?: number;
-  OrderBy?: EOrderByRule;
+  OrderBy?: EOrderByRule | null;
 };
 
 export type GetContractsQueryParams = {

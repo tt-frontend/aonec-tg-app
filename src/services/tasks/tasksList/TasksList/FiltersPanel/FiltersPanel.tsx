@@ -11,6 +11,13 @@ import { Button, Select } from "antd";
 import { FormItem } from "@/components/FormItem";
 import { useUnit } from "effector-react";
 import { backButtonService } from "@/services/backButton/backButtonService.model";
+import { NO_CONTRACT_FLAG } from "../../tasksListService.models";
+import {
+  ETasksSortType,
+  filterToTaskSortType,
+  TaskSortTypeToFilter,
+  TasksSortTypeToLable,
+} from "./FiltersPanel.constatns";
 
 export const FiltersPanel: FC<Props> = ({
   handleApply,
@@ -32,12 +39,36 @@ export const FiltersPanel: FC<Props> = ({
     return () => {
       setGoBackHandler(null);
     };
-  }, [handleCancel, setGoBackHandler]);
+  }, [handleCancel, handleClose, setGoBackHandler]);
 
   return (
     <Wrapper>
       <Content>
         <Title>Фильтры</Title>
+
+        <FormItem label="Сортировка" bold>
+          <InputWrapper>
+            <Select
+              size="large"
+              placeholder="Без сортировки"
+              onChange={(value: ETasksSortType | null) => {
+                if (!value) {
+                  setTasksListFilters({ OrderBy: null, OrderRule: null });
+                  return;
+                }
+
+                setTasksListFilters({ ...TaskSortTypeToFilter[value] });
+              }}
+              value={filterToTaskSortType(filters.OrderBy, filters.OrderRule)}
+            >
+              {Object.values(ETasksSortType).map((type) => (
+                <Select.Option key={type} value={type}>
+                  {TasksSortTypeToLable[type]}
+                </Select.Option>
+              ))}
+            </Select>
+          </InputWrapper>
+        </FormItem>
 
         <FormItem label="Номенклатура работ" bold>
           <InputWrapper>
@@ -48,7 +79,10 @@ export const FiltersPanel: FC<Props> = ({
               allowClear
               value={filters.NomenclatureId}
               onChange={(value) =>
-                setTasksListFilters({ NomenclatureId: value })
+                setTasksListFilters({
+                  NomenclatureId: value,
+                  CharacteristicId: null,
+                })
               }
             >
               {nomenclatures?.map((elem) => (
@@ -90,9 +124,14 @@ export const FiltersPanel: FC<Props> = ({
               style={{ width: "100%" }}
               size="large"
               allowClear
-              value={filters.ContractId}
-              onChange={(value) => setTasksListFilters({ ContractId: value })}
+              value={filters.ContractIdValue}
+              onChange={(value) =>
+                setTasksListFilters({ ContractIdValue: value })
+              }
             >
+              <Select.Option key={NO_CONTRACT_FLAG} value={NO_CONTRACT_FLAG}>
+                Без договора
+              </Select.Option>
               {contracts?.items?.map((elem) => (
                 <Select.Option key={elem.id} value={elem.id}>
                   {elem.name} {elem.type}
