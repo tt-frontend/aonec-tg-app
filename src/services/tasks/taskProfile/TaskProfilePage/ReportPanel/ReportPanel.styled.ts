@@ -5,7 +5,7 @@ import styled from "styled-components";
 export const Wrapper = styled(Card)``;
 
 export const TextAreaSC = styled(TextArea)`
-  min-height: 128px !important;
+  min-height: 86px !important;
 
   background-color: #f2f2f7 !important;
 
