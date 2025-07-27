@@ -13,6 +13,8 @@ import { Empty, Skeleton } from "antd";
 import { FiltersPanel } from "./FiltersPanel";
 import { TaskItem } from "./TaskItem";
 import { FilterIcon } from "@/components/icons/FilterIcon";
+import { useLocation } from "react-router-dom";
+import { getScrollPosition, saveScrollPosition } from "@/utils/scrollManager";
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -30,6 +32,8 @@ export const TasksList: FC<Props> = ({
   resetFilters,
   addressesList,
 }) => {
+  const location = useLocation();
+
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => {
@@ -39,6 +43,17 @@ export const TasksList: FC<Props> = ({
       document.body.style.overflow = "";
     }
   }, [isFilterOpen]);
+
+  useEffect(() => {
+    const y = getScrollPosition(location.pathname);
+    window.scrollTo(0, y);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    return () => {
+      saveScrollPosition(location.pathname);
+    };
+  }, [location.pathname]);
 
   return (
     <Container>

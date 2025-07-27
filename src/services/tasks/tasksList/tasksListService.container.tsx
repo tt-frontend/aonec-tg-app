@@ -45,7 +45,7 @@ export const TasksListContainer = () => {
       <TasksListGate />
       <TasksList
         tasksListPagedList={tasksListPagedList}
-        isLoading={isLoading}
+        isLoading={isLoading && !tasksListPagedList?.items?.length}
         setTasksListFilters={setTasksListFilters}
         filters={filters}
         nomenclatures={nomenclatures}
