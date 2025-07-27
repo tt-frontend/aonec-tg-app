@@ -28,6 +28,7 @@ export const FiltersPanel: FC<Props> = ({
   filters,
   setTasksListFilters,
   handleClose,
+  addressesList,
 }) => {
   const { setGoBackHandler } = useUnit({
     setGoBackHandler: backButtonService.inputs.setGoBackHandler,
@@ -60,10 +61,29 @@ export const FiltersPanel: FC<Props> = ({
                 setTasksListFilters({ ...TaskSortTypeToFilter[value] });
               }}
               value={filterToTaskSortType(filters.OrderBy, filters.OrderRule)}
+              allowClear
             >
               {Object.values(ETasksSortType).map((type) => (
                 <Select.Option key={type} value={type}>
                   {TasksSortTypeToLable[type]}
+                </Select.Option>
+              ))}
+            </Select>
+          </InputWrapper>
+        </FormItem>
+
+        <FormItem label="Адрес" bold>
+          <InputWrapper>
+            <Select
+              size="large"
+              placeholder="Выберите из списка"
+              value={filters.AddressId}
+              onChange={(value) => setTasksListFilters({ AddressId: value })}
+              allowClear
+            >
+              {addressesList?.items?.map((elem) => (
+                <Select.Option key={elem.id} value={elem.id}>
+                  {elem.address}
                 </Select.Option>
               ))}
             </Select>

@@ -43,3 +43,12 @@ export type GetExecutingContractsQueryParams = {
   PageSize?: number;
   OrderBy?: EOrderByRule;
 };
+
+export type AddressesOfTasksQueryParams = {
+  Address?: string;
+  /** @format int32 */
+  PageNumber?: number;
+  /** @format int32 */
+  PageSize?: number;
+  OrderBy?: EOrderByRule;
+};

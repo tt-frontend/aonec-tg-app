@@ -1,6 +1,7 @@
 import { createEvent, createStore, sample } from "effector";
 import { createGate } from "effector-react";
 import {
+  addressesOfTasksQuery,
   contractsListQuery,
   executingContractsListQuery,
   nomenclatureCharacteristicsQuery,
@@ -8,24 +9,61 @@ import {
   tasksListQuery,
 } from "./tasksListService.api";
 import { GetTasksListQueryParams } from "./tasksListService.types";
-import { EProductionOrderStatus } from "@/api/types";
+import {
+  EProductionOrderStatus,
+  ProductionOrderListResponse,
+} from "@/api/types";
 
 const TasksListGate = createGate();
 
 const setTasksListFilters = createEvent<GetTasksListQueryParams>();
 const resetFilters = createEvent();
 
+const nextPage = createEvent();
+const onNextPage = createEvent();
+
+const initialLoadTasks = createEvent();
+
 const $tasksListFilters = createStore<GetTasksListQueryParams>({
   Status: EProductionOrderStatus.InProgress,
+  PageSize: 15,
+  PageNumber: 1,
 })
   .on(setTasksListFilters, (prev, filters) => ({ ...prev, ...filters }))
+  .on(onNextPage, (prev) => ({
+    ...prev,
+    PageNumber: (prev.PageNumber || 1) + 1,
+  }))
   .reset(resetFilters);
+
+const $isAllowNextPage = tasksListQuery.$pending.map((isLoading) => !isLoading);
+
+sample({
+  clock: nextPage,
+  filter: $isAllowNextPage,
+  target: onNextPage,
+});
+
+const $tasksList = createStore<ProductionOrderListResponse[]>([])
+  .on(tasksListQuery.finished.success, (prev, { result }) => [
+    ...prev,
+    ...(result.items || []),
+  ])
+  .reset(resetFilters, setTasksListFilters);
 
 export const NO_CONTRACT_FLAG = "NO_CONTRACT";
 
+const $isAllowInitialLoadByGate = $tasksList.map((list) => !list.length);
+
+sample({
+  clock: TasksListGate.open,
+  filter: $isAllowInitialLoadByGate,
+  target: initialLoadTasks,
+});
+
 sample({
   source: $tasksListFilters,
-  clock: [TasksListGate.open, $tasksListFilters.updates],
+  clock: [initialLoadTasks, $tasksListFilters.updates],
   fn: (filters): GetTasksListQueryParams => {
     return {
       ...filters,
@@ -54,6 +92,11 @@ sample({
   target: executingContractsListQuery.start.prepend(() => ({})),
 });
 
+sample({
+  clock: TasksListGate.open,
+  target: addressesOfTasksQuery.start.prepend(() => ({})),
+});
+
 const $selectecNomenclature = $tasksListFilters.map(
   ({ NomenclatureId }) => NomenclatureId
 );
@@ -65,7 +108,7 @@ sample({
 });
 
 export const tasksListService = {
-  inputs: { setTasksListFilters, resetFilters },
-  outputs: { $tasksListFilters },
+  inputs: { setTasksListFilters, resetFilters, nextPage },
+  outputs: { $tasksListFilters, $tasksList },
   gates: { TasksListGate },
 };

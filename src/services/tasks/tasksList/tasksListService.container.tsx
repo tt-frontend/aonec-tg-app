@@ -2,6 +2,7 @@ import { tasksListService } from "./tasksListService.models";
 import { TasksList } from "./TasksList/TasksList";
 import { useUnit } from "effector-react";
 import {
+  addressesOfTasksQuery,
   contractsListQuery,
   executingContractsListQuery,
   nomenclatureCharacteristicsQuery,
@@ -11,6 +12,7 @@ import {
 
 const {
   inputs,
+  outputs,
   gates: { TasksListGate },
 } = tasksListService;
 
@@ -25,6 +27,9 @@ export const TasksListContainer = () => {
     executingContracts,
     characteristics,
     resetFilters,
+    addressesList,
+    tasksList,
+    handleNextPage,
   } = useUnit({
     tasksListPagedList: tasksListQuery.$data,
     isLoading: tasksListQuery.$pending,
@@ -35,6 +40,9 @@ export const TasksListContainer = () => {
     executingContracts: executingContractsListQuery.$data,
     characteristics: nomenclatureCharacteristicsQuery.$data,
     resetFilters: inputs.resetFilters,
+    addressesList: addressesOfTasksQuery.$data,
+    tasksList: outputs.$tasksList,
+    handleNextPage: inputs.nextPage,
   });
 
   return (
@@ -50,6 +58,9 @@ export const TasksListContainer = () => {
         executingContracts={executingContracts}
         characteristics={characteristics}
         resetFilters={resetFilters}
+        addressesList={addressesList}
+        tasksList={tasksList}
+        handleNextPage={handleNextPage}
       />
     </>
   );

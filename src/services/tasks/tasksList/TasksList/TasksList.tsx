@@ -13,6 +13,13 @@ import { Empty, Skeleton } from "antd";
 import { FiltersPanel } from "./FiltersPanel";
 import { TaskItem } from "./TaskItem";
 import { FilterIcon } from "@/components/icons/FilterIcon";
+import { useLocation } from "react-router-dom";
+import { getScrollPosition, saveScrollPosition } from "@/utils/scrollManager";
+import { useInfiniteScroll } from "@/utils/useInfiniteScroll";
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
 export const TasksList: FC<Props> = ({
   tasksListPagedList,
@@ -24,7 +31,12 @@ export const TasksList: FC<Props> = ({
   setTasksListFilters,
   characteristics,
   resetFilters,
+  addressesList,
+  tasksList,
+  handleNextPage,
 }) => {
+  const location = useLocation();
+
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => {
@@ -34,6 +46,22 @@ export const TasksList: FC<Props> = ({
       document.body.style.overflow = "";
     }
   }, [isFilterOpen]);
+
+  useEffect(() => {
+    const y = getScrollPosition(location.pathname);
+    window.scrollTo(0, y);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    return () => {
+      saveScrollPosition(location.pathname);
+    };
+  }, [location.pathname]);
+
+  useInfiniteScroll(
+    handleNextPage,
+    tasksListPagedList?.hasNextPage && location.pathname === "/tasks"
+  );
 
   return (
     <Container>
@@ -48,12 +76,13 @@ export const TasksList: FC<Props> = ({
           setTasksListFilters={setTasksListFilters}
           characteristics={characteristics}
           handleClose={() => setIsFilterOpen(false)}
+          addressesList={addressesList}
         />
       )}
       <Wrapper>
         <TitleWrapper>
           <Title>
-            Активные задачи
+            <div onClick={scrollToTop}>Активные задачи</div>
             <ButtonsWrapper>
               <SearchButtonWrapper onClick={() => setIsFilterOpen(true)}>
                 <FilterIcon />
@@ -62,16 +91,16 @@ export const TasksList: FC<Props> = ({
           </Title>
         </TitleWrapper>
 
-        {!isLoading && (
-          <TasksListWrapper>
-            {tasksListPagedList?.items?.map((task) => (
-              <TaskItem task={task} key={task.id} />
-            ))}
-          </TasksListWrapper>
-        )}
-        {!isLoading && !tasksListPagedList?.items?.length && (
+        <TasksListWrapper>
+          {tasksList?.map((task) => (
+            <TaskItem task={task} key={task.id} />
+          ))}
+        </TasksListWrapper>
+
+        {!isLoading && !tasksList?.length && (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Нет задач" />
         )}
+
         {isLoading && <Skeleton active />}
       </Wrapper>
     </Container>
