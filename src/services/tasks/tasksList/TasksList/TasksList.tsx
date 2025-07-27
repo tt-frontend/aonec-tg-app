@@ -15,6 +15,7 @@ import { TaskItem } from "./TaskItem";
 import { FilterIcon } from "@/components/icons/FilterIcon";
 import { useLocation } from "react-router-dom";
 import { getScrollPosition, saveScrollPosition } from "@/utils/scrollManager";
+import { useInfiniteScroll } from "@/utils/useInfiniteScroll";
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -31,6 +32,8 @@ export const TasksList: FC<Props> = ({
   characteristics,
   resetFilters,
   addressesList,
+  tasksList,
+  handleNextPage,
 }) => {
   const location = useLocation();
 
@@ -54,6 +57,11 @@ export const TasksList: FC<Props> = ({
       saveScrollPosition(location.pathname);
     };
   }, [location.pathname]);
+
+  useInfiniteScroll(
+    handleNextPage,
+    tasksListPagedList?.hasNextPage && location.pathname === "/tasks"
+  );
 
   return (
     <Container>
@@ -83,16 +91,16 @@ export const TasksList: FC<Props> = ({
           </Title>
         </TitleWrapper>
 
-        {!isLoading && (
-          <TasksListWrapper>
-            {tasksListPagedList?.items?.map((task) => (
-              <TaskItem task={task} key={task.id} />
-            ))}
-          </TasksListWrapper>
-        )}
-        {!isLoading && !tasksListPagedList?.items?.length && (
+        <TasksListWrapper>
+          {tasksList?.map((task) => (
+            <TaskItem task={task} key={task.id} />
+          ))}
+        </TasksListWrapper>
+
+        {!isLoading && !tasksList?.length && (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Нет задач" />
         )}
+
         {isLoading && <Skeleton active />}
       </Wrapper>
     </Container>

@@ -12,6 +12,7 @@ import {
 
 const {
   inputs,
+  outputs,
   gates: { TasksListGate },
 } = tasksListService;
 
@@ -27,6 +28,8 @@ export const TasksListContainer = () => {
     characteristics,
     resetFilters,
     addressesList,
+    tasksList,
+    handleNextPage,
   } = useUnit({
     tasksListPagedList: tasksListQuery.$data,
     isLoading: tasksListQuery.$pending,
@@ -38,6 +41,8 @@ export const TasksListContainer = () => {
     characteristics: nomenclatureCharacteristicsQuery.$data,
     resetFilters: inputs.resetFilters,
     addressesList: addressesOfTasksQuery.$data,
+    tasksList: outputs.$tasksList,
+    handleNextPage: inputs.nextPage,
   });
 
   return (
@@ -45,7 +50,7 @@ export const TasksListContainer = () => {
       <TasksListGate />
       <TasksList
         tasksListPagedList={tasksListPagedList}
-        isLoading={isLoading && !tasksListPagedList?.items?.length}
+        isLoading={isLoading}
         setTasksListFilters={setTasksListFilters}
         filters={filters}
         nomenclatures={nomenclatures}
@@ -54,6 +59,8 @@ export const TasksListContainer = () => {
         characteristics={characteristics}
         resetFilters={resetFilters}
         addressesList={addressesList}
+        tasksList={tasksList}
+        handleNextPage={handleNextPage}
       />
     </>
   );

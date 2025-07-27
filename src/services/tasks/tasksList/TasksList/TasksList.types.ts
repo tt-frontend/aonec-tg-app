@@ -3,12 +3,14 @@ import {
   CharacteristicResponse,
   ContractListResponsePagedList,
   NomenclatureListResponse,
+  ProductionOrderListResponse,
   ProductionOrderListResponsePagedList,
 } from "@/api/types";
 import { GetTasksListQueryParams } from "../tasksListService.types";
 
 export type Props = {
   tasksListPagedList: ProductionOrderListResponsePagedList | null;
+  tasksList: ProductionOrderListResponse[];
   isLoading: boolean;
   setTasksListFilters: (filters: GetTasksListQueryParams) => void;
   filters: GetTasksListQueryParams;
@@ -18,4 +20,5 @@ export type Props = {
   characteristics: CharacteristicResponse[] | null;
   resetFilters: () => void;
   addressesList: AddressResponsePagedList | null;
+  handleNextPage: () => void;
 };
