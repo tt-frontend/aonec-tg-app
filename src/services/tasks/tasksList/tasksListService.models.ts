@@ -13,6 +13,7 @@ import {
   EProductionOrderStatus,
   ProductionOrderListResponse,
 } from "@/api/types";
+import { completeTaskMutation } from "../taskProfile/taskProfileService.api";
 
 const TasksListGate = createGate();
 
@@ -49,7 +50,11 @@ const $tasksList = createStore<ProductionOrderListResponse[]>([])
     ...prev,
     ...(result.items || []),
   ])
-  .reset(resetFilters, setTasksListFilters);
+  .reset(
+    resetFilters,
+    setTasksListFilters,
+    completeTaskMutation.finished.success
+  );
 
 export const NO_CONTRACT_FLAG = "NO_CONTRACT";
 
