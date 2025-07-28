@@ -30,7 +30,7 @@ const $tasksListFilters = createStore<GetTasksListQueryParams>({
   PageSize: 15,
   PageNumber: 1,
 })
-  .on(setTasksListFilters, (prev, filters) => ({ ...prev, ...filters }))
+  .on(setTasksListFilters, (prev, filters) => ({ ...prev, PageNumber: 1, ...filters }))
   .on(onNextPage, (prev) => ({
     ...prev,
     PageNumber: (prev.PageNumber || 1) + 1,
