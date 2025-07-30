@@ -52,14 +52,14 @@ const $authToken = createStore<null | string>(null)
     return data.token;
   })
   .on(setTokens, (_, { token }) => token)
-  .reset(logoutUser);
+  .reset(logoutUserMutation.finished.finally);
 
 const $refreshToken = createStore<null | string>(null)
   .on(fetchAuthTokenFx.doneData, (_, data) => {
     return data.refreshToken;
   })
   .on(setTokens, (_, { refreshToken }) => refreshToken)
-  .reset(logoutUser);
+  .reset(logoutUserMutation.finished.finally);
 
 persist({
   store: $authToken,
@@ -90,6 +90,12 @@ const $logoutRequest = combine(
       refreshToken: refreshToken as string,
     } as LogoutRequest)
 );
+
+logoutUserMutation.finished.finally.watch(() => {
+  setTimeout(() => {
+    window.location.reload();
+  }, 10);
+});
 
 sample({
   source: $logoutRequest,
