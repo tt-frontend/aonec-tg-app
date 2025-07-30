@@ -2,7 +2,7 @@ import { authService } from "@/services/authService";
 import { checkUrl } from "@/utils";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://stage-ecbot.ru/api";
+axios.defaults.baseURL = "https://stage.aonec-bot.ru/api";
 
 axios.interceptors.request.use((req) => {
   req.headers.Authorization = `Bearer ${
