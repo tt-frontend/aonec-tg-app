@@ -52,6 +52,10 @@ axios.interceptors.response.use(
       return;
     }
 
+    if (status === 401 && checkUrl("Auth/logout", url)) {
+      return;
+    }
+
     if (status === 401 && !checkUrl("Auth/login|Auth/confirm", error.config.url)) {
       const { config } = error;
 
