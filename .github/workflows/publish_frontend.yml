@@ -30,7 +30,7 @@ jobs:
         (needs.bump_version.result == 'success')
     uses: ./.github/workflows/publish.yml
     with:
-      docker_registry: cr.yandex/crpnm76utfphmac4qo1t
+      docker_registry: cr.yandex/crp7c1crhqf81ppp32bp
       image_name: aonec-bot
       dockerfile_path: ./Dockerfile
       image_tag: ${{ github.ref_name }}
