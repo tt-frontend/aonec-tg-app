@@ -48,3 +48,9 @@ export const PaginationWrapper = styled.div`
   justify-content: center;
   width: 100%;
 `;
+
+export const TaskAmount = styled.div`
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 400;
+`;

@@ -4,6 +4,7 @@ import {
   Container,
   PaginationWrapper,
   SearchButtonWrapper,
+  TaskAmount,
   TasksListWrapper,
   TitleWrapper,
   Wrapper,
@@ -76,7 +77,10 @@ export const TasksList: FC<Props> = ({
       <Wrapper>
         <TitleWrapper>
           <Title>
-            <div onClick={scrollToTop}>Активные задачи</div>
+            <div onClick={scrollToTop}>
+              Активные задачи
+              <TaskAmount>Всего задач: {tasksListPagedList?.totalItems}</TaskAmount>
+            </div>
             <ButtonsWrapper>
               <SearchButtonWrapper onClick={() => setIsFilterOpen(true)}>
                 <FilterIcon />

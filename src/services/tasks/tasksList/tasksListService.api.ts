@@ -11,6 +11,7 @@ import {
   AddressesOfTasksQueryParams,
   GetContractsQueryParams,
   GetExecutingContractsQueryParams,
+  GetNomenclaturesQueryParams,
   GetTasksListQueryParams,
 } from "./tasksListService.types";
 import axios from "axios";
@@ -23,11 +24,7 @@ export const tasksListQuery = createQuery<
 });
 
 export const nomenclaturesListQuery = createQuery<
-  [
-    {
-      NomenclatureName?: string;
-    }
-  ],
+  [GetNomenclaturesQueryParams],
   NomenclatureListResponse[]
 >({
   handler: (payload) => api.get("/Nomenclatures", { params: payload }),

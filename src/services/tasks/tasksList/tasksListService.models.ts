@@ -50,22 +50,30 @@ sample({
 
 sample({
   clock: TasksListGate.open,
-  target: nomenclaturesListQuery.start.prepend(() => ({})),
+  target: nomenclaturesListQuery.start.prepend(() => ({
+    ProductionOrderStatus: EProductionOrderStatus.InProgress,
+  })),
 });
 
 sample({
   clock: TasksListGate.open,
-  target: contractsListQuery.start.prepend(() => ({})),
+  target: contractsListQuery.start.prepend(() => ({
+    ProductionOrderStatus: EProductionOrderStatus.InProgress,
+  })),
 });
 
 sample({
   clock: TasksListGate.open,
-  target: executingContractsListQuery.start.prepend(() => ({})),
+  target: executingContractsListQuery.start.prepend(() => ({
+    ProductionOrderStatus: EProductionOrderStatus.InProgress,
+  })),
 });
 
 sample({
   clock: TasksListGate.open,
-  target: addressesOfTasksQuery.start.prepend(() => ({})),
+  target: addressesOfTasksQuery.start.prepend(() => ({
+    ProductionOrderStatus: EProductionOrderStatus.InProgress,
+  })),
 });
 
 const $selectedNomenclature = $tasksListFilters.map(
