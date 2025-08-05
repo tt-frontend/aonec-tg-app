@@ -9,66 +9,32 @@ import {
   tasksListQuery,
 } from "./tasksListService.api";
 import { GetTasksListQueryParams } from "./tasksListService.types";
-import {
-  EProductionOrderStatus,
-  ProductionOrderListResponse,
-} from "@/api/types";
-import { completeTaskMutation } from "../taskProfile/taskProfileService.api";
+import { EProductionOrderStatus } from "@/api/types";
 
 const TasksListGate = createGate();
 
 const setTasksListFilters = createEvent<GetTasksListQueryParams>();
 const resetFilters = createEvent();
 
-const nextPage = createEvent();
-const onNextPage = createEvent();
-
-const initialLoadTasks = createEvent();
-
 const $tasksListFilters = createStore<GetTasksListQueryParams>({
   Status: EProductionOrderStatus.InProgress,
-  PageSize: 15,
+  PageSize: 10,
   PageNumber: 1,
 })
-  .on(setTasksListFilters, (prev, filters) => ({ ...prev, PageNumber: 1, ...filters }))
-  .on(onNextPage, (prev) => ({
+  .on(setTasksListFilters, (prev, filters) => ({
     ...prev,
-    PageNumber: (prev.PageNumber || 1) + 1,
+    PageNumber: 1,
+    ...filters,
   }))
   .reset(resetFilters);
 
-const $isAllowNextPage = tasksListQuery.$pending.map((isLoading) => !isLoading);
-
-sample({
-  clock: nextPage,
-  filter: $isAllowNextPage,
-  target: onNextPage,
-});
-
-const $tasksList = createStore<ProductionOrderListResponse[]>([])
-  .on(tasksListQuery.finished.success, (prev, { result }) => [
-    ...prev,
-    ...(result.items || []),
-  ])
-  .reset(
-    resetFilters,
-    setTasksListFilters,
-    completeTaskMutation.finished.success
-  );
+const $tasksList = tasksListQuery.$data.map((data) => data?.items || []);
 
 export const NO_CONTRACT_FLAG = "NO_CONTRACT";
 
-const $isAllowInitialLoadByGate = $tasksList.map((list) => !list.length);
-
-sample({
-  clock: TasksListGate.open,
-  filter: $isAllowInitialLoadByGate,
-  target: initialLoadTasks,
-});
-
 sample({
   source: $tasksListFilters,
-  clock: [initialLoadTasks, $tasksListFilters.updates],
+  clock: [TasksListGate.open, $tasksListFilters.updates],
   fn: (filters): GetTasksListQueryParams => {
     return {
       ...filters,
@@ -102,18 +68,18 @@ sample({
   target: addressesOfTasksQuery.start.prepend(() => ({})),
 });
 
-const $selectecNomenclature = $tasksListFilters.map(
+const $selectedNomenclature = $tasksListFilters.map(
   ({ NomenclatureId }) => NomenclatureId
 );
 
 sample({
-  source: $selectecNomenclature,
+  source: $selectedNomenclature,
   filter: Boolean,
   target: nomenclatureCharacteristicsQuery.start,
 });
 
 export const tasksListService = {
-  inputs: { setTasksListFilters, resetFilters, nextPage },
+  inputs: { setTasksListFilters, resetFilters },
   outputs: { $tasksListFilters, $tasksList },
   gates: { TasksListGate },
 };

@@ -42,3 +42,9 @@ export const TitleWrapper = styled.div`
   background: #ffffffb5;
   z-index: 2;
 `;
+
+export const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
