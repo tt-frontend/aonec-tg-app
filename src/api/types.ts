@@ -830,6 +830,7 @@ export class Api<
     filtersAddressesList: (
       query?: {
         Address?: string;
+        ProductionOrderStatus?: EProductionOrderStatus;
         /** @format int32 */
         PageNumber?: number;
         /** @format int32 */
@@ -858,6 +859,7 @@ export class Api<
      */
     filtersContractsList: (
       query?: {
+        ProductionOrderStatus?: EProductionOrderStatus;
         /** @format int32 */
         PageNumber?: number;
         /** @format int32 */
@@ -886,6 +888,7 @@ export class Api<
      */
     filtersExecutionContractsList: (
       query?: {
+        ProductionOrderStatus?: EProductionOrderStatus;
         /** @format int32 */
         PageNumber?: number;
         /** @format int32 */
@@ -915,6 +918,7 @@ export class Api<
     nomenclaturesList: (
       query?: {
         NomenclatureName?: string;
+        ProductionOrderStatus?: EProductionOrderStatus;
       },
       params: RequestParams = {},
     ) =>

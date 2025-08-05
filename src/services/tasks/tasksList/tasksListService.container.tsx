@@ -29,7 +29,6 @@ export const TasksListContainer = () => {
     resetFilters,
     addressesList,
     tasksList,
-    handleNextPage,
   } = useUnit({
     tasksListPagedList: tasksListQuery.$data,
     isLoading: tasksListQuery.$pending,
@@ -42,7 +41,6 @@ export const TasksListContainer = () => {
     resetFilters: inputs.resetFilters,
     addressesList: addressesOfTasksQuery.$data,
     tasksList: outputs.$tasksList,
-    handleNextPage: inputs.nextPage,
   });
 
   return (
@@ -60,7 +58,6 @@ export const TasksListContainer = () => {
         resetFilters={resetFilters}
         addressesList={addressesList}
         tasksList={tasksList}
-        handleNextPage={handleNextPage}
       />
     </>
   );

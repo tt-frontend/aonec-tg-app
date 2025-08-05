@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "apigen": "npx swagger-typescript-api generate -p https://stage-ecbot.ru/openapi/public/ecBot.json -o ./src/api -n types.ts"
+    "apigen": "npx swagger-typescript-api generate -p https://stage.aonec-bot.ru/openapi/public/ecBot.json -o ./src/api -n types.ts"
   },
   "dependencies": {
     "@ant-design/v5-patch-for-react-19": "^1.0.3",

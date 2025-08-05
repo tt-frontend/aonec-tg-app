@@ -29,6 +29,7 @@ export type GetTasksListQueryParams = {
 };
 
 export type GetContractsQueryParams = {
+  ProductionOrderStatus?: EProductionOrderStatus;
   /** @format int32 */
   PageNumber?: number;
   /** @format int32 */
@@ -37,6 +38,7 @@ export type GetContractsQueryParams = {
 };
 
 export type GetExecutingContractsQueryParams = {
+  ProductionOrderStatus?: EProductionOrderStatus;
   /** @format int32 */
   PageNumber?: number;
   /** @format int32 */
@@ -46,9 +48,15 @@ export type GetExecutingContractsQueryParams = {
 
 export type AddressesOfTasksQueryParams = {
   Address?: string;
+  ProductionOrderStatus?: EProductionOrderStatus;
   /** @format int32 */
   PageNumber?: number;
   /** @format int32 */
   PageSize?: number;
   OrderBy?: EOrderByRule;
+};
+
+export type GetNomenclaturesQueryParams = {
+  NomenclatureName?: string;
+  ProductionOrderStatus?: EProductionOrderStatus;
 };

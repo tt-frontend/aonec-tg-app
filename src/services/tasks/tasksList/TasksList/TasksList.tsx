@@ -2,20 +2,21 @@ import { FC, useEffect, useState } from "react";
 import {
   ButtonsWrapper,
   Container,
+  PaginationWrapper,
   SearchButtonWrapper,
+  TaskAmount,
   TasksListWrapper,
   TitleWrapper,
   Wrapper,
 } from "./TasksList.styled";
 import { Props } from "./TasksList.types";
 import { Title } from "@/components/Title";
-import { Empty, Skeleton } from "antd";
+import { Empty, Pagination, Skeleton } from "antd";
 import { FiltersPanel } from "./FiltersPanel";
 import { TaskItem } from "./TaskItem";
 import { FilterIcon } from "@/components/icons/FilterIcon";
 import { useLocation } from "react-router-dom";
 import { getScrollPosition, saveScrollPosition } from "@/utils/scrollManager";
-import { useInfiniteScroll } from "@/utils/useInfiniteScroll";
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -33,7 +34,6 @@ export const TasksList: FC<Props> = ({
   resetFilters,
   addressesList,
   tasksList,
-  handleNextPage,
 }) => {
   const location = useLocation();
 
@@ -58,11 +58,6 @@ export const TasksList: FC<Props> = ({
     };
   }, [location.pathname]);
 
-  useInfiniteScroll(
-    handleNextPage,
-    tasksListPagedList?.hasNextPage && location.pathname === "/tasks"
-  );
-
   return (
     <Container>
       {isFilterOpen && (
@@ -82,7 +77,10 @@ export const TasksList: FC<Props> = ({
       <Wrapper>
         <TitleWrapper>
           <Title>
-            <div onClick={scrollToTop}>Активные задачи</div>
+            <div onClick={scrollToTop}>
+              Активные задачи
+              <TaskAmount>Всего задач: {tasksListPagedList?.totalItems}</TaskAmount>
+            </div>
             <ButtonsWrapper>
               <SearchButtonWrapper onClick={() => setIsFilterOpen(true)}>
                 <FilterIcon />
@@ -96,6 +94,23 @@ export const TasksList: FC<Props> = ({
             <TaskItem task={task} key={task.id} />
           ))}
         </TasksListWrapper>
+
+        <PaginationWrapper>
+          {Boolean(tasksList.length) && (
+            <Pagination
+              responsive
+              size="default"
+              current={tasksListPagedList?.pageNumber}
+              onChange={(pageNumber) =>
+                setTasksListFilters({ PageNumber: pageNumber })
+              }
+              total={tasksListPagedList?.totalItems}
+              showSizeChanger={false}
+              showQuickJumper={false}
+              hideOnSinglePage
+            />
+          )}
+        </PaginationWrapper>
 
         {!isLoading && !tasksList?.length && (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Нет задач" />

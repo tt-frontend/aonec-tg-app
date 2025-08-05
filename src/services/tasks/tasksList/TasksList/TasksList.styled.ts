@@ -42,3 +42,15 @@ export const TitleWrapper = styled.div`
   background: #ffffffb5;
   z-index: 2;
 `;
+
+export const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const TaskAmount = styled.div`
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 400;
+`;
