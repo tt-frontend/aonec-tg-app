@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const Container = styled.div``;
 
@@ -54,4 +54,24 @@ export const TaskAmount = styled.div`
   margin-top: 4px;
   font-size: 12px;
   font-weight: 400;
+`;
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const ReloadWrapper = styled.div<{ isLoading: boolean }>`
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  animation: ${({ isLoading }) => (isLoading ? rotate : "none")} 0.5s linear
+    infinite;
 `;

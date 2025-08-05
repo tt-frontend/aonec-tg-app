@@ -20,4 +20,5 @@ export type Props = {
   characteristics: CharacteristicResponse[] | null;
   resetFilters: () => void;
   addressesList: AddressResponsePagedList | null;
+  handleReload: () => void;
 };

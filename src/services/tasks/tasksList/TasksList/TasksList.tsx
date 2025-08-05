@@ -3,6 +3,7 @@ import {
   ButtonsWrapper,
   Container,
   PaginationWrapper,
+  ReloadWrapper,
   SearchButtonWrapper,
   TaskAmount,
   TasksListWrapper,
@@ -17,6 +18,7 @@ import { TaskItem } from "./TaskItem";
 import { FilterIcon } from "@/components/icons/FilterIcon";
 import { useLocation } from "react-router-dom";
 import { getScrollPosition, saveScrollPosition } from "@/utils/scrollManager";
+import { ReloadIcon } from "@/components/icons/Reload";
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -34,6 +36,7 @@ export const TasksList: FC<Props> = ({
   resetFilters,
   addressesList,
   tasksList,
+  handleReload,
 }) => {
   const location = useLocation();
 
@@ -57,6 +60,10 @@ export const TasksList: FC<Props> = ({
       saveScrollPosition(location.pathname);
     };
   }, [location.pathname]);
+
+  useEffect(() => {
+    scrollToTop();
+  }, [filters.PageNumber]);
 
   return (
     <Container>
@@ -86,6 +93,11 @@ export const TasksList: FC<Props> = ({
               )}
             </div>
             <ButtonsWrapper>
+              <SearchButtonWrapper onClick={handleReload}>
+                <ReloadWrapper isLoading={isLoading}>
+                  <ReloadIcon />
+                </ReloadWrapper>
+              </SearchButtonWrapper>
               <SearchButtonWrapper onClick={() => setIsFilterOpen(true)}>
                 <FilterIcon />
               </SearchButtonWrapper>
@@ -120,7 +132,7 @@ export const TasksList: FC<Props> = ({
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Нет задач" />
         )}
 
-        {isLoading && <Skeleton active />}
+        {!tasksList.length && isLoading && <Skeleton active />}
       </Wrapper>
     </Container>
   );

@@ -29,6 +29,7 @@ export const TasksListContainer = () => {
     resetFilters,
     addressesList,
     tasksList,
+    handleReload,
   } = useUnit({
     tasksListPagedList: tasksListQuery.$data,
     isLoading: tasksListQuery.$pending,
@@ -41,6 +42,7 @@ export const TasksListContainer = () => {
     resetFilters: inputs.resetFilters,
     addressesList: addressesOfTasksQuery.$data,
     tasksList: outputs.$tasksList,
+    handleReload: inputs.reload,
   });
 
   return (
@@ -58,6 +60,7 @@ export const TasksListContainer = () => {
         resetFilters={resetFilters}
         addressesList={addressesList}
         tasksList={tasksList}
+        handleReload={handleReload}
       />
     </>
   );

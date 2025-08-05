@@ -16,6 +16,8 @@ const TasksListGate = createGate();
 const setTasksListFilters = createEvent<GetTasksListQueryParams>();
 const resetFilters = createEvent();
 
+const reload = createEvent();
+
 const $tasksListFilters = createStore<GetTasksListQueryParams>({
   Status: EProductionOrderStatus.InProgress,
   PageSize: 10,
@@ -34,7 +36,7 @@ export const NO_CONTRACT_FLAG = "NO_CONTRACT";
 
 sample({
   source: $tasksListFilters,
-  clock: [TasksListGate.open, $tasksListFilters.updates],
+  clock: [TasksListGate.open, $tasksListFilters.updates, reload],
   fn: (filters): GetTasksListQueryParams => {
     return {
       ...filters,
@@ -87,7 +89,7 @@ sample({
 });
 
 export const tasksListService = {
-  inputs: { setTasksListFilters, resetFilters },
+  inputs: { setTasksListFilters, resetFilters, reload },
   outputs: { $tasksListFilters, $tasksList },
   gates: { TasksListGate },
 };
