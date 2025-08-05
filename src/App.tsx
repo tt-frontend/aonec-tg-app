@@ -6,10 +6,13 @@ import ruRu from "antd/locale/ru_RU";
 import { useEffect } from "react";
 import { themeConfig } from "./themeConfig";
 
+console.log(import.meta.env.VITE_APP_ENVIRONMENT);
+
 function App() {
   useEffect(() => {
     Telegram.WebApp.enableClosingConfirmation();
   }, []);
+
   return (
     <BrowserRouter>
       <ConfigProvider locale={ruRu} theme={themeConfig}>
