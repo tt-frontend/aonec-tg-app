@@ -24,7 +24,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "typeRoots": ["./node_modules/telegram-webapps-types-new"]
+    "typeRoots": ["./node_modules/telegram-webapps-types-new"],
+    "resolveJsonModule": true
   },
   "include": ["src"]
 }

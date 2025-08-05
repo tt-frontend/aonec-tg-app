@@ -79,7 +79,11 @@ export const TasksList: FC<Props> = ({
           <Title>
             <div onClick={scrollToTop}>
               Активные задачи
-              <TaskAmount>Всего задач: {tasksListPagedList?.totalItems}</TaskAmount>
+              {typeof tasksListPagedList?.totalItems === "number" && (
+                <TaskAmount>
+                  Всего задач: {tasksListPagedList?.totalItems}
+                </TaskAmount>
+              )}
             </div>
             <ButtonsWrapper>
               <SearchButtonWrapper onClick={() => setIsFilterOpen(true)}>

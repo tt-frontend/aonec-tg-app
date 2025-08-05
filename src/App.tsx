@@ -9,6 +9,7 @@ import { themeConfig } from "./themeConfig";
 function App() {
   useEffect(() => {
     Telegram.WebApp.enableClosingConfirmation();
+    Telegram.WebApp.exitFullscreen();
   }, []);
 
   return (

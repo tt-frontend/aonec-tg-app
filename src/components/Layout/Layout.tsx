@@ -1,10 +1,12 @@
 import { Outlet } from "react-router-dom";
-import { Wrapper } from "./Layout.styled";
+import { Content, Wrapper } from "./Layout.styled";
 
 export const Layout = () => {
   return (
     <Wrapper>
-      <Outlet />
+      <Content>
+        <Outlet />
+      </Content>
     </Wrapper>
   );
 };

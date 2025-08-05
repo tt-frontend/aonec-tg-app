@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const Container = styled.div``;
 
 export const Wrapper = styled.div`
-  padding-top: 64px;
+  padding-top: 70px;
+  padding-bottom: 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -38,8 +39,8 @@ export const TitleWrapper = styled.div`
   padding: 14px 16px;
   position: fixed;
   width: calc(100% - 32px);
-  backdrop-filter: blur(4px);
-  background: #ffffffb5;
+  backdrop-filter: blur(6px);
+  background: #ffffffad;
   z-index: 2;
 `;
 

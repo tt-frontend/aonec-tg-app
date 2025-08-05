@@ -1,8 +1,14 @@
+import { IS_DEV_MODE } from "@/constants/devMode";
 import { authService } from "@/services/authService";
 import { checkUrl } from "@/utils";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://stage.aonec-bot.ru/api";
+export const PROD_API_URL = "https://prod.aonec-bot.ru/api";
+export const STAGE_API_URL = "https://stage.aonec-bot.ru/api";
+
+export const BASE_API_URL = IS_DEV_MODE ? STAGE_API_URL : PROD_API_URL;
+
+axios.defaults.baseURL = BASE_API_URL;
 
 axios.interceptors.request.use((req) => {
   req.headers.Authorization = `Bearer ${
@@ -56,7 +62,10 @@ axios.interceptors.response.use(
       return;
     }
 
-    if (status === 401 && !checkUrl("Auth/login|Auth/confirm", error.config.url)) {
+    if (
+      status === 401 &&
+      !checkUrl("Auth/login|Auth/confirm", error.config.url)
+    ) {
       const { config } = error;
 
       config._retry = true;

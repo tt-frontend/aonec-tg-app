@@ -8,6 +8,9 @@ import { LoginRequest } from "@/api/types";
 import { IMask } from "react-imask";
 import { validationSchema } from "./LoginPage.constants";
 import { ErrorMessage } from "@/components/ErrorMessage";
+import { AppIcon } from "@/components/icons/AppIcon";
+import { AppVersion } from "@/components/AppVersion";
+import { IS_DEV_MODE } from "@/constants/devMode";
 
 export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
   const { values, handleChange, handleSubmit, setFieldValue, errors } =
@@ -24,8 +27,9 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
 
   return (
     <Wrapper>
+      <AppIcon />
       <Card>
-        <Title>Войдите в приложение</Title>
+        <Title>Войти в приложение</Title>
         <FormItem label="Номер телефона">
           <PhoneNumberInput
             value={values.phoneNumber}
@@ -34,13 +38,13 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
           />
           <ErrorMessage>{errors.phoneNumber}</ErrorMessage>
         </FormItem>
-        <FormItem label="Имя">
+        <FormItem label="ФИО">
           <Input
             size="large"
             value={values.name}
             onChange={handleChange}
             name="name"
-            placeholder="Введите имя и фамилию"
+            placeholder="Введите фамилию, имя и отчество"
             status={errors.name && "error"}
           />
           <ErrorMessage>{errors.name}</ErrorMessage>
@@ -54,21 +58,26 @@ export const LoginPage: FC<Props> = ({ handleLogin, isLoading }) => {
         >
           Войти
         </Button>
-        <Button
-          size="large"
-          type="link"
-          onClick={() =>
-            handleLogin({
-              phoneNumber: "89612514987",
-              name: "Белослудцев Евгений Викторович",
-            })
-          }
-          loading={isLoading}
-          disabled={isLoading}
-        >
-          Быстрый вход
-        </Button>
+        {IS_DEV_MODE && (
+          <Button
+            size="large"
+            type="link"
+            onClick={() =>
+              handleLogin({
+                phoneNumber: "89612514987",
+                name: "Белослудцев Евгений Викторович",
+              })
+            }
+            loading={isLoading}
+            disabled={isLoading}
+          >
+            Быстрый вход
+          </Button>
+        )}
       </Card>
+      <div>
+        <AppVersion />
+      </div>
     </Wrapper>
   );
 };
@@ -97,9 +106,10 @@ const PhoneNumberInput: FC<{
       size="large"
       prefix="+7"
       onChange={(e) => onChange(e.target.value)}
+      onBlur={(e) => onChange(e.target.value)}
       ref={inputRef}
       status={isError ? "error" : void 0}
-      placeholder="(___)___-__-__"
+      placeholder="(___) ___-__-__"
     />
   );
 };
