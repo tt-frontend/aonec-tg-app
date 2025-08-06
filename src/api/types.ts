@@ -37,9 +37,14 @@ export enum EContractType {
   Execution = "Execution",
 }
 
+/** Ответ на получение модели адреса объекта */
 export interface AddressResponse {
-  /** @format int32 */
+  /**
+   * Id
+   * @format int32
+   */
   id?: number;
+  /** Адрес объекта */
   address?: string | null;
 }
 
@@ -61,6 +66,7 @@ export interface AddressResponsePagedList {
   items?: AddressResponse[] | null;
 }
 
+/** Ответ API для получения характеристик */
 export interface CharacteristicResponse {
   /** @format int32 */
   id?: number;
@@ -81,10 +87,16 @@ export interface CommentResponse {
   createdAt?: string;
 }
 
+/** Облегченная модель договора */
 export interface ContractListResponse {
-  /** @format int32 */
+  /**
+   * Id договора
+   * @format int32
+   */
   id?: number;
+  /** Наименование */
   name?: string | null;
+  /** Тип договора */
   type?: EContractType;
 }
 
@@ -106,14 +118,23 @@ export interface ContractListResponsePagedList {
   items?: ContractListResponse[] | null;
 }
 
+/** Модель договора */
 export interface ContractResponse {
   /** @format int32 */
   id?: number;
+  /** Наименование */
   name?: string | null;
+  /** Тип */
   type?: EContractType;
-  /** @format date-time */
+  /**
+   * Дата начала
+   * @format date-time
+   */
   startDate?: string;
-  /** @format date-time */
+  /**
+   * Дата окончания
+   * @format date-time
+   */
   endDate?: string | null;
 }
 
@@ -229,12 +250,18 @@ export interface NomenclatureResponse {
   name?: string | null;
 }
 
+/** Выходные изделия */
 export interface OutputMaterialResponse {
-  /** Ответ API для номенклатура */
+  /** Номенклатура */
   nomenclature?: NomenclatureResponse | null;
+  /** Характеристика */
   characteristic?: CharacteristicResponse | null;
-  /** @format double */
+  /**
+   * Количество
+   * @format double
+   */
   amount?: number | null;
+  /** Единицы измерения */
   units?: string | null;
 }
 
@@ -248,8 +275,12 @@ export interface ProblemDetails {
   [key: string]: any;
 }
 
+/** Запрос на прикрепление документа к наряду */
 export interface ProductionOrderDocumentLinkRequest {
-  /** @format int32 */
+  /**
+   * ID документа
+   * @format int32
+   */
   id?: number;
 }
 
@@ -274,6 +305,10 @@ export interface ProductionOrderListResponse {
   requestNumber?: string | null;
   outputMaterials?: OutputMaterialResponse[] | null;
   objectAddress?: string | null;
+  /** @format int32 */
+  actsCount?: number;
+  /** @format int32 */
+  photosCount?: number;
 }
 
 export interface ProductionOrderListResponsePagedList {
@@ -298,24 +333,42 @@ export interface ProductionOrderListResponsePagedList {
 export interface ProductionOrderResponse {
   /** @format int32 */
   id?: number;
+  /** Статус наряд задания */
   status?: EProductionOrderStatus;
+  /** Прикрепленные документы */
   documents?: DocumentResponse[] | null;
-  /** Облегченная модель исполнителя */
+  /** Исполнитель */
   executor?: ExecutorLiteResponse | null;
   /** @deprecated */
   comments?: CommentResponse[] | null;
+  /** Договор */
   contract?: ContractResponse | null;
-  /** @format date-time */
+  /**
+   * Нормативный срок завершения
+   * @format date-time
+   */
   normativeCompletionDate?: string;
-  /** @format date-time */
+  /**
+   * Дата начала
+   * @format date-time
+   */
   startDate?: string;
-  /** @format date-time */
+  /**
+   * Время создания
+   * @format date-time
+   */
   creationTime?: string;
+  /** Адрес объекта */
   objectAddress?: string | null;
+  /** Номер */
   requestNumber?: string | null;
+  /** Описание наряда */
   description?: string | null;
+  /** Список выходных изделий */
   outputMaterials?: OutputMaterialResponse[] | null;
+  /** Комментарий к наряду */
   report?: string | null;
+  /** Этап */
   stage?: string | null;
 }
 
@@ -341,7 +394,9 @@ export interface RefreshTokenRequest {
   refreshToken: string;
 }
 
+/** Запрос на обновления комментария к задаче */
 export interface ReportRequest {
+  /** Комментарий */
   report?: string | null;
 }
 
@@ -806,6 +861,7 @@ export class Api<
      *
      * @tags Executors
      * @name ExecutorsCurrentList
+     * @summary Получить текущего исполнителя
      * @request GET:/api/Executors/current
      * @secure
      */
@@ -823,13 +879,14 @@ export class Api<
      *
      * @tags Filters
      * @name FiltersAddressesList
-     * @summary Получить список объектов
+     * @summary Получить список объектов, прикрепленных к нарядам исполнителя
      * @request GET:/api/Filters/addresses
      * @secure
      */
     filtersAddressesList: (
       query?: {
         Address?: string;
+        /** Статус наряд-задания */
         ProductionOrderStatus?: EProductionOrderStatus;
         /** @format int32 */
         PageNumber?: number;
@@ -853,12 +910,13 @@ export class Api<
      *
      * @tags Filters
      * @name FiltersContractsList
-     * @summary Получить список доходных договоров внутри контрагента
+     * @summary Получить список договоров, прикрепленных к нарядам исполнителя
      * @request GET:/api/Filters/contracts
      * @secure
      */
     filtersContractsList: (
       query?: {
+        /** Статус нарядов */
         ProductionOrderStatus?: EProductionOrderStatus;
         /** @format int32 */
         PageNumber?: number;
@@ -888,6 +946,7 @@ export class Api<
      */
     filtersExecutionContractsList: (
       query?: {
+        /** Статус нарядов */
         ProductionOrderStatus?: EProductionOrderStatus;
         /** @format int32 */
         PageNumber?: number;
@@ -918,6 +977,7 @@ export class Api<
     nomenclaturesList: (
       query?: {
         NomenclatureName?: string;
+        /** Статус нарядов */
         ProductionOrderStatus?: EProductionOrderStatus;
       },
       params: RequestParams = {},
@@ -960,21 +1020,41 @@ export class Api<
      */
     productionOrdersList: (
       query?: {
-        /** @format int32 */
+        /**
+         * Id номенклатуры
+         * @format int32
+         */
         NomenclatureId?: number;
-        /** @format int32 */
+        /**
+         * Id характеристики
+         * @format int32
+         */
         CharacteristicId?: number;
+        /** Статус наряда */
         Status?: EProductionOrderStatus;
-        /** @format int32 */
+        /**
+         * Фильтр: Id договора(существуют наряды у которых нет договора - null)
+         * @format int32
+         */
         ContractIdValue?: number;
+        /** Флаг:использовать ли фильтр по договорам */
         ContractIdHasValue?: boolean;
-        /** @format int32 */
+        /**
+         * Id адреса объекта
+         * @format int32
+         */
         AddressId?: number;
         /** Тип сортировки наряд-заданий */
         OrderRule?: EProductionOrderOrderRule;
-        /** @format date-time */
+        /**
+         * Дата начала
+         * @format date-time
+         */
         From?: string;
-        /** @format date-time */
+        /**
+         * Нормативный срок завершения
+         * @format date-time
+         */
         To?: string;
         /** @format int32 */
         PageNumber?: number;

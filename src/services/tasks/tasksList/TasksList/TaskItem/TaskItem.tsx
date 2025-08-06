@@ -5,7 +5,10 @@ import {
   DateName,
   DateString,
   DateWrapper,
+  FilesInfo,
+  FilesInfoItem,
   IconWrapper,
+  InfoWrapper,
   NomenclatureName,
   RequestNumber,
   Wrapper,
@@ -20,6 +23,8 @@ import {
   getProgressBarColor,
 } from "@/utils/dateDiffs";
 import { EProductionOrderStatus } from "@/api/types";
+import { FileIcon } from "@/components/icons/FileIcon";
+import { PhotoIcon } from "@/components/icons/PhotoIcon";
 
 export const TaskItem: FC<Props> = ({ task, status }) => {
   const percent = getDateProgressBarPercent(
@@ -64,9 +69,24 @@ export const TaskItem: FC<Props> = ({ task, status }) => {
           <CharacterisicWrapper>
             {elem.characteristic?.name}
           </CharacterisicWrapper>
-          <CharacterisicWrapper>
-            {elem.amount} • {elem.units}
-          </CharacterisicWrapper>
+          <InfoWrapper>
+            <CharacterisicWrapper>
+              {elem.amount} • {elem.units}
+            </CharacterisicWrapper>
+            <FilesInfo>
+              {Boolean(task.actsCount) && (
+                <FilesInfoItem>
+                  <FileIcon /> {task.actsCount}
+                </FilesInfoItem>
+              )}
+
+              {Boolean(task.photosCount) && (
+                <FilesInfoItem>
+                  <PhotoIcon /> {task.photosCount}
+                </FilesInfoItem>
+              )}
+            </FilesInfo>
+          </InfoWrapper>
         </>
       ))}
       {isActive && (
