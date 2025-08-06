@@ -24,9 +24,9 @@ export const MainPage: FC<Props> = ({
       <FloatButton
         onClick={() =>
           alert(
-            `aonec-tg-app \n\n ${APP_VERSION} \n\n TT frontend team ${dayjs().format(
+            `aonec-tg-app \n\n ${APP_VERSION} \n\n TT dev team ${dayjs().format(
               "YYYY"
-            )} \n\n 🧑🏻‍💻👨🏻‍💻👩🏻‍💻👩🏼‍💻👩🏻‍🎨`
+            )} \n\n 🧑🏼‍💻🧑🏻‍💻👨‍💻👨🏻‍💻👩🏻‍💻👩🏼‍💻👩🏻‍🎨`
           )
         }
         icon={
@@ -34,7 +34,6 @@ export const MainPage: FC<Props> = ({
             <b>i</b>
           </i>
         }
-        
         style={{ insetInlineEnd: 24, backgroundColor: "white" }}
         shape="square"
       />
