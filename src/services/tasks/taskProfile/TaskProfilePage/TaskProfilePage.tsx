@@ -19,6 +19,7 @@ import { TaskProgressPanel } from "./TaskProgressPanel";
 import { TaskInfo } from "./TaskInfo";
 import { TaskFilesUpload } from "./TaskFilesUpload";
 import { ReportPanel } from "./ReportPanel";
+import { EProductionOrderStatus } from "@/api/types";
 
 export const TaskProfilePage: FC<Props> = ({
   isLoading,
@@ -56,20 +57,24 @@ export const TaskProfilePage: FC<Props> = ({
     handleCompleteTask();
   };
 
+  const isActive = task.status === EProductionOrderStatus.InProgress;
+
   return (
     <>
-      <ButtonWrapper>
-        <Button
-          onClick={onCompleteTask}
-          size="large"
-          type="primary"
-          style={{ height: 64 }}
-        >
-          Завершить задачу
-        </Button>
-      </ButtonWrapper>
-      <Wrapper>
-        <TaskProgressPanel task={task} />
+      {isActive && (
+        <ButtonWrapper>
+          <Button
+            onClick={onCompleteTask}
+            size="large"
+            type="primary"
+            style={{ height: 64 }}
+          >
+            Завершить задачу
+          </Button>
+        </ButtonWrapper>
+      )}
+      <Wrapper isActive={isActive}>
+        {isActive && <TaskProgressPanel task={task} />}
         {task.stage && (
           <TaskStage>
             <span style={{ fontWeight: 300 }}>Этап: </span>
@@ -93,8 +98,13 @@ export const TaskProfilePage: FC<Props> = ({
             </OutputMaterial>
           ))}
         </TitleWrapper>
-        <ReportPanel task={task} updateReport={updateReport} />
+        <ReportPanel
+          isActive={isActive}
+          task={task}
+          updateReport={updateReport}
+        />
         <TaskFilesUpload
+          isActive={isActive}
           documents={task.documents}
           handleFile={handleFile}
           handleDeleteDocument={handleDeleteDocument}

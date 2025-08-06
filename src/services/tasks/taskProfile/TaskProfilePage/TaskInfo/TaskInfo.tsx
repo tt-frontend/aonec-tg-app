@@ -35,16 +35,16 @@ export const TaskInfo: FC<Props> = ({ task }) => {
               key: "Описание",
               value: task.contract?.name,
             },
-            {
-              key: "Дата начала",
-              value: dayjs(task.contract?.startDate).format("DD.MM.YYYY"),
-            },
-            {
-              key: "Дата окончания",
-              value:
-                task.contract?.endDate &&
-                dayjs(task.contract?.endDate).format("DD.MM.YYYY"),
-            },
+            // {
+            //   key: "Дата начала",
+            //   value: dayjs(task.contract?.startDate).format("DD.MM.YYYY"),
+            // },
+            // {
+            //   key: "Дата окончания",
+            //   value:
+            //     task.contract?.endDate &&
+            //     dayjs(task.contract?.endDate).format("DD.MM.YYYY"),
+            // },
           ]}
         />
       </Card>

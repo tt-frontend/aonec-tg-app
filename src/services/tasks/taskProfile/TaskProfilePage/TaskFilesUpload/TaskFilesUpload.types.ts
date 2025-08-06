@@ -6,4 +6,5 @@ export type Props = {
   documents?: DocumentResponse[] | null;
   handleDeleteDocument: (documentId: number) => void;
   isLoadingUploadFile: boolean;
+  isActive: boolean;
 };

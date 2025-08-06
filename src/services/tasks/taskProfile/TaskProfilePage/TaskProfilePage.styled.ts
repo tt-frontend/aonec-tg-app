@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ isActive: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 16px;
   position: relative;
-  padding-bottom: 96px;
+  padding-bottom: ${({ isActive }) => isActive && "96px"};
 `;
 
 export const TitleWrapper = styled.div`
