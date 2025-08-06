@@ -95,9 +95,11 @@ completeTaskMutation.finished.failure.watch(({ error }) =>
   message.error(error.response.data.error.Text)
 );
 
-addDocumentMutation.finished.failure.watch(({ error }) =>
-  message.error(error.response.data.error.Text)
-);
+addDocumentMutation.finished.failure.watch(({ error }) => {
+  const e = error.response.data.error;
+
+  message.error(e.Text || e.Message || JSON.stringify({ e }));
+});
 
 export const taskProfileService = {
   inputs: { handleFile },

@@ -2,12 +2,15 @@ import { api } from "@/api";
 import { createMutation } from "@farfetched/core";
 import { UploadFileRequestPayload } from "./filesUploadService.types";
 import { DocumentResponse } from "@/api/types";
+import { createEffect } from "effector";
+import { EffectFailDataAxiosError } from "@/types";
 
-export const uploadFileMutation = createMutation<
-  UploadFileRequestPayload,
-  DocumentResponse[]
->({
-  handler: async ({ type, file }) => {
+export const uploadFileMutation = createMutation({
+  effect: createEffect<
+    UploadFileRequestPayload,
+    DocumentResponse[],
+    EffectFailDataAxiosError
+  >(async ({ type, file }) => {
     const formData = new FormData();
 
     formData.append("type", type as string);
@@ -24,7 +27,7 @@ export const uploadFileMutation = createMutation<
     );
 
     return response; // возвращаем "как есть"
-  },
+  }),
 });
 
 export const deleteFileMutation = createMutation<number, void>({

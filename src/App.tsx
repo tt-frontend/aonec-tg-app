@@ -5,6 +5,7 @@ import { ConfigProvider } from "antd";
 import ruRu from "antd/locale/ru_RU";
 import { useEffect } from "react";
 import { themeConfig } from "./themeConfig";
+import "./services/filesUpload/filesUploadService.model";
 
 function App() {
   useEffect(() => {
