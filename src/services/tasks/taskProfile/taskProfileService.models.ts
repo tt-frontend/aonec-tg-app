@@ -83,9 +83,21 @@ updateReportMutation.finished.success.watch(() => {
   message.success("Комментарий обновлен");
 });
 
+updateReportMutation.finished.failure.watch(({ error }) =>
+  message.error(error.response.data.error.Text)
+);
+
 completeTaskMutation.finished.success.watch(() => {
   message.success("Задача завершена!");
 });
+
+completeTaskMutation.finished.failure.watch(({ error }) =>
+  message.error(error.response.data.error.Text)
+);
+
+addDocumentMutation.finished.failure.watch(({ error }) =>
+  message.error(error.response.data.error.Text)
+);
 
 export const taskProfileService = {
   inputs: { handleFile },
