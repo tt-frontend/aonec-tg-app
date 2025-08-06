@@ -15,6 +15,7 @@ export const ActionLink: FC<ActionLinkProps> = ({
   description,
   path,
   statusColor,
+  icon,
 }) => {
   return (
     <Wrapper to={path}>
@@ -26,7 +27,8 @@ export const ActionLink: FC<ActionLinkProps> = ({
         {description && <Description>{description}</Description>}
       </TitleWrapper>
       <ChevronWrapper>
-        <ChevronRight />
+        {!icon && <ChevronRight />}
+        {icon}
       </ChevronWrapper>
     </Wrapper>
   );

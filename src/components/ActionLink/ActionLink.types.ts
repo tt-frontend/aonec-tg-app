@@ -5,4 +5,5 @@ export type ActionLinkProps = {
   description?: string | null | ReactNode;
   path: string;
   statusColor?: string;
+  icon?: ReactNode;
 };
