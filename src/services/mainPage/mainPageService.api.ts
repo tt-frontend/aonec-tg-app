@@ -19,3 +19,13 @@ export const tasksCountQuery = createQuery<
       params: { PageSize: 1, Status: EProductionOrderStatus.InProgress },
     }),
 });
+
+export const archiveTasksCountQuery = createQuery<
+  [],
+  ProductionOrderListResponsePagedList
+>({
+  handler: () =>
+    api.get("/ProductionOrders", {
+      params: { PageSize: 1, Status: EProductionOrderStatus.Archived },
+    }),
+});

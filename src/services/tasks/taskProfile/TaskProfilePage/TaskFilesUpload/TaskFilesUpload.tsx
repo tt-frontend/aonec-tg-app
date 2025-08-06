@@ -60,9 +60,11 @@ export const TaskFilesUpload: FC<Props> = ({
           <DocumentItem key={doc.id}>
             <ClipIcon />
             <DocumentName>{doc.name}</DocumentName>
-            <span onClick={() => onDeleteDocument(doc.id!)}>
-              <XIcon />
-            </span>
+            {isActive && (
+              <span onClick={() => onDeleteDocument(doc.id!)}>
+                <XIcon />
+              </span>
+            )}
           </DocumentItem>
         ))}
       </Card>

@@ -1,12 +1,20 @@
 import { createGate } from "effector-react";
-import { currentUserQuery, tasksCountQuery } from "./mainPageService.api";
+import {
+  archiveTasksCountQuery,
+  currentUserQuery,
+  tasksCountQuery,
+} from "./mainPageService.api";
 import { sample } from "effector";
 
 export const MainPageGate = createGate();
 
 sample({
   clock: MainPageGate.open,
-  target: [currentUserQuery.start, tasksCountQuery.start],
+  target: [
+    currentUserQuery.start,
+    tasksCountQuery.start,
+    archiveTasksCountQuery.start,
+  ],
 });
 
 export const mainPageService = {

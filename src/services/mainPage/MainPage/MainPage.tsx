@@ -14,6 +14,7 @@ export const MainPage: FC<Props> = ({
   currentUser,
   tasksCount,
   isLoading,
+  archivedTasksCount,
 }) => {
   return (
     <Wrapper>
@@ -52,6 +53,7 @@ export const MainPage: FC<Props> = ({
           path="/archiveTasks"
           title="В архиве"
           statusColor="#999999"
+          description={archivedTasksCount}
         />
         <SpaceLine />
         {/* <Title>Объекты</Title>
