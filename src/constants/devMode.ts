@@ -1,1 +1,1 @@
-export const IS_DEV_MODE = false;
+export const IS_DEV_MODE = import.meta.env.DEV;
