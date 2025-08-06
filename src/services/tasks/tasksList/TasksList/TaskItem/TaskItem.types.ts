@@ -1,5 +1,9 @@
-import { ProductionOrderListResponse } from "@/api/types";
+import {
+  EProductionOrderStatus,
+  ProductionOrderListResponse,
+} from "@/api/types";
 
 export type Props = {
   task: ProductionOrderListResponse;
+  status: EProductionOrderStatus;
 };

@@ -9,6 +9,8 @@ import {
   nomenclaturesListQuery,
   tasksListQuery,
 } from "./tasksListService.api";
+import { FC } from "react";
+import { EProductionOrderStatus } from "@/api/types";
 
 const {
   inputs,
@@ -16,7 +18,9 @@ const {
   gates: { TasksListGate },
 } = tasksListService;
 
-export const TasksListContainer = () => {
+export const TasksListContainer: FC<{
+  status: EProductionOrderStatus;
+}> = ({ status }) => {
   const {
     tasksListPagedList,
     isLoading,
@@ -47,7 +51,7 @@ export const TasksListContainer = () => {
 
   return (
     <>
-      <TasksListGate />
+      <TasksListGate status={status} />
       <TasksList
         tasksListPagedList={tasksListPagedList}
         isLoading={isLoading}
@@ -61,6 +65,7 @@ export const TasksListContainer = () => {
         addressesList={addressesList}
         tasksList={tasksList}
         handleReload={handleReload}
+        status={status}
       />
     </>
   );

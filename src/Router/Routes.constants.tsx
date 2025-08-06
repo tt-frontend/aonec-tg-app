@@ -4,6 +4,7 @@ import { LoginContainer } from "@/services/login";
 import { MainPageContainer } from "@/services/mainPage";
 import { TasksListContainer } from "@/services/tasks/tasksList";
 import { TaskProfileContainer } from "@/services/tasks/taskProfile";
+import { EProductionOrderStatus } from "@/api/types";
 
 export const getRoutes = (isAuth: boolean): RouteObject[] => [
   {
@@ -21,7 +22,15 @@ export const getRoutes = (isAuth: boolean): RouteObject[] => [
           },
           {
             path: "/tasks",
-            element: <TasksListContainer />,
+            element: (
+              <TasksListContainer status={EProductionOrderStatus.InProgress} />
+            ),
+          },
+          {
+            path: "/archiveTasks",
+            element: (
+              <TasksListContainer status={EProductionOrderStatus.Archived} />
+            ),
           },
           {
             path: "*",

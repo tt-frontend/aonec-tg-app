@@ -19,6 +19,7 @@ import { FilterIcon } from "@/components/icons/FilterIcon";
 import { useLocation } from "react-router-dom";
 import { getScrollPosition, saveScrollPosition } from "@/utils/scrollManager";
 import { ReloadIcon } from "@/components/icons/Reload";
+import { EProductionOrderStatus } from "@/api/types";
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -37,6 +38,7 @@ export const TasksList: FC<Props> = ({
   addressesList,
   tasksList,
   handleReload,
+  status,
 }) => {
   const location = useLocation();
 
@@ -65,6 +67,8 @@ export const TasksList: FC<Props> = ({
     scrollToTop();
   }, [filters.PageNumber]);
 
+  const isActive = status === EProductionOrderStatus.InProgress;
+
   return (
     <Container>
       {isFilterOpen && (
@@ -85,7 +89,8 @@ export const TasksList: FC<Props> = ({
         <TitleWrapper>
           <Title>
             <div onClick={scrollToTop}>
-              Активные задачи
+              {isActive && "Активные задачи"}
+              {!isActive && "Архивные задачи"}
               {typeof tasksListPagedList?.totalItems === "number" && (
                 <TaskAmount>
                   Всего задач: {tasksListPagedList?.totalItems}
@@ -107,7 +112,7 @@ export const TasksList: FC<Props> = ({
 
         <TasksListWrapper>
           {tasksList?.map((task) => (
-            <TaskItem task={task} key={task.id} />
+            <TaskItem status={status} task={task} key={task.id} />
           ))}
         </TasksListWrapper>
 

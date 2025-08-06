@@ -19,12 +19,15 @@ import {
   getDateProgressBarPercent,
   getProgressBarColor,
 } from "@/utils/dateDiffs";
+import { EProductionOrderStatus } from "@/api/types";
 
-export const TaskItem: FC<Props> = ({ task }) => {
+export const TaskItem: FC<Props> = ({ task, status }) => {
   const percent = getDateProgressBarPercent(
     dayjs(task.startDate),
     dayjs(task.normativeCompletionDate)
   );
+
+  const isActive = status === EProductionOrderStatus.InProgress;
 
   const dateSegment = (
     <>
@@ -66,13 +69,15 @@ export const TaskItem: FC<Props> = ({ task }) => {
           </CharacterisicWrapper>
         </>
       ))}
-      <Progress
-        percent={percent}
-        size="small"
-        showInfo={false}
-        strokeColor={getProgressBarColor(percent)}
-      />
-      {dateSegment}
+      {isActive && (
+        <Progress
+          percent={percent}
+          size="small"
+          showInfo={false}
+          strokeColor={getProgressBarColor(percent)}
+        />
+      )}
+      {isActive && dateSegment}
     </Wrapper>
   );
 };

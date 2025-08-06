@@ -1,4 +1,4 @@
-import { createEvent, createStore, sample } from "effector";
+import { combine, createEvent, createStore, sample } from "effector";
 import { createGate } from "effector-react";
 import {
   addressesOfTasksQuery,
@@ -8,10 +8,13 @@ import {
   nomenclaturesListQuery,
   tasksListQuery,
 } from "./tasksListService.api";
-import { GetTasksListQueryParams } from "./tasksListService.types";
+import {
+  GetNomenclaturesQueryParams,
+  GetTasksListQueryParams,
+} from "./tasksListService.types";
 import { EProductionOrderStatus } from "@/api/types";
 
-const TasksListGate = createGate();
+const TasksListGate = createGate<{ status: EProductionOrderStatus }>();
 
 const setTasksListFilters = createEvent<GetTasksListQueryParams>();
 const resetFilters = createEvent();
@@ -19,7 +22,6 @@ const resetFilters = createEvent();
 const reload = createEvent();
 
 const $tasksListFilters = createStore<GetTasksListQueryParams>({
-  Status: EProductionOrderStatus.InProgress,
   PageSize: 10,
   PageNumber: 1,
 })
@@ -34,8 +36,17 @@ const $tasksList = tasksListQuery.$data.map((data) => data?.items || []);
 
 export const NO_CONTRACT_FLAG = "NO_CONTRACT";
 
+const $preparedFilters = combine(
+  $tasksListFilters,
+  TasksListGate.state,
+  (filters, { status }): GetTasksListQueryParams => ({
+    ...filters,
+    Status: status,
+  })
+);
+
 sample({
-  source: $tasksListFilters,
+  source: $preparedFilters,
   clock: [TasksListGate.open, $tasksListFilters.updates, reload],
   fn: (filters): GetTasksListQueryParams => {
     return {
@@ -51,31 +62,39 @@ sample({
 });
 
 sample({
+  source: $preparedFilters,
   clock: TasksListGate.open,
-  target: nomenclaturesListQuery.start.prepend(() => ({
-    ProductionOrderStatus: EProductionOrderStatus.InProgress,
-  })),
+  fn: ({ Status }): GetNomenclaturesQueryParams => ({
+    ProductionOrderStatus: Status,
+  }),
+  target: nomenclaturesListQuery.start,
 });
 
 sample({
+  source: $preparedFilters,
   clock: TasksListGate.open,
-  target: contractsListQuery.start.prepend(() => ({
-    ProductionOrderStatus: EProductionOrderStatus.InProgress,
-  })),
+  fn: ({ Status }): GetNomenclaturesQueryParams => ({
+    ProductionOrderStatus: Status,
+  }),
+  target: contractsListQuery.start,
 });
 
 sample({
+  source: $preparedFilters,
   clock: TasksListGate.open,
-  target: executingContractsListQuery.start.prepend(() => ({
-    ProductionOrderStatus: EProductionOrderStatus.InProgress,
-  })),
+  fn: ({ Status }): GetNomenclaturesQueryParams => ({
+    ProductionOrderStatus: Status,
+  }),
+  target: executingContractsListQuery.start,
 });
 
 sample({
+  source: $preparedFilters,
   clock: TasksListGate.open,
-  target: addressesOfTasksQuery.start.prepend(() => ({
-    ProductionOrderStatus: EProductionOrderStatus.InProgress,
-  })),
+  fn: ({ Status }): GetNomenclaturesQueryParams => ({
+    ProductionOrderStatus: Status,
+  }),
+  target: addressesOfTasksQuery.start,
 });
 
 const $selectedNomenclature = $tasksListFilters.map(

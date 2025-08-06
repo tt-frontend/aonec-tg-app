@@ -2,6 +2,7 @@ import {
   AddressResponsePagedList,
   CharacteristicResponse,
   ContractListResponsePagedList,
+  EProductionOrderStatus,
   NomenclatureListResponse,
   ProductionOrderListResponse,
   ProductionOrderListResponsePagedList,
@@ -21,4 +22,5 @@ export type Props = {
   resetFilters: () => void;
   addressesList: AddressResponsePagedList | null;
   handleReload: () => void;
+  status: EProductionOrderStatus;
 };
