@@ -44,7 +44,7 @@ export const TaskProfileContainer = () => {
 
   useEffect(() => {
     return completeTaskMutation.finished.success.watch(() => {
-      // navigate(-1);
+      navigate("/tasks");
     }).unsubscribe;
   }, [navigate]);
 

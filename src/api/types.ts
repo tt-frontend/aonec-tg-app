@@ -1032,18 +1032,9 @@ export class Api<
         CharacteristicId?: number;
         /** Статус наряда */
         Status?: EProductionOrderStatus;
-        /**
-         * Фильтр: Id договора(существуют наряды у которых нет договора - null)
-         * @format int32
-         */
-        ContractIdValue?: number;
-        /** Флаг:использовать ли фильтр по договорам */
-        ContractIdHasValue?: boolean;
-        /**
-         * Id адреса объекта
-         * @format int32
-         */
-        AddressId?: number;
+        ContractIds?: number[];
+        /** Ids адресов объекта */
+        AddressIds?: number[];
         /** Тип сортировки наряд-заданий */
         OrderRule?: EProductionOrderOrderRule;
         /**
