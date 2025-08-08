@@ -15,12 +15,17 @@ import {
   GetTasksListQueryParams,
 } from "./tasksListService.types";
 import axios from "axios";
+import queryString from "query-string";
 
 export const tasksListQuery = createQuery<
   [GetTasksListQueryParams],
   ProductionOrderListResponsePagedList
 >({
-  handler: (params) => api.get("/ProductionOrders", { params }),
+  handler: (params) =>
+    api.get("/ProductionOrders", {
+      params,
+      paramsSerializer: (params) => queryString.stringify(params),
+    }),
 });
 
 export const nomenclaturesListQuery = createQuery<

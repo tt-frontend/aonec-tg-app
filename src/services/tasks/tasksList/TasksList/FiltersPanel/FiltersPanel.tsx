@@ -18,7 +18,7 @@ import {
   TaskSortTypeToFilter,
   TasksSortTypeToLable,
 } from "./FiltersPanel.constatns";
-import { XIcon } from "@/components/icons/XIcon";
+import { XLightIcon } from "@/components/icons/XLightIcon";
 
 export const FiltersPanel: FC<Props> = ({
   handleApply,
@@ -43,6 +43,8 @@ export const FiltersPanel: FC<Props> = ({
     };
   }, [handleCancel, handleClose, setGoBackHandler]);
 
+  const sortValue = filterToTaskSortType(filters.OrderBy, filters.OrderRule);
+
   return (
     <Wrapper>
       <Content>
@@ -61,9 +63,11 @@ export const FiltersPanel: FC<Props> = ({
 
                 setTasksListFilters({ ...TaskSortTypeToFilter[value] });
               }}
-              value={filterToTaskSortType(filters.OrderBy, filters.OrderRule)}
-              allowClear
+              value={sortValue}
             >
+              <Select.Option key={null} value={null}>
+                Без сортировки
+              </Select.Option>
               {Object.values(ETasksSortType).map((type) => (
                 <Select.Option key={type} value={type}>
                   {TasksSortTypeToLable[type]}
@@ -80,10 +84,9 @@ export const FiltersPanel: FC<Props> = ({
               placeholder="Выберите из списка"
               value={filters.AddressIds}
               onChange={(value) => setTasksListFilters({ AddressIds: value })}
-              allowClear
               mode="multiple"
               showSearch={false}
-              removeIcon={() => <XIcon />}
+              removeIcon={() => <XLightIcon />}
             >
               {addressesList?.items?.map((elem) => (
                 <Select.Option key={elem.id} value={elem.id}>
@@ -100,7 +103,6 @@ export const FiltersPanel: FC<Props> = ({
               placeholder="Выберите из списка"
               style={{ width: "100%" }}
               size="large"
-              allowClear
               value={filters.NomenclatureId}
               onChange={(value) =>
                 setTasksListFilters({
@@ -109,6 +111,9 @@ export const FiltersPanel: FC<Props> = ({
                 })
               }
             >
+              <Select.Option key={null} value={null}>
+                Не выбрано
+              </Select.Option>
               {nomenclatures?.map((elem) => (
                 <Select.Option key={elem.id} value={elem.id}>
                   {elem.name}
@@ -129,8 +134,11 @@ export const FiltersPanel: FC<Props> = ({
                 placeholder="Выберите из списка"
                 style={{ width: "100%" }}
                 size="large"
-                allowClear
               >
+                {" "}
+                <Select.Option key={null} value={null}>
+                  Не выбрано
+                </Select.Option>
                 {characteristics?.map((elem) => (
                   <Select.Option key={elem.id} value={elem.id}>
                     {elem.name}
@@ -147,12 +155,12 @@ export const FiltersPanel: FC<Props> = ({
               placeholder="Выберите из списка"
               style={{ width: "100%" }}
               size="large"
-              allowClear
               value={filters.ContractIds}
               onChange={(value) => setTasksListFilters({ ContractIds: value })}
               mode="multiple"
               showSearch={false}
               placement="topLeft"
+              removeIcon={() => <XLightIcon />}
             >
               <Select.Option key={NO_CONTRACT_FLAG} value={NO_CONTRACT_FLAG}>
                 Без договора
