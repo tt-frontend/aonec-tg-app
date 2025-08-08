@@ -9,6 +9,7 @@ import {
   FilesAttachCardHeader,
   ImageItem,
   ImagesList,
+  XWrapper,
 } from "./TaskFilesUpload.styled";
 import { ClipIcon } from "@/components/icons/ClipIcon";
 import { XIcon } from "@/components/icons/XIcon";
@@ -61,9 +62,9 @@ export const TaskFilesUpload: FC<Props> = ({
             <ClipIcon />
             <DocumentName>{doc.name}</DocumentName>
             {isActive && (
-              <span onClick={() => onDeleteDocument(doc.id!)}>
+              <XWrapper onClick={() => onDeleteDocument(doc.id!)}>
                 <XIcon />
-              </span>
+              </XWrapper>
             )}
           </DocumentItem>
         ))}
@@ -96,9 +97,9 @@ export const TaskFilesUpload: FC<Props> = ({
             {photosList?.map((doc) => (
               <ImageItem key={doc.id} url={doc.url!}>
                 {isActive && (
-                  <span onClick={() => onDeleteDocument(doc.id!)}>
+                  <XWrapper onClick={() => onDeleteDocument(doc.id!)}>
                     <XWhiteIcon />
-                  </span>
+                  </XWrapper>
                 )}
               </ImageItem>
             ))}

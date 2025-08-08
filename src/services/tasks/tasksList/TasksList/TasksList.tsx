@@ -111,6 +111,15 @@ export const TasksList: FC<Props> = ({
         </TitleWrapper>
 
         <TasksListWrapper>
+          {!tasksList.length && isLoading && <Skeleton active />}
+
+          {!isLoading && !tasksList?.length && (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="Нет задач"
+            />
+          )}
+
           {tasksList?.map((task) => (
             <TaskItem status={status} task={task} key={task.id} />
           ))}
@@ -132,12 +141,6 @@ export const TasksList: FC<Props> = ({
             />
           )}
         </PaginationWrapper>
-
-        {!isLoading && !tasksList?.length && (
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Нет задач" />
-        )}
-
-        {!tasksList.length && isLoading && <Skeleton active />}
       </Wrapper>
     </Container>
   );

@@ -50,3 +50,9 @@ export const ImageItem = styled.div<{ url: string }>`
   display: flex;
   justify-content: flex-end;
 `;
+
+export const XWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: min-content;
+`;
