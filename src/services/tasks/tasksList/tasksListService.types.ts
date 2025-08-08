@@ -5,21 +5,32 @@ import {
 } from "@/api/types";
 
 export type GetTasksListQueryParams = {
-  /** @format int32 */
+  /**
+   * Id номенклатуры
+   * @format int32
+   */
   NomenclatureId?: number;
-  /** @format int32 */
+  /**
+   * Id характеристики
+   * @format int32
+   */
   CharacteristicId?: number | null;
+  /** Статус наряда */
   Status?: EProductionOrderStatus;
-  /** @format int32 */
-  ContractIdValue?: number | string | null;
-  ContractIdHasValue?: boolean;
-  /** @format int32 */
-  AddressId?: number;
+  ContractIds?: (number | null)[];
+  /** Ids адресов объекта */
+  AddressIds?: number[];
   /** Тип сортировки наряд-заданий */
   OrderRule?: EProductionOrderOrderRule | null;
-  /** @format date-time */
+  /**
+   * Дата начала
+   * @format date-time
+   */
   From?: string;
-  /** @format date-time */
+  /**
+   * Нормативный срок завершения
+   * @format date-time
+   */
   To?: string;
   /** @format int32 */
   PageNumber?: number;

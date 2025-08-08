@@ -18,6 +18,7 @@ import {
   TaskSortTypeToFilter,
   TasksSortTypeToLable,
 } from "./FiltersPanel.constatns";
+import { XIcon } from "@/components/icons/XIcon";
 
 export const FiltersPanel: FC<Props> = ({
   handleApply,
@@ -77,9 +78,12 @@ export const FiltersPanel: FC<Props> = ({
             <Select
               size="large"
               placeholder="Выберите из списка"
-              value={filters.AddressId}
-              onChange={(value) => setTasksListFilters({ AddressId: value })}
+              value={filters.AddressIds}
+              onChange={(value) => setTasksListFilters({ AddressIds: value })}
               allowClear
+              mode="multiple"
+              showSearch={false}
+              removeIcon={() => <XIcon />}
             >
               {addressesList?.items?.map((elem) => (
                 <Select.Option key={elem.id} value={elem.id}>
@@ -144,10 +148,11 @@ export const FiltersPanel: FC<Props> = ({
               style={{ width: "100%" }}
               size="large"
               allowClear
-              value={filters.ContractIdValue}
-              onChange={(value) =>
-                setTasksListFilters({ ContractIdValue: value })
-              }
+              value={filters.ContractIds}
+              onChange={(value) => setTasksListFilters({ ContractIds: value })}
+              mode="multiple"
+              showSearch={false}
+              placement="topLeft"
             >
               <Select.Option key={NO_CONTRACT_FLAG} value={NO_CONTRACT_FLAG}>
                 Без договора
