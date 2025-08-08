@@ -3,5 +3,17 @@
 body {
   margin: 0;
   font-family: "Rubik", sans-serif;
-  background: #F9F9F9;
+  background: #f9f9f9;
+}
+
+.ant-select-clear {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 8px;
+  font-size: 16px;
+  touch-action: manipulation;
+  z-index: 2;
 }

@@ -1,3 +1,16 @@
 .ant-select-item-option-selected {
   color: white !important;
 }
+
+.ant-input-clear-icon {
+  width: 32px; // увеличиваем зону нажатия
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 8px;
+  font-size: 16px;
+  z-index: 5;
+  pointer-events: auto;
+  touch-action: manipulation; // помогает на iOS
+}

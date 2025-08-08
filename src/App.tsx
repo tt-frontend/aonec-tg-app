@@ -11,6 +11,7 @@ function App() {
   useEffect(() => {
     Telegram.WebApp.enableClosingConfirmation();
     Telegram.WebApp.exitFullscreen();
+    Telegram.WebApp.disableVerticalSwipes();
   }, []);
 
   return (

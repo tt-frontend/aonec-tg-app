@@ -51,11 +51,9 @@ sample({
   fn: (filters): GetTasksListQueryParams => {
     return {
       ...filters,
-      ContractIdHasValue: Boolean(filters.ContractIdValue),
-      ContractIdValue:
-        filters.ContractIdValue === NO_CONTRACT_FLAG
-          ? null
-          : filters.ContractIdValue,
+      ContractIds: filters.ContractIds?.map((elem) => {
+        return (elem as number | string) === NO_CONTRACT_FLAG ? null : elem;
+      }),
     };
   },
   target: tasksListQuery.start,
