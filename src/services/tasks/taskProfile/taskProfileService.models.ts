@@ -79,10 +79,6 @@ sample({
   target: deleteFileMutation.start,
 });
 
-updateReportMutation.finished.success.watch(() => {
-  message.success("Комментарий обновлен");
-});
-
 updateReportMutation.finished.failure.watch(({ error }) =>
   message.error(error.response.data.error.Text)
 );
