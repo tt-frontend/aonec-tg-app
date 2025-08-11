@@ -20,6 +20,7 @@ import { TaskInfo } from "./TaskInfo";
 import { TaskFilesUpload } from "./TaskFilesUpload";
 import { ReportPanel } from "./ReportPanel";
 import { EProductionOrderStatus } from "@/api/types";
+import { useKeyboardOpen } from "@/utils/useKeyboardOpen";
 
 export const TaskProfilePage: FC<Props> = ({
   isLoading,
@@ -30,6 +31,8 @@ export const TaskProfilePage: FC<Props> = ({
   handleCompleteTask,
   updateReport,
 }) => {
+  const isKeyboardOpen = useKeyboardOpen();
+
   if (isLoading && !task) return <Skeleton active />;
 
   if (!task) {
@@ -61,7 +64,7 @@ export const TaskProfilePage: FC<Props> = ({
 
   return (
     <>
-      {isActive && (
+      {isActive && !isKeyboardOpen && (
         <ButtonWrapper>
           <Button
             onClick={onCompleteTask}
@@ -73,7 +76,7 @@ export const TaskProfilePage: FC<Props> = ({
           </Button>
         </ButtonWrapper>
       )}
-      <Wrapper isActive={isActive}>
+      <Wrapper isActive={isActive && !isKeyboardOpen}>
         {isActive && <TaskProgressPanel task={task} />}
         {task.stage && (
           <TaskStage>
