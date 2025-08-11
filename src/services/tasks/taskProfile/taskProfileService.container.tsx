@@ -9,7 +9,7 @@ import {
   updateReportMutation,
 } from "./taskProfileService.api";
 import { uploadFileMutation } from "@/services/filesUpload";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 const {
   inputs,
@@ -48,6 +48,11 @@ export const TaskProfileContainer = () => {
     }).unsubscribe;
   }, [navigate]);
 
+  const handleUpdateReport = useCallback(
+    (report: string) => updateReport({ id: Number(id), report }),
+    [id, updateReport]
+  );
+
   return (
     <>
       {id && <TaskProfileGate id={Number(id)} />}
@@ -60,7 +65,7 @@ export const TaskProfileContainer = () => {
         }
         isLoadingUploadFile={isLoadingUploadFile}
         handleCompleteTask={handleCompleteTask}
-        updateReport={(report) => updateReport({ id: Number(id), report })}
+        updateReport={handleUpdateReport}
       />
     </>
   );

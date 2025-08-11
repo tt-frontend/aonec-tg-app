@@ -1,12 +1,50 @@
 import { FC, useEffect, useState } from "react";
 import { Header, TextAreaSC, Wrapper } from "./ReportPanel.styled";
 import { Props } from "./ReportPanel.types";
-import { Button } from "antd";
+import { Spin } from "antd";
+import { useUnit } from "effector-react";
+import { updateReportMutation } from "../../taskProfileService.api";
+import { useDebounce } from "@/utils/useDebounce";
+import { CompleteIcon } from "@/components/icons/Complete";
 
 export const ReportPanel: FC<Props> = ({ task, updateReport, isActive }) => {
   const [text, setText] = useState<string | null | void>("");
+  const [isComplete, setIsComplete] = useState<boolean>(false);
+  const { isLoading } = useUnit({
+    isLoading: updateReportMutation.$pending,
+  });
 
-  const isChanged = task?.report !== text;
+  const debouncedText = useDebounce(text, 1000);
+
+  const isChanged = task?.report !== debouncedText;
+
+  useEffect(() => {
+    if (!debouncedText || typeof debouncedText !== "string" || !isChanged) {
+      return;
+    }
+
+    updateReport(debouncedText);
+  }, [debouncedText, updateReport, isChanged]);
+
+  useEffect(() => {
+    const unsubscribeSuccess = updateReportMutation.finished.success.watch(
+      () => {
+        setIsComplete(true);
+      }
+    ).unsubscribe;
+
+    const unsubscribeFailure = updateReportMutation.finished.failure.watch(
+      () => {
+        setIsComplete(false);
+      }
+    ).unsubscribe;
+
+    return () => {
+      unsubscribeSuccess();
+      unsubscribeFailure();
+      setIsComplete(false);
+    };
+  }, []);
 
   useEffect(() => {
     setText(task?.report);
@@ -18,12 +56,8 @@ export const ReportPanel: FC<Props> = ({ task, updateReport, isActive }) => {
     <Wrapper
       header={
         <Header>
-          Комментарий{" "}
-          {isChanged && (
-            <Button size="small" onClick={() => setText(task?.report)}>
-              Отмена
-            </Button>
-          )}
+          Комментарий {isLoading && <Spin />}
+          {!isLoading && isComplete && <CompleteIcon />}
         </Header>
       }
     >
@@ -33,14 +67,6 @@ export const ReportPanel: FC<Props> = ({ task, updateReport, isActive }) => {
         value={text || ""}
         onChange={(e) => setText(e.target.value)}
       />
-      {isChanged && (
-        <Button
-          type="primary"
-          onClick={() => typeof text === "string" && updateReport(text)}
-        >
-          Сохранить
-        </Button>
-      )}
     </Wrapper>
   );
 };
