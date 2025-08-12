@@ -7,7 +7,12 @@ import { updateReportMutation } from "../../taskProfileService.api";
 import { useDebounce } from "@/utils/useDebounce";
 import { CompleteIcon } from "@/components/icons/Complete";
 
-export const ReportPanel: FC<Props> = ({ task, updateReport, isActive }) => {
+export const ReportPanel: FC<Props> = ({
+  task,
+  updateReport,
+  isActive,
+  setIsCommentFocused,
+}) => {
   const [text, setText] = useState<string | null | void>("");
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const { isLoading } = useUnit({
@@ -66,6 +71,8 @@ export const ReportPanel: FC<Props> = ({ task, updateReport, isActive }) => {
         placeholder="Кратко опишите проделанную работу"
         value={text || ""}
         onChange={(e) => setText(e.target.value)}
+        onFocus={() => setIsCommentFocused(true)}
+        onBlur={() => setIsCommentFocused(false)}
       />
     </Wrapper>
   );

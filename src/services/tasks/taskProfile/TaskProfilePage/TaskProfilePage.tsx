@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   AddessWrapper,
   ButtonWrapper,
@@ -20,7 +20,6 @@ import { TaskInfo } from "./TaskInfo";
 import { TaskFilesUpload } from "./TaskFilesUpload";
 import { ReportPanel } from "./ReportPanel";
 import { EProductionOrderStatus } from "@/api/types";
-import { useKeyboardOpen } from "@/utils/useKeyboardOpen";
 
 export const TaskProfilePage: FC<Props> = ({
   isLoading,
@@ -31,7 +30,7 @@ export const TaskProfilePage: FC<Props> = ({
   handleCompleteTask,
   updateReport,
 }) => {
-  const isKeyboardOpen = useKeyboardOpen();
+  const [isCommentFocused, setIsCommentFocused] = useState(false);
 
   if (isLoading && !task) return <Skeleton active />;
 
@@ -64,7 +63,7 @@ export const TaskProfilePage: FC<Props> = ({
 
   return (
     <>
-      {isActive && !isKeyboardOpen && (
+      {isActive && !isCommentFocused && (
         <ButtonWrapper>
           <Button
             onClick={onCompleteTask}
@@ -76,7 +75,7 @@ export const TaskProfilePage: FC<Props> = ({
           </Button>
         </ButtonWrapper>
       )}
-      <Wrapper isActive={isActive && !isKeyboardOpen}>
+      <Wrapper isActive={isActive && !isCommentFocused}>
         {isActive && <TaskProgressPanel task={task} />}
         {task.stage && (
           <TaskStage>
@@ -105,6 +104,7 @@ export const TaskProfilePage: FC<Props> = ({
           isActive={isActive}
           task={task}
           updateReport={updateReport}
+          setIsCommentFocused={setIsCommentFocused}
         />
         <TaskFilesUpload
           isActive={isActive}
