@@ -6,12 +6,15 @@ import ruRu from "antd/locale/ru_RU";
 import { useEffect } from "react";
 import { themeConfig } from "./themeConfig";
 import "./services/filesUpload/filesUploadService.model";
+import { CURRENT_OS } from "./constants/os";
+
+console.log(CURRENT_OS);
 
 function App() {
   useEffect(() => {
-    Telegram.WebApp.enableClosingConfirmation();
-    Telegram.WebApp.exitFullscreen();
-    Telegram.WebApp.disableVerticalSwipes();
+    Telegram.WebApp?.enableClosingConfirmation();
+    Telegram.WebApp?.exitFullscreen();
+    Telegram.WebApp?.disableVerticalSwipes();
   }, []);
 
   return (

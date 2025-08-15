@@ -1,11 +1,23 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <title>Все на ладони</title>
+
+    <script type="module">
+      if (import.meta.env.DEV) {
+        import("//cdn.jsdelivr.net/npm/eruda").then((data) => {
+          console.log(data);
+        });
+      }
+    </script>
+
+    <title>Мои работы</title>
   </head>
   <body>
     <div id="root"></div>

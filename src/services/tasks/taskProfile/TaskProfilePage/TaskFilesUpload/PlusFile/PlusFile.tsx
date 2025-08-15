@@ -51,6 +51,7 @@ export const PlusFile: FC<Props> = ({
         accept={accept}
         onChange={handleFileChange}
         multiple={multiple}
+        capture="environment"
       />
 
       <Wrapper onClick={handleClick}>
