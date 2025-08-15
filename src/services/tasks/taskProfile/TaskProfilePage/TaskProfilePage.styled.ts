@@ -75,7 +75,7 @@ export const TaskUnitAmountWrapper = styled.div`
   padding: 0 8px;
   display: flex;
   align-items: center;
-  color: #e0e0e0;
+  color: #ffffff;
   background: #2d2d2d;
 `;
 

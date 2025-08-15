@@ -3,6 +3,7 @@ import {
   Address,
   CharacterisicWrapper,
   DateName,
+  DateSection,
   DateString,
   DateWrapper,
   FilesInfo,
@@ -11,6 +12,7 @@ import {
   InfoWrapper,
   NomenclatureName,
   RequestNumber,
+  Stage,
   Wrapper,
 } from "./TaskItem.styled";
 import { Props } from "./TaskItem.types";
@@ -30,33 +32,35 @@ export const TaskItem: FC<Props> = ({ task, status }) => {
   const percent = getDateProgressBarPercent(
     dayjs(task.startDate),
     dayjs(task.normativeCompletionDate)
-  );
+  ); //- Math.random() * 100;
 
   const isActive = status === EProductionOrderStatus.InProgress;
 
   const dateSegment = (
-    <>
+    <DateSection>
       <DateWrapper>
         <DateName>
           <IconWrapper>
             <DateIcon />
           </IconWrapper>
-          Начать до:
+          {/* Начать до: */}
         </DateName>
         <DateString>{dayjs(task.startDate).format("DD.MM.YYYY")}</DateString>
       </DateWrapper>
+      {/* <ArrowRight /> */}
+      <span>—</span>
       <DateWrapper>
         <DateName>
           <IconWrapper>
             <FinishIcon />
           </IconWrapper>
-          Выполнить до:
+          {/* Выполнить до: */}
         </DateName>
         <DateString>
           {dayjs(task.normativeCompletionDate).format("DD.MM.YYYY")}
         </DateString>
       </DateWrapper>
-    </>
+    </DateSection>
   );
 
   return (
@@ -95,9 +99,12 @@ export const TaskItem: FC<Props> = ({ task, status }) => {
           size="small"
           showInfo={false}
           strokeColor={getProgressBarColor(percent)}
+          strokeLinecap="butt"
+          strokeWidth={3}
         />
       )}
       {isActive && dateSegment}
+      {task.stage && <Stage>{task.stage}</Stage>}
     </Wrapper>
   );
 };

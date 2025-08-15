@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled(Link)`
   background-color: white;
-  padding: 16px;
+  padding: 12px;
   box-shadow: 0px 0px 8px 0px #0000000d;
   display: flex;
   flex-direction: column;
@@ -57,6 +57,7 @@ export const DateWrapper = styled.div`
   font-size: 14px;
   font-weight: 300;
   align-items: center;
+  gap: 6px;
 `;
 
 export const DateString = styled.div`
@@ -88,4 +89,23 @@ export const Address = styled.div`
   letter-spacing: -0.41px;
   vertical-align: middle;
   opacity: 0.5;
+`;
+
+export const DateSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #000000;
+
+  span {
+    color: #b7b7b7;
+  }
+`;
+
+export const Stage = styled.div`
+  color: #0088ff;
+  font-size: 12px;
+  padding: 4px 8px;
+  background: #0088ff1d;
+  width: fit-content;
 `;

@@ -309,6 +309,8 @@ export interface ProductionOrderListResponse {
   actsCount?: number;
   /** @format int32 */
   photosCount?: number;
+  /** Этап */
+  stage?: string | null;
 }
 
 export interface ProductionOrderListResponsePagedList {
