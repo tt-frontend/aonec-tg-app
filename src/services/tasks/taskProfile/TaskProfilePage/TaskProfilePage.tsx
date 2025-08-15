@@ -14,12 +14,13 @@ import {
   Wrapper,
 } from "./TaskProfilePage.styled";
 import { Props } from "./TaskProfilePage.types";
-import { Button, Empty, message, Skeleton, Tooltip } from "antd";
+import { Empty, message, Skeleton, Tooltip } from "antd";
 import { TaskProgressPanel } from "./TaskProgressPanel";
 import { TaskInfo } from "./TaskInfo";
 import { TaskFilesUpload } from "./TaskFilesUpload";
 import { ReportPanel } from "./ReportPanel";
 import { EProductionOrderStatus } from "@/api/types";
+import { CompleteButton } from "../../tasksList/TasksList/TaskItem/TaskItem.styled";
 
 export const TaskProfilePage: FC<Props> = ({
   isLoading,
@@ -65,14 +66,17 @@ export const TaskProfilePage: FC<Props> = ({
     <>
       {isActive && !isCommentFocused && (
         <ButtonWrapper>
-          <Button
+          {/* <Button
             onClick={onCompleteTask}
             size="large"
             type="primary"
-            style={{ height: 64 }}
+            style={{ height: 64, borderRadius: 100 }}
           >
             Завершить задачу
-          </Button>
+          </Button> */}
+          <CompleteButton onClick={onCompleteTask}>
+            Завершить задачу
+          </CompleteButton>
         </ButtonWrapper>
       )}
       <Wrapper isActive={isActive && !isCommentFocused}>

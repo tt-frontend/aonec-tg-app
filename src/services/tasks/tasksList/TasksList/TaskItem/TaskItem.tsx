@@ -32,7 +32,7 @@ export const TaskItem: FC<Props> = ({ task, status }) => {
   const percent = getDateProgressBarPercent(
     dayjs(task.startDate),
     dayjs(task.normativeCompletionDate)
-  ); //- Math.random() * 100;
+  );
 
   const isActive = status === EProductionOrderStatus.InProgress;
 
@@ -65,6 +65,7 @@ export const TaskItem: FC<Props> = ({ task, status }) => {
 
   return (
     <Wrapper to={`/tasks/${task.id}`}>
+      {task.stage && <Stage>{task.stage}</Stage>}
       <Address>{task.objectAddress}</Address>
       <RequestNumber>№{task.requestNumber}</RequestNumber>
       {task.outputMaterials?.map((elem) => (
@@ -100,11 +101,10 @@ export const TaskItem: FC<Props> = ({ task, status }) => {
           showInfo={false}
           strokeColor={getProgressBarColor(percent)}
           strokeLinecap="butt"
-          strokeWidth={3}
+          strokeWidth={4}
         />
       )}
       {isActive && dateSegment}
-      {task.stage && <Stage>{task.stage}</Stage>}
     </Wrapper>
   );
 };

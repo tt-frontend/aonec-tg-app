@@ -109,3 +109,15 @@ export const Stage = styled.div`
   background: #0088ff1d;
   width: fit-content;
 `;
+
+export const CompleteButton = styled.div`
+  height: 64px;
+  background: black;
+  color: white;
+  font-size: 18px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+`;
