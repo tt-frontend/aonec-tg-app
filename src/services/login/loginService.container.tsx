@@ -13,7 +13,14 @@ export const LoginContainer = () => {
 
   useEffect(() => {
     return authService.effect.fetchAuthTokenFx.failData.watch((e) => {
-      message.error(e?.response?.data?.error?.Text);
+      if (!e) return;
+
+      const msg =
+        e?.response?.data?.error?.Text || e?.response?.data?.error?.Message;
+
+      if (!msg) return;
+
+      message.error(msg);
     }).unsubscribe;
   }, []);
 

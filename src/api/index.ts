@@ -1,7 +1,9 @@
 import { IS_DEV_MODE } from "@/constants/devMode";
 import { authService } from "@/services/authService";
 import { checkUrl } from "@/utils";
+import { notification } from "antd";
 import axios from "axios";
+import { createEvent, createStore } from "effector";
 
 export const PROD_API_URL = "https://prod.aonec-bot.ru/api";
 export const STAGE_API_URL = "https://stage.aonec-bot.ru/api";
@@ -42,11 +44,23 @@ axios.interceptors.response.use(
       authService.inputs.setTokens(data);
     }
 
+    setIsOnline();
+
     return data;
   },
   async (error) => {
     const status = error?.response?.status;
     const url = error?.config?.url;
+
+    if (!axios.isCancel(error) && !status && $isOnline.getState()) {
+      notification.error({
+        description: "Проверьте свое подключение к интернету",
+        message: "Ошибка связи",
+      });
+      setIsOffline();
+    }
+
+    setIsOnline();
 
     if (status === 401 && checkUrl("Auth/refreshToken", url)) {
       authService.inputs.logoutUser();
@@ -83,5 +97,12 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+const setIsOffline = createEvent();
+const setIsOnline = createEvent();
+
+const $isOnline = createStore(true)
+  .on(setIsOffline, () => false)
+  .on(setIsOnline, () => true);
 
 export const api = axios;
