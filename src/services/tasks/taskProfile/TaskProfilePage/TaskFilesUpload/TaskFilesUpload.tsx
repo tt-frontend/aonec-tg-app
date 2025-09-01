@@ -44,6 +44,7 @@ export const TaskFilesUpload: FC<Props> = ({
                 isLoading={isLoadingUploadFile}
                 uniqId="task-act-add"
                 multiple
+                accept=".jpg,.jpeg,.png"
                 fileHandler={(files) => {
                   if (isLoadingUploadFile) return;
 
@@ -77,8 +78,8 @@ export const TaskFilesUpload: FC<Props> = ({
               <PlusFile
                 isLoading={isLoadingUploadFile}
                 uniqId="task-photo-add"
-                // accept="image/*"
                 multiple
+                accept=".jpg,.jpeg,.png"
                 fileHandler={(files) => {
                   if (isLoadingUploadFile) return;
 
