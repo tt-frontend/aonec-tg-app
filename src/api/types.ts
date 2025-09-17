@@ -188,18 +188,6 @@ export interface ExecutorResponse {
   profilePhoto?: DocumentResponse | null;
 }
 
-/** Запрос на инициализацию телеграм пользователя */
-export interface InitializeRequest {
-  /** @minLength 1 */
-  telegramUserInitData: string;
-}
-
-/** Ответ на инициализацию телеграм пользователя */
-export interface InitializeResponse {
-  /** JWT-токен, содержайщий !:CustomClaimTypes.TgUserId */
-  token?: string | null;
-}
-
 /** Запрос на начало сессии исполнителя */
 export interface LoginRequest {
   /**
@@ -263,16 +251,6 @@ export interface OutputMaterialResponse {
   amount?: number | null;
   /** Единицы измерения */
   units?: string | null;
-}
-
-export interface ProblemDetails {
-  type?: string | null;
-  title?: string | null;
-  /** @format int32 */
-  status?: number | null;
-  detail?: string | null;
-  instance?: string | null;
-  [key: string]: any;
 }
 
 /** Запрос на прикрепление документа к наряду */
@@ -739,29 +717,6 @@ export class Api<
         body: data,
         secure: true,
         type: ContentType.Json,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name AuthInitializationCreate
-     * @summary Инициализация и валидация Телеграм пользователя
-     * @request POST:/api/Auth/initialization
-     * @secure
-     */
-    authInitializationCreate: (
-      data: InitializeRequest,
-      params: RequestParams = {},
-    ) =>
-      this.request<InitializeResponse, ErrorApiResponse | ProblemDetails>({
-        path: `/api/Auth/initialization`,
-        method: "POST",
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: "json",
         ...params,
       }),
 

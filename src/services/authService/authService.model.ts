@@ -6,12 +6,10 @@ import {
   sample,
 } from "effector";
 import {
-  initializeUser,
   loginUser,
   logoutUserMutation,
 } from "./authService.api";
 import {
-  InitializeResponse,
   LoginRequest,
   LogoutRequest,
   TokenResponse,
@@ -26,12 +24,6 @@ const setTokens = createEvent<TokenResponse>();
 
 const AuthGate = createGate();
 
-const initializeUserFx = createEffect<
-  void,
-  InitializeResponse,
-  EffectFailDataAxiosError
->(initializeUser);
-
 const fetchAuthTokenFx = createEffect<
   LoginRequest,
   TokenResponse,
@@ -39,13 +31,6 @@ const fetchAuthTokenFx = createEffect<
 >(loginUser);
 
 export const DEFAULT_INIT_TOKEN = null;
-
-const $initToken = createStore<string | null>(DEFAULT_INIT_TOKEN).on(
-  initializeUserFx.doneData,
-  (_, data) => {
-    return data.token;
-  }
-);
 
 const $authToken = createStore<null | string>(null)
   .on(fetchAuthTokenFx.doneData, (_, data) => {
@@ -69,11 +54,6 @@ persist({
 persist({
   store: $refreshToken,
   key: "refreshToken",
-});
-
-sample({
-  clock: AuthGate.open,
-  target: initializeUserFx,
 });
 
 sample({
@@ -109,7 +89,7 @@ const $isLoginLoading = fetchAuthTokenFx.pending;
 
 export const authService = {
   inputs: { handleLoginUser, logoutUser, setTokens },
-  outputs: { $authToken, $refreshToken, $initToken, $isAuth, $isLoginLoading },
+  outputs: { $authToken, $refreshToken, $isAuth, $isLoginLoading },
   effect: { fetchAuthTokenFx },
   gates: { AuthGate },
 };

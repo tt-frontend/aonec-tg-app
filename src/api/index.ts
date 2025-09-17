@@ -13,10 +13,7 @@ export const BASE_API_URL = IS_DEV_MODE ? STAGE_API_URL : PROD_API_URL;
 axios.defaults.baseURL = BASE_API_URL;
 
 axios.interceptors.request.use((req) => {
-  req.headers.Authorization = `Bearer ${
-    authService.outputs.$authToken.getState() ||
-    authService.outputs.$initToken.getState()
-  }`;
+  req.headers.Authorization = `Bearer ${authService.outputs.$authToken.getState()}`;
   req.headers["x-user-path"] = window.location.pathname || "none";
   req.params = {
     ...(req.params || {}),
@@ -64,11 +61,6 @@ axios.interceptors.response.use(
 
     if (status === 401 && checkUrl("Auth/refreshToken", url)) {
       authService.inputs.logoutUser();
-      return;
-    }
-
-    if (status === 401 && checkUrl("Auth/initialization", url)) {
-      Telegram.WebApp.close();
       return;
     }
 
