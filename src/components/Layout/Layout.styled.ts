@@ -1,7 +1,12 @@
 import { styled } from "styled-components";
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+`;
 
 export const Content = styled.div`
-  padding: 16px;
+  width: 100%;
+  max-width: 480px;
 `;

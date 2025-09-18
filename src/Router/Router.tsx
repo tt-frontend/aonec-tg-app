@@ -10,9 +10,8 @@ const { AuthGate } = authService.gates;
 export const Router = () => {
   useBackButton();
 
-  const { isAuth, initToken } = useUnit({
+  const { isAuth } = useUnit({
     isAuth: authService.outputs.$isAuth,
-    initToken: authService.outputs.$initToken,
   });
 
   const routes = useMemo(() => getRoutes(isAuth), [isAuth]);
@@ -22,7 +21,7 @@ export const Router = () => {
   return (
     <>
       <AuthGate />
-      {initToken && router}
+      {router}
     </>
   );
 };
