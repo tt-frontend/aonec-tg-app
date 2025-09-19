@@ -11,6 +11,8 @@ export const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  align-items: center;
 `;
 
 export const Content = styled.div`
@@ -20,6 +22,8 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
+  max-width: 480px;
 `;
 
 export const ButtonsWrapper = styled.div`

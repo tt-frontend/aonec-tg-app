@@ -8,4 +8,7 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  width: 100%;
+  max-width: 480px;
 `;
