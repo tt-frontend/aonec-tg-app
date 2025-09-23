@@ -22,7 +22,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 100%;
+  width: calc(100% - 32px);
   max-width: 480px;
 `;
 
