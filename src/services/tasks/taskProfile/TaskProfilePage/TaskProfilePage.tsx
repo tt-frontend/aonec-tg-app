@@ -66,14 +66,6 @@ export const TaskProfilePage: FC<Props> = ({
     <>
       {isActive && !isCommentFocused && (
         <ButtonWrapper>
-          {/* <Button
-            onClick={onCompleteTask}
-            size="large"
-            type="primary"
-            style={{ height: 64, borderRadius: 100 }}
-          >
-            Завершить задачу
-          </Button> */}
           <CompleteButton onClick={onCompleteTask}>
             Завершить задачу
           </CompleteButton>

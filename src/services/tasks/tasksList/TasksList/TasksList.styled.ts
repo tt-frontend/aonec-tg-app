@@ -42,6 +42,9 @@ export const TitleWrapper = styled.div`
   backdrop-filter: blur(6px);
   background: #ffffffad;
   z-index: 2;
+
+  display: flex;
+  justify-content: center;
 `;
 
 export const PaginationWrapper = styled.div`

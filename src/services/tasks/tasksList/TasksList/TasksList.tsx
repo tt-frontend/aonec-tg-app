@@ -15,11 +15,12 @@ import { Title } from "@/components/Title";
 import { Empty, Pagination, Skeleton } from "antd";
 import { FiltersPanel } from "./FiltersPanel";
 import { TaskItem } from "./TaskItem";
-import { FilterIcon } from "@/components/icons/FilterIcon";
+import { ActiveFilterIcon, FilterIcon } from "@/components/icons/FilterIcon";
 import { useLocation } from "react-router-dom";
 import { getScrollPosition, saveScrollPosition } from "@/utils/scrollManager";
 import { ReloadIcon } from "@/components/icons/Reload";
 import { EProductionOrderStatus } from "@/api/types";
+import { isFilterselected } from "./TasksList.utils";
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -69,6 +70,8 @@ export const TasksList: FC<Props> = ({
 
   const isActive = status === EProductionOrderStatus.InProgress;
 
+  const isFiltersExist = isFilterselected(filters);
+
   return (
     <Container>
       {isFilterOpen && (
@@ -104,7 +107,8 @@ export const TasksList: FC<Props> = ({
                 </ReloadWrapper>
               </SearchButtonWrapper>
               <SearchButtonWrapper onClick={() => setIsFilterOpen(true)}>
-                <FilterIcon />
+                {!isFiltersExist && <FilterIcon />}
+                {isFiltersExist && <ActiveFilterIcon />}
               </SearchButtonWrapper>
             </ButtonsWrapper>
           </Title>

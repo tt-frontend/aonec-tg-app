@@ -44,6 +44,7 @@ export const ButtonWrapper = styled.div`
   background-color: #ffffff3d;
   backdrop-filter: blur(6px);
   padding: 16px;
+  max-width: 480px;
 `;
 
 export const AddessWrapper = styled.div`
