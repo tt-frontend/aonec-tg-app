@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, useRef, useState } from "react";
 import { Wrapper } from "./PlusFile.styled";
 import { Props } from "./PlusFile.types";
 import { PlusIcon } from "@/components/icons/PlusIcon";
@@ -14,6 +14,7 @@ export const PlusFile: FC<Props> = ({
 }) => {
   const id = `file-input-${uniqId}`;
   const inputFileRef = useRef<HTMLInputElement | null>(null);
+  const [compressLoading, setCompressLoading] = useState(false);
 
   const handleClick = () => {
     inputFileRef.current?.click();
@@ -25,7 +26,6 @@ export const PlusFile: FC<Props> = ({
     const files = event.target.files;
     if (!files) return;
 
-
     if (files.length > 3) {
       const isContinue = confirm(
         "Максимальное кол-во файлов для одновременной загрузки — 3, продолжить?",
@@ -34,6 +34,7 @@ export const PlusFile: FC<Props> = ({
     }
 
     try {
+      setCompressLoading(true);
       const processedFiles = await Promise.all(
         Array.from(files).map(async (file) => {
           if (file.type.startsWith("image/")) {
@@ -49,10 +50,12 @@ export const PlusFile: FC<Props> = ({
       fileHandler(dataTransfer.files);
     } catch (error) {
       console.error("Ошибка сжатия:", error);
-    }
+    } finally {
+      setCompressLoading(false);
 
-    if (inputFileRef.current?.value) {
-      inputFileRef.current.value = "";
+      if (inputFileRef.current?.value) {
+        inputFileRef.current.value = "";
+      }
     }
   };
 
@@ -69,8 +72,8 @@ export const PlusFile: FC<Props> = ({
       />
 
       <Wrapper onClick={handleClick}>
-        {!isLoading && <PlusIcon />}
-        {isLoading && <Spin />}
+        {!isLoading && !compressLoading && <PlusIcon />}
+        {(isLoading || compressLoading) && <Spin />}
       </Wrapper>
     </>
   );
