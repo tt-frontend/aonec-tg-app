@@ -25,10 +25,6 @@ export const PlusFile: FC<Props> = ({
     const files = event.target.files;
     if (!files) return;
 
-    // console.log(
-    //   "Исходные файлы (KB):",
-    //   Array.from(files).map((f) => f.size / 1024),
-    // );
 
     if (files.length > 3) {
       const isContinue = confirm(

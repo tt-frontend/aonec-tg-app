@@ -12,7 +12,7 @@ export const compressImage = async (file: File): Promise<File> => {
         convertSize: 0,
         success(result) {
           resolve(
-            new File([result], "image.jpg", {
+            new File([result], file.name, {
               type: "image/jpeg",
             }),
           );
