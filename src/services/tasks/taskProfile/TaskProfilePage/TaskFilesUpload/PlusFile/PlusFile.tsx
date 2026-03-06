@@ -43,11 +43,6 @@ export const PlusFile: FC<Props> = ({
         }),
       );
 
-      // console.log(
-      //   "Размеры файлов после обработки (KB):",
-      //   processedFiles.map((f) => f.size / 1024),
-      // );
-
       const dataTransfer = new DataTransfer();
       processedFiles.forEach((file) => dataTransfer.items.add(file));
 

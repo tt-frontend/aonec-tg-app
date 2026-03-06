@@ -11,9 +11,11 @@ export const compressImage = async (file: File): Promise<File> => {
         mimeType: "image/jpeg",
         convertSize: 0,
         success(result) {
+          const extension = result.type.split("/")[1];
+
           resolve(
-            new File([result], file.name, {
-              type: "image/jpeg",
+            new File([result], file.name.replace(/\.\w+$/, `.${extension}`), {
+              type: result.type,
             }),
           );
         },
