@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Content, Wrapper } from "./Layout.styled";
+import { InstallAppPrompt } from "../InstallAppPrompt";
 
 export const Layout = () => {
   return (
@@ -7,6 +8,7 @@ export const Layout = () => {
       <Content>
         <Outlet />
       </Content>
+      <InstallAppPrompt />
     </Wrapper>
   );
 };
