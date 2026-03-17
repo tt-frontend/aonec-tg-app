@@ -6,4 +6,16 @@ import { registerServiceWorker } from "./pwa/registerServiceWorker";
 
 createRoot(document.getElementById("root")!).render(<App />);
 
+const startupSplash = document.getElementById("app-startup-splash");
+
+if (startupSplash) {
+  requestAnimationFrame(() => {
+    startupSplash.classList.add("is-hidden");
+
+    window.setTimeout(() => {
+      startupSplash.remove();
+    }, 200);
+  });
+}
+
 registerServiceWorker();

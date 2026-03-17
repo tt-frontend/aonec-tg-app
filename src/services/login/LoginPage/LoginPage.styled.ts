@@ -2,9 +2,11 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   height: calc(100vh - 32px);
+  height: calc(100dvh - 32px);
   display: flex;
   flex-direction: column;
   padding: 0 16px;
+  box-sizing: border-box;
   align-items: center;
   justify-content: space-evenly;
 `;
