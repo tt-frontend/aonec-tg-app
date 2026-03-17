@@ -1,24 +1,20 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  top: 0;
-  left: 0;
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   background: #f9f9f9;
   z-index: 10;
-
   display: flex;
   flex-direction: column;
-
   align-items: center;
 `;
 
 export const Content = styled.div`
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
-  padding: 16px;
+  padding: calc(16px + env(safe-area-inset-top)) 16px 12px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -29,9 +25,11 @@ export const Content = styled.div`
 export const ButtonsWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 12px;
   border-top: 1px solid lightgray;
   width: 100%;
-  padding: 0;
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+  box-sizing: border-box;
   background: white;
 `;
 

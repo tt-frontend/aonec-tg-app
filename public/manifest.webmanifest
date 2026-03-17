@@ -1,7 +1,7 @@
 {
   "id": "./",
   "name": "Мои работы",
-  "short_name": "Работы",
+  "short_name": "Мои работы",
   "description": "Приложение для работы с задачами",
   "lang": "ru-RU",
   "start_url": "./",
