@@ -15,9 +15,12 @@ export function useBackButton() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const backButton = Telegram.WebApp.BackButton;
+  const backButton =
+    typeof Telegram !== "undefined" ? Telegram.WebApp.BackButton : undefined;
 
   useEffect(() => {
+    if (!backButton) return;
+
     if (!excludedRoutes.includes(location.pathname)) {
       backButton.show();
     } else {
@@ -32,7 +35,13 @@ export function useBackButton() {
   }, [navigate, goBackHandler]);
 
   useEffect(() => {
+    if (!backButton) return;
+
     backButton.onClick(handleBack);
+
+    return () => {
+      backButton.offClick(handleBack);
+    };
   }, [backButton, handleBack]);
 }
 
