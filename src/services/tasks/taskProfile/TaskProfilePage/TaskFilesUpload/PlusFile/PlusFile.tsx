@@ -3,7 +3,7 @@ import { Wrapper } from "./PlusFile.styled";
 import { Props } from "./PlusFile.types";
 import { PlusIcon } from "@/components/icons/PlusIcon";
 import { Spin } from "antd";
-import { compressImage } from "./PlusFile.compressor";
+import { compressImage, shouldCompressImage } from "./PlusFile.compressor";
 
 export const PlusFile: FC<Props> = ({
   uniqId,
@@ -37,10 +37,16 @@ export const PlusFile: FC<Props> = ({
       setCompressLoading(true);
       const processedFiles = await Promise.all(
         Array.from(files).map(async (file) => {
-          if (file.type.startsWith("image/")) {
-            return await compressImage(file);
+          if (!file.type.startsWith("image/") || !shouldCompressImage(file)) {
+            return file;
           }
-          return file;
+
+          try {
+            return await compressImage(file);
+          } catch (error) {
+            console.error("Ошибка сжатия файла:", file.name, error);
+            return file;
+          }
         }),
       );
 
@@ -49,7 +55,7 @@ export const PlusFile: FC<Props> = ({
 
       fileHandler(dataTransfer.files);
     } catch (error) {
-      console.error("Ошибка сжатия:", error);
+      console.error("Ошибка обработки файлов:", error);
     } finally {
       setCompressLoading(false);
 

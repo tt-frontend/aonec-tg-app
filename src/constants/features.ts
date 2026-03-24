@@ -1,0 +1,1 @@
+export const IS_TASK_FILES_IMAGE_COMPRESSION_ENABLED = false;

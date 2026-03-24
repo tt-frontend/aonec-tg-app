@@ -9,7 +9,6 @@ import {
 } from "./taskProfileService.api";
 import { UploadFileRequestPayload } from "@/services/filesUpload/filesUploadService.types";
 import { uploadFileMutation } from "@/services/filesUpload";
-import { deleteFileMutation } from "@/services/filesUpload/filesUploadService.api";
 import { message } from "antd";
 import { AddDocumentToTaskPayload } from "./taskProfileService.types";
 
@@ -71,16 +70,8 @@ sample({
   target: addDocumentMutation.start,
 });
 
-sample({
-  clock: deleteDocumentMutation.finished.success,
-  fn({ params: [, documentId] }) {
-    return documentId;
-  },
-  target: deleteFileMutation.start,
-});
-
 updateReportMutation.finished.failure.watch(({ error }) =>
-  message.error(error.response.data.error.Text)
+  message.error(error.response.data.error.Text),
 );
 
 completeTaskMutation.finished.success.watch(() => {
@@ -88,7 +79,7 @@ completeTaskMutation.finished.success.watch(() => {
 });
 
 completeTaskMutation.finished.failure.watch(({ error }) =>
-  message.error(error.response.data.error.Text)
+  message.error(error.response.data.error.Text),
 );
 
 addDocumentMutation.finished.failure.watch(({ error }) => {
