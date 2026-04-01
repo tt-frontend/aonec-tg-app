@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { excludedRoutes } from "./backButtonService.constants";
 import { backButtonService } from "./backButtonService.model";
 import { useUnit } from "effector-react";
+import { useTelegramWebApp } from "../telegram/telegramWebApp";
 
 const { inputs, outputs } = backButtonService;
 
@@ -14,9 +15,9 @@ export function useBackButton() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const telegramWebApp = useTelegramWebApp();
 
-  const backButton =
-    typeof Telegram !== "undefined" ? Telegram.WebApp.BackButton : undefined;
+  const backButton = telegramWebApp?.BackButton;
 
   useEffect(() => {
     if (!backButton) return;
